@@ -50,3 +50,13 @@ Vamos a tener dos heaps para los traslados:
 + Array de ciudades, desde el 0 hasta el num-ciudades - 1
 + max-heap siendo el max del superavit 
 + tener un handle que relacionen las ciudades con el max-heap
+
+## Implementaciones de los procs:
+
+ + heaps:
+      + Tiene que implementar: encolar, desencolar, quitar(elemento por referencia) y máximo
+
+ + Array de ciudades:
+      + Deberían de implementar: getters y despachador de traslados
+
+ + Handles, deberían de estar siempre iguales
