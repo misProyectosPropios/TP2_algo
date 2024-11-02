@@ -41,3 +41,12 @@
       + Complejidad: O(1)
 
 # AED
+
+Vamos a tener dos heaps para los traslados:
+
++ max-heap siendo los más redituables la estructure
++ min-heap siendo los más antiguios 
++ handle para tener una idea de como se relaciona un heap con el otro
++ Array de ciudades, desde el 0 hasta el num-ciudades - 1
++ max-heap siendo el max del superavit 
++ tener un handle que relacionen las ciudades con el max-heap
