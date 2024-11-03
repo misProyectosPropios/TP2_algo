@@ -1,6 +1,7 @@
 package aed;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class Heaps<T> implements ColaDePrioridad<T>{
     private ArrayList<T> heap = new ArrayList<T>(0);
