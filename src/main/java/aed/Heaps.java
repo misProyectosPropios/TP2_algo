@@ -55,7 +55,13 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     public T desencolar(){
-        return this.heap.get(0);
+        T returnValue = this.heap.get(0);
+        this.heap.set(0, this.heap.get(this.heap.size())); // O(1) Pasamos el ultimo al primeor
+        
+
+
+
+        return returnValue;
     }
 
 
