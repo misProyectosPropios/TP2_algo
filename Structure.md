@@ -56,6 +56,10 @@ Vamos a tener dos heaps para los traslados:
  + heaps:
       + Tiene que implementar: encolar, desencolar, quitar(elemento por referencia) y máximo
 
+    proc encolar (T element):
+        array.add(element) //Agrega al final
+        
+        
  + Array de ciudades:
       + Deberían de implementar: getters y despachador de traslados
 
