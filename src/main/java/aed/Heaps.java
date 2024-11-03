@@ -1,10 +1,15 @@
 package aed;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.Comparator;
 
 public class Heaps<T> implements ColaDePrioridad<T>{
     private ArrayList<T> heap = new ArrayList<T>(0);
+    private Comparator<T> comparador;
+
+    public Heaps (Comparator<T> comparador) {
+        this.comparador = comparador;
+    }
 
     public T proximo() {
         return this.heap.get(0);
