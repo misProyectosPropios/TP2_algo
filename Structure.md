@@ -19,6 +19,8 @@
 
 ## Ciudad
 
+ + 
+
 ## BestEffort
 
 ### Methods 
@@ -61,7 +63,11 @@ Vamos a tener dos heaps para los traslados:
 
      ### proc encolar (T element):
 
-          array.add(element) //Agrega al final
+     array.add(element) //Agrega al final
+     var cache = array[0]
+     array[0] = array[array.length - 1]
+     array[array.length - 1] = cache //Lo llamamos     
+     while 
         
      ### proc desencolar() -> T:
 
@@ -98,7 +104,7 @@ Vamos a tener dos heaps para los traslados:
           return this.array[nombre]
 
      ### proc despacharTraslado(Traslado tras) -> Int:
-          
+
           this.array[tras.origen] += tras.gananciaNeta
           this.array[tras.destino] -= tras.gananciaNeta
 
