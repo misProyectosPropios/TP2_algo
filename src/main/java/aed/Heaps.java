@@ -62,6 +62,51 @@ public class Heaps<T> {
         return this.heap.get(0);
     }
 
+    private void bajarElemento(int i){
+        //CASO BASE
+        if(izq(i)>=heap.size() && der(i)>=this.heap.size()){
+            return;}
+        
+        //CASO TIENE 2 hijos
+        if (izq(i)<heap.size() && der(i)<this.heap.size()){
+            if(this.heap.get(i)<this.heap.get(izq(i)) || this.heap.get(i)<this.heap.get(der(i))){
+                if(heap.get(izq(i))>this.heap.get(der(i))){
+                    swap(i , izq(i));
+                    bajarElemento( izq(i));} else{
+                    swap(i, der(i));
+                    bajarElemento(der(i));
+                        }
+                } else{return;}
+            } else{
+    
+            //Caso Izq null
+            if (izq(i)>=this.heap.size()){
+                //Nos fijamos si i es menor que su hijo derecho, si lo es hacemos swap y recursion
+                if (this.heap.get(i)<this.heap.get(der(i))){
+                    swap(i, der(i));
+                    bajarElemento(der(i));}
+                //Si no es menor, return
+                    else{ return;}}
+            //Caso Der null
+            if (der(i)>=this.heap.size()){
+                if(this.heap.get(i)<this.heap.get(izq(i))){
+                    swap( i, izq(i));
+                    bajarElemento( izq(i)); 
+                } else{return;}
+            }
+        }
+        
+            
+    }
+    static int der(int i){
+        return  i*2+2;
+     }
+     
+     static int izq(int i){
+         return i*2+1;
+     }
+
+    
 
 
 }
