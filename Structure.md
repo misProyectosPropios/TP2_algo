@@ -73,14 +73,20 @@ Vamos a tener dos heaps para los traslados:
 
           array.add(element) //Agrega al final
      
-     ### proc quitar() -> T:
+     ### proc quitar(int posicion) -> T:
 
+          //Mover el ultimo a la posicion
+          //Mover a donde corresponda el elemento. Ordernar en las pocas partes donde tiene que ordenarse 
+          //Sacar el ultimo elemento. Borrar el ultimo.
           array.add(element) //Agrega al final
 
      ### prox maximo() -> T
-          return this.array[0] //Como requiere tomamos que haya algún elemento
-          array.add(element) //Agrega al final      
-     
+
+          return this.array[0]
+
+     ### prox cantidadElementos() -> int
+          
+          return this.array.size();
 
 + Ciudades:
      + Variables
