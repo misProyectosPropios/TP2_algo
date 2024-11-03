@@ -55,11 +55,25 @@ Vamos a tener dos heaps para los traslados:
 
  + heaps:
       + Tiene que implementar: encolar, desencolar, quitar(elemento por referencia) y máximo
+      + Los elementos del heap deben ser: 
+          + Un ArrayList
+          + Un comparator que se haya pasado para comparar según decida el usuario
 
-    proc encolar (T element):
-        array.add(element) //Agrega al final
+     ### proc encolar (T element):
+
+          array.add(element) //Agrega al final
         
-        
+     ### proc desencolar() -> T:
+
+          array.add(element) //Agrega al final
+     
+     ### proc quitar() -> T:
+
+          array.add(element) //Agrega al final
+
+     ### prox maximo() -> T
+  
+          array.add(element) //Agrega al final      
  + Array de ciudades:
       + Deberían de implementar: getters y despachador de traslados
 
