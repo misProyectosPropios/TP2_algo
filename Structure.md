@@ -72,9 +72,37 @@ Vamos a tener dos heaps para los traslados:
           array.add(element) //Agrega al final
 
      ### prox maximo() -> T
-  
+          return this.array[0] //Como requiere tomamos que haya algún elemento
           array.add(element) //Agrega al final      
- + Array de ciudades:
+     
+
++ Ciudades:
+     + Variables
+          + Nombre
+          + Ganancias
+          + Perdidas
+
+ + ## Array de ciudades:
       + Deberían de implementar: getters y despachador de traslados
 
+     ### proc getGananciaDeCiudad(int nombre) -> Int:
+
+          return this.array[nombre].ganancia
+     
+     ### proc getPerdidaDeCiudad(int nombre) -> Int:
+
+          return this.array[nombre].perdida
+
+     ## proc getCiudad(int nombre) -> Ciudad:
+          
+          return this.array[nombre]
+
+     ### proc despacharTraslado(Traslado tras) -> Int:
+          
+          this.array[tras.origen] += tras.gananciaNeta
+          this.array[tras.destino] -= tras.gananciaNeta
+
  + Handles, deberían de estar siempre iguales
+     + Tenemos 2 handles importantes: 
+          + Handle para ciudades con el heap
+          + Handle para traslados
