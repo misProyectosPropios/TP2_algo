@@ -42,6 +42,14 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return positionParent;
     }
 
+    private int calcularPosicionHijoIzquierdo(int position) {
+        return position * 2 + 1;
+    }
+
+    private int calcularPosicionHijoDerecho(int position) {
+        return position * 2 + 2;
+    }
+
     //Implementarlo
     private boolean prioridadMayorQuePadre(int positionElement, int positionParentElement) {
         return true;
@@ -55,15 +63,24 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     public T desencolar(){
-        T returnValue = this.heap.get(0);
+        T returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
         this.heap.set(0, this.heap.get(this.heap.size())); // O(1) Pasamos el ultimo al primeor
         
-
-
+        //Bajar el elemento hasta la posición deseada
+        this.bajar(0);
 
         return returnValue;
     }
 
+    private void bajar(int p) {
+        while (this.esHoja(p) && this.heap.get(p) != null) {
+
+        }
+    }
+
+    private boolean esHoja(int indice) {
+        return indice * 2 >= this.heap.size(); //Verificar si es correcta esta cuenta
+    }
 
     public T quitar(int pos) {
         return this.heap.get(0);
