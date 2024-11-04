@@ -1,19 +1,18 @@
 package aed;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Heaps<T> {
+public class Heaps<T> implements ColaDePrioridad<T>{
     private ArrayList<T> heap = new ArrayList<T>(0);
+    private Comparator<T> comparador;
 
-    public void addElement(T element) {
-
+    public Heaps (Comparator<T> comparador) {
+        this.comparador = comparador;
     }
 
-    public T proximo() throws Exception {
-        if (this.heap.size() > 0) {
-            return this.heap.get(0);
-        }
-        throw new Exception("Heaps doens't have any elements");
+    public T proximo() {
+        return this.heap.get(0);
     }
 
     public void Encolar(T element) {
@@ -43,6 +42,14 @@ public class Heaps<T> {
         return positionParent;
     }
 
+    private int calcularPosicionHijoIzquierdo(int position) {
+        return position * 2 + 1;
+    }
+
+    private int calcularPosicionHijoDerecho(int position) {
+        return position * 2 + 2;
+    }
+
     //Implementarlo
     private boolean prioridadMayorQuePadre(int positionElement, int positionParentElement) {
         return true;
@@ -55,10 +62,42 @@ public class Heaps<T> {
 
     }
 
-    public T desencolar() throws Exception {
-        if (this.heap.size() == 0) {
-            throw new Exception("Heaps doens't have any elements"); 
+    public T desencolar(){
+        T returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
+        this.heap.set(0, this.heap.get(this.heap.size())); // O(1) Pasamos el ultimo al primeor
+        
+        //Bajar el elemento hasta la posición deseada
+        this.bajar(0);
+
+        return returnValue;
+    }
+
+    private void bajar(int p) {
+        while (!this.esHoja(p)) {
+
         }
+    }
+
+    private boolean prioridadDeAlgunHijoEsMayor(int position) {
+        //Implementar
+        return !this.esHoja(position); //
+    }
+
+    private boolean prioridadDeHijoIzquierdo(int posicionHijoIzquierdo) {
+        //Implementarlo
+        return true;
+    }
+
+    private boolean prioridadDeHijoDerecho(int posicionHijoDerecho) {
+        //Implementarlo
+        return true;
+    }
+
+    private boolean esHoja(int indice) {
+        return indice * 2 >= this.heap.size(); //Verificar si es correcta esta cuenta
+    }
+
+    public T quitar(int pos) {
         return this.heap.get(0);
     }
 
@@ -108,5 +147,7 @@ public class Heaps<T> {
 
     
 
+
+}
 
 }
