@@ -73,9 +73,24 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     private void bajar(int p) {
-        while (this.esHoja(p) && this.heap.get(p) != null) {
+        while (!this.esHoja(p)) {
 
         }
+    }
+
+    private boolean prioridadDeAlgunHijoEsMayor(int position) {
+        //Implementar
+        return !this.esHoja(position); //
+    }
+
+    private boolean prioridadDeHijoIzquierdo(int posicionHijoIzquierdo) {
+        //Implementarlo
+        return true;
+    }
+
+    private boolean prioridadDeHijoDerecho(int posicionHijoDerecho) {
+        //Implementarlo
+        return true;
     }
 
     private boolean esHoja(int indice) {
