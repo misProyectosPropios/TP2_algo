@@ -81,23 +81,24 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     //Asumimos que no es un null
     private boolean prioridadDeHijoIzquierdo(int position) {
-        //Implementarlo
-        T leftChild = this.heap.get(Heaps.calcularPosicionHijoIzquierdo(position));
         //Returns true if the left child is greater than the position value
-        return comparador.compare(leftChild, this.heap.get(position)) > 0;
+        return tieneHijoIzquierdo(position) && comparador.compare(this.heap.get(Heaps.calcularPosicionHijoIzquierdo(position)), this.heap.get(position)) > 0;
     }
 
     //Asumimos que no es un null
     private boolean prioridadDeHijoDerecho(int position) {
         //Implementarlo
-        T rightChild = this.heap.get(Heaps.calcularPosicionHijoDerecho(position));
         //Returns true if the right child is greater than the position value
-        return comparador.compare(rightChild, this.heap.get(position)) > 0;
+        return tieneHijoDerecho(position) && comparador.compare(this.heap.get(Heaps.calcularPosicionHijoDerecho(position)), this.heap.get(position)) > 0;
     }
 
     //Devuelve true si es izquierda, si es false es derecha
     private boolean compararPrioridadHijos(int position) {
         //implementar
+        if (tieneHijoIzquierdo(position) && !tieneHijoDerecho(position)) {
+            return true;
+        } 
+        //Suponemos que tiene hijoDerecho ahora, así como izquierdo
         T rightChild = this.heap.get(Heaps.calcularPosicionHijoDerecho(position));
         T leftChild = this.heap.get(Heaps.calcularPosicionHijoIzquierdo(position));
         return comparador.compare(rightChild, leftChild) >= 0; 
@@ -106,6 +107,14 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     private boolean esHoja(int indice) {
         return indice * 2 + 2 >= this.heap.size(); //Verificar si es correcta esta cuenta
+    }
+
+    private boolean tieneHijoIzquierdo(int indice) {
+        return indice >= 0 && indice * 2 + 1 < this.heap.size();
+    }
+
+    private boolean tieneHijoDerecho(int indice) {
+        return indice >= 0 && indice * 2 + 2 < this.heap.size();
     }
 
     private boolean esNodoCompleto(int indice) {
@@ -125,6 +134,8 @@ public class Heaps<T> implements ColaDePrioridad<T>{
                 swap(index, Heaps.calcularPosicionHijoDerecho(index));
                 index = Heaps.calcularPosicionHijoDerecho(index);
             }
+            
+            
         }
     } 
 
