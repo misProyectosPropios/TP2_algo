@@ -137,11 +137,12 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         
             
     }
-    static int der(int i){
+    
+    private static int der(int i){
         return  i*2+2;
      }
      
-     static int izq(int i){
+    private static int izq(int i){
          return i*2+1;
      }
 
