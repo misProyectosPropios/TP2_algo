@@ -72,40 +72,73 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return returnValue;
     }
 
-    private void bajar(int p) {
-        while (!this.esHoja(p)) {
-
-        }
-    }
-
+    //Asumimos que no va a ser una hoja
     private boolean prioridadDeAlgunHijoEsMayor(int position) {
-        //Implementar
-        return !this.esHoja(position); //
+        //Implementar usando el comparador
+        return this.prioridadDeHijoIzquierdo(position) || this.prioridadDeHijoDerecho(position);
     }
 
-    private boolean prioridadDeHijoIzquierdo(int posicionHijoIzquierdo) {
+    //Asumimos que no es un null
+    private boolean prioridadDeHijoIzquierdo(int position) {
         //Implementarlo
         return true;
     }
 
-    private boolean prioridadDeHijoDerecho(int posicionHijoDerecho) {
+    //Asumimos que no es un null
+    private boolean prioridadDeHijoDerecho(int position) {
         //Implementarlo
+        return true;
+    }
+
+    //Devuelve true si es izquierda, si es false es derecha
+    private boolean compararPrioridadHijos(int position) {
+        //implementar
         return true;
     }
 
     private boolean esHoja(int indice) {
-        return indice * 2 >= this.heap.size(); //Verificar si es correcta esta cuenta
+        return indice * 2 + 2 >= this.heap.size(); //Verificar si es correcta esta cuenta
+    }
+
+    private boolean esNodoCompleto(int indice) {
+        return Heaps.calcularPosicionHijoDerecho(indice) < this.heap.size();
     }
 
     public T quitar(int pos) {
         return this.heap.get(0);
     }
 
+    private void bajar(int index) {
+        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayor(index)) {
+            if (this.compararPrioridadHijos(index)) {
+                swap(index, Heaps.calcularPosicionHijoIzquierdo(index));
+                index = Heaps.calcularPosicionHijoIzquierdo(index);
+            } else {
+                swap(index, Heaps.calcularPosicionHijoDerecho(index));
+                index = Heaps.calcularPosicionHijoDerecho(index);
+            }
+        }
+    } 
+
     private void bajarElemento(int i){
         //CASO BASE
+        if (this.esHoja(i)) {
+            return;
+        }
+
+        //Es lo mismo que acá
         if(izq(i)>=heap.size() && der(i)>=this.heap.size()){
-            return;}
-        
+            return;
+        }
+
+        //No es hoja, veamos si tiene un hijo o dos
+        if (this.esNodoCompleto(i)) {
+
+        } 
+        else  //Tiene 1 solo nodo izquierdo. Por invariante, no puede ser nucna el derecho e que tenga
+        {
+
+        }
         //CASO TIENE 2 hijos
         if (izq(i)<heap.size() && der(i)<this.heap.size()){
             if(this.heap.get(i)<this.heap.get(izq(i)) || this.heap.get(i)<this.heap.get(der(i))){
