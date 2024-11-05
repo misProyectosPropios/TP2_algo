@@ -82,13 +82,17 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     //Asumimos que no es un null
     private boolean prioridadDeHijoIzquierdo(int position) {
         //Implementarlo
-        return true;
+        T leftChild = this.heap.get(Heaps.calcularPosicionHijoIzquierdo(position));
+        //Returns true if the left child is greater than the position value
+        return comparador.compare(leftChild, this.heap.get(position)) > 0;
     }
 
     //Asumimos que no es un null
     private boolean prioridadDeHijoDerecho(int position) {
         //Implementarlo
-        return true;
+        T rightChild = this.heap.get(Heaps.calcularPosicionHijoDerecho(position));
+        //Returns true if the right child is greater than the position value
+        return comparador.compare(rightChild, this.heap.get(position)) > 0;
     }
 
     //Devuelve true si es izquierda, si es false es derecha
