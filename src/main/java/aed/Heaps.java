@@ -98,7 +98,10 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     //Devuelve true si es izquierda, si es false es derecha
     private boolean compararPrioridadHijos(int position) {
         //implementar
-        return true;
+        T rightChild = this.heap.get(Heaps.calcularPosicionHijoDerecho(position));
+        T leftChild = this.heap.get(Heaps.calcularPosicionHijoIzquierdo(position));
+        return comparador.compare(rightChild, leftChild) >= 0; 
+        //Return true iff the leftChild is greater or equal than the rigthChild
     }
 
     private boolean esHoja(int indice) {
