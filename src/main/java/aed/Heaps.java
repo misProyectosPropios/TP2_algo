@@ -120,6 +120,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         }
     } 
 
+    /* 
     private void bajarElemento(int i){
         //CASO BASE
         if (this.esHoja(i)) {
@@ -171,6 +172,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
             
     }
     
+    */
     private static int der(int i){
         return  i*2+2;
      }
