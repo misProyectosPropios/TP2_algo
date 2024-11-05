@@ -52,7 +52,8 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     //Implementarlo
     private boolean prioridadMayorQuePadre(int positionElement, int positionParentElement) {
-        return true;
+        //Si el elemento es menor que el parent, debe de devolver numero negativo
+        return comparador.compare(this.heap.get(positionElement), this.heap.get(positionParentElement)) < 0; 
     }
 
     private void swap(int position1, int position2) {
@@ -183,7 +184,5 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     
 
-
-}
 
 }
