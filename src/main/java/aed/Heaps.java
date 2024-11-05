@@ -32,7 +32,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         }
     }
 
-    private int calcularPosicionPadre(int position) {
+    private static int calcularPosicionPadre(int position) {
         int positionParent;
         if (position % 2 == 0) {
             positionParent = (position - 2) / 2;
@@ -42,11 +42,11 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return positionParent;
     }
 
-    private int calcularPosicionHijoIzquierdo(int position) {
+    private static int calcularPosicionHijoIzquierdo(int position) {
         return position * 2 + 1;
     }
 
-    private int calcularPosicionHijoDerecho(int position) {
+    private static int calcularPosicionHijoDerecho(int position) {
         return position * 2 + 2;
     }
 
