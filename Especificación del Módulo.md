@@ -116,16 +116,6 @@ Proc nuevoSistema ( in cantCiudades: int , in traslados: seq< InfoTraslados > : 
 **Complejidad Total** -> O(|C| + |T|) 
 - Al ser operaciones (ciclos) consecutivas, se suman sus complejidades.
 
-> [!IMPORTANT]
-> **Corregir** porque `trasladosTotales` (a priori) no vamos a utilizarla mas como variable de estado.
-> **Corregir** que en `mayorPerdida` y `mayorGanancia` hay una *ciudad fantasma* al inciailizar el sistema. Esta *ciudad fantasma* es una instancia de `Ciudad` con sus atributos en 0.
-> La necesidad de esta *ciudad fantasma* viene porque al despachar traslados por primera vez, al actualizar `mayorPerdida` y `mayorGanancia` hay que comparar con algo.
-
-> [!WARNING]
-> Tenemos un problema. Los heaps están vacíos actualmente.
-> Llenar los heaps me cuesta `log(T)`, y eso me rompe la complejidad pedida por el enunciado.
-> Si simplemente trato los heaps como listas (para poder llenarlos en O(1)), no puedo hacer el `arrayToHeap` en este proc (porque me vuelve a romper la complejidad), pero cuando quiera usar los heaps NO VAN A SER HEAPS.
-
 ### `registratTraslados`
 
 ```
