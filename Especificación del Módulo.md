@@ -151,10 +151,10 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 	arrayList<int> res = new ArrayList() ;                                       -> O( 1 )
 	
 	int index = 0 ;                                                              -> O( 1 )
-	while ( index != n )                                                         -> Ciclo se ejecuta n veces: O(n (log (T) + log (C))) 
+	while ( index != n && sistema.trasladoPorAntiguedad.length > 0)                                                         -> Ciclo se ejecuta n veces: O(n (log (T) + log (C))) 
 		
 		Traslado despachado = sistema.trasladosPorGanancia.desencolar() ;          -> O(log (T))
-		sistema.trasladosPorAntiguedad.eliminar( despachado[1] ) ;                 -> O(log (T)) 
+		sistema.trasladosPorAntiguedad.eliminar( despachado[1|] ) ;                 -> O(log (T)) 
 
 		res.add(despachado.id) ;                                                   -> O(1)
 		sistema.totalDespachados ++ ;                                              -> O(1)
@@ -163,15 +163,26 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 		sistema.ciudadesTotales[ despacho.destino ].perdidaNeta += despacho.gananciaNeta ;   -> O(1)
 		
 		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
-		
+
+
 		if ( sistema.ciudadesTotales[ despachado.destino ].perdidaNeta >=  sistema.ciudadesTotales[ sistema.mayorPerdida ] ).perdidaNeta )    -> O(1)
-		sistema.mayorPerdida = sistema.ciudadesTotales[ despachado.destino ] ;                                                                -> O(1)
-		
+		sistema.mayorPerdida = sistema.ciudadesTotales[ despachado.destino ] ;							-> O(1)
+
+		//Acomodo superavit
+		// If (esMenosQueAlgunoHijo) { mayorSuperavit.bajarElemento( nombreCiudadModificada ) ; } -> O(log C)
+		// else if (esMenorQuePadre) { mayorSuperavit.subirElemento( nombreCiudadModificada ) ; } -> O(log C)
+
 		if ( sistema.ciudadesTotales[ despachado.origen ].gananciaNeta >=  sistema.ciudadesTotales[ sistema.mayorGanancia ] ).gananciaNeta )  -> O(1)
-		sistema.mayorGanancia = sistema.ciudadesTotales[ despachado.origen ] ;                                                                -> O(1)
+		sistema.mayorGanancia = sistema.ciudadesTotales[ despachado.origen ] ;					-> O(1)
+
+		//Acomodo superavit
+		// If (esMenosQueAlgunoHijo) { mayorSuperavit.bajarElemento( nombreCiudadModificada ) ; } -> O(log C)
+		// else if (esMenorQuePadre) { mayorSuperavit.subirElemento( nombreCiudadModificada ) ; } -> O(log C)
+
+
 		
 		index ++ ;                                                                   -> O(1)
-		
+
 	return res ;                                                                   -> O(1)
 }
 ```
@@ -183,4 +194,6 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 > Básicamente, es lo mismo que el `desencolar()`, pero con un elemento del medio (no la raíz).
 > - `reOrdenar()` es hacer `heapify`. En este algoritmo, el `heapify` se hace en función de `ciudad.superavit`.
 
+>[!WARNING]
+> - No estamos acomodando el heap de trasladosMasAntiguos a medida que vamos sacando elemento, ni los handles
 **Fin**... por ahora.
