@@ -24,7 +24,7 @@ var mayorSuperavit: max-heap ( tuplas< int , int , int > )
 ```
 
 ```
-var ciudadesTotales: arrayList < Ciudades > 
+var ciudadesTotales: array < Ciudades > 
 		// 'Ciudades' ubicadas en el index de su 'nombre'.
 ```
 
@@ -88,18 +88,27 @@ Proc nuevoSistema ( in cantCiudades: int , in traslados: seq< InfoTraslados > : 
 	
 	int index = 0 ;
 	while ( index < cantCiudades )                                         -> Ciclo que se ejecuta C  veces: O(|C|)
-		Ciudad añadir = new Ciudad ( index , 0 , 0 ) ;                       -> O(1)
-		res.ciudadesTotales.add( añadir ) ;                                  -> O(1)
+		Ciudad añadirCiudad = new Ciudad ( index , 0 , 0 ) ;                       -> O(1)
+		res.ciudadesTotales.add( añadirCiudad ) ;                                  -> O(1)
+		res.mayorSuperavit.add( añadirCiudad ) ;				   -> O(1)
 		index ++ ;                                                           -> O(1)
 		
 	index = 0 ;                                                             -> O(1)
 	while ( index < traslados.size() )                                     -> Ciclo que se ejecuta T  veces: O(|T|)
 		tupla trasladoEncuestion = traslados[ index ] ;                      -> O(1), igual que el de abajo (muy laga la línea jejeje)
-		Traslado añadir = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ) ;
+		Traslado añadirTranslados = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ) ;
+		res.trasladosPorGanancia.add( añadirTranslados ) ; 			     -> O(1)
+		res.trasladosPorAntiguedad.add( añadirTranslados ) ;			     -> O(1)
 		index ++ ;                                                           -> O(1)
 		
 	}
 
+	floyd ( res.mayorSuperavit ) ;						-> O( |C| )
+	floyd ( trasladosPorGanancia ) ;					-> O( |T| )
+	floyd ( trasladosPorAntiguedad ) ;					-> O( |T| )
+
+	res.mayorPerdida = 0 ;							-> O(1)
+	res.mayorGanancia = 0 ;							-> O(1)
 	res.totalDespachados = 0 ;						-> O(1)
 	return res ;								-> O(1)
 ```
