@@ -3,29 +3,37 @@ Especificación del módulo que vamos a implementar.
 ### Módulo BestEffort implementa SistemaEmpresarial {
 
 ```
-var trasladosPorGanancia: max-heap ( tuplas< Traslado , int , int> )
+var trasladosPorGanancia: max-heap ( tuplas< Traslado , (1) , (2) , (3) > )
 		// Heap que almacena 'traslados'.
 		// Ordena por 'gananciaNeta'.
 		// En caso de empate, ordena por 'id'.
+		// (1) -> posicion del Traslado en 'trasladoPorAntiguedad'.
+		// (2) -> Traslado.origen (para poder acceder rápido y cambiarle 'ganaciaNeta').
+		// (3) -> Traslado.destino (para poder acceder rápido y cambiarle 'perdidaNeta').
 ```
 
 ```
-var trasladosPorAntiguedad: max-heap ( tuplas< Traslado , int , int > )
+var trasladosPorAntiguedad: max-heap ( tuplas< Traslado , (1) , (2) , (3) > )
 		// Heap que almacena 'traslados'.
 		// Ordena por 'timestamp'.
 		// En caso de empate, ordena por 'id'.
+		// (1) -> posicion del Traslado en 'trasladoPorGanancia'.
+		// (2) -> Traslado.origen (para poder acceder rápido y cambiarle 'ganaciaNeta').
+		// (3) -> Traslado.destino (para poder acceder rápido y cambiarle 'perdidaNeta').
 ```
 
 ```
-var mayorSuperavit: max-heap ( tuplas< int , int , int > ) 
+var mayorSuperavit: max-heap ( (1) ) 
 		// Heap que almacena 'ciudades'.
 		// Ordena por 'superavit'.
 		// En caso de empate, ordena por 'nombre' (que es un número único).
+		// (1) -> index de la ciudad en 'ciudadesTotales'.
 ```
 
 ```
-var ciudadesTotales: array < Ciudades > 
+var ciudadesTotales: array < tuplas< Ciudad , (1) > > 
 		// 'Ciudades' ubicadas en el index de su 'nombre'.
+		// (1) -> index de la ciudad en 'mayorSuperavit'.
 ```
 
 ```
@@ -89,16 +97,16 @@ Proc nuevoSistema ( in cantCiudades: int , in traslados: seq< InfoTraslados > : 
 	int index = 0 ;
 	while ( index < cantCiudades )                                         -> Ciclo que se ejecuta C  veces: O(|C|)
 		Ciudad añadirCiudad = new Ciudad ( index , 0 , 0 ) ;                       -> O(1)
-		res.ciudadesTotales.add( añadirCiudad ) ;                                  -> O(1)
-		res.mayorSuperavit.add( añadirCiudad ) ;				   -> O(1)
-		index ++ ;                                                           -> O(1)
+		res.mayorSuperavit.add( añadirCiudad ) ;			           -> O(1)
+ 		res.ciudadesTotales.add( tupla< añadirCiudad , index > ) ;                 -> O(1)
+		index ++ ;                                                                 -> O(1)
 		
 	index = 0 ;                                                             -> O(1)
 	while ( index < traslados.size() )                                     -> Ciclo que se ejecuta T  veces: O(|T|)
 		tupla trasladoEncuestion = traslados[ index ] ;                      -> O(1), igual que el de abajo (muy laga la línea jejeje)
 		Traslado añadirTranslados = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ) ;
-		res.trasladosPorGanancia.add( añadirTranslados ) ; 			     -> O(1)
-		res.trasladosPorAntiguedad.add( añadirTranslados ) ;			     -> O(1)
+		res.trasladosPorGanancia.add( tupla< añadirTranslados , index , añadirTraslado.origen , añadirTraslado.destino > ) ; 			     -> O(1)
+		res.trasladosPorAntiguedad.add( tupla< añadirTranslados , index , añadirTraslado.origen , añadirTraslado.destino > ) ;			     -> O(1)
 		index ++ ;                                                           -> O(1)
 		
 	}
@@ -129,8 +137,9 @@ Proc registrarTraslados ( inout sistema: BestEffort , in traslados: seq<InfoTras
 		Traslado añadir = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ) ;
 
 		// Lo añado a los heaps.
-		sistema.trasladosPorGanancia.encolar( añadir ) ;                     -> O(log(T))
-		sistema.trasladosPorAntiguedad.encolar( añadir ) ;                   -> O(log(T))
+		int positionAux = sistema.trasladosPorGanancia.encolar( < añadir , index , añadir.origen , añadir.destino > ) ;                            -> O(log(T))
+		int positionAux2 = sistema.trasladosPorAntiguedad.encolar( < añadir , posicionAux , añadir.origen , añadir.destino > ) ;                   -> O(log(T))
+		sistema.trasladosPorGanancia[positionAux][1] = positionAux2 ;                                                                              -> O(1)
 		
 		index ++ ;                                                           -> O(1)
 		
@@ -196,4 +205,9 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 
 >[!WARNING]
 > - No estamos acomodando el heap de trasladosMasAntiguos a medida que vamos sacando elemento, ni los handles
+
+**Comentarios Generales**
+-`floyd` debe modificar handles cuando acomoda.
+- `encolar` debe devolver la posición (en el heap-array) donde queda acomodado el elemento añadido (para poder mantener el handles).
+
 **Fin**... por ahora.
