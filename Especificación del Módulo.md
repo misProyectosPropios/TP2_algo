@@ -127,10 +127,8 @@ Proc registrarTraslados ( inout sistema: BestEffort , in traslados: seq<InfoTras
 		// Tomo la tupla y fabrico el traslado.
 		tupla cuestion = traslados[ indice ] ;                               -> O(1), igual que el de abajo (muy larga la línea jejeje)
 		Traslado añadir = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ) ;
-		
-		// Lo enchufo en la lista de 'trasladosTotales' y luego, en cada uno de los heaps que involucran traslados.
-		sistema.trasladosTotales.add( añadir ) ;                             -> O(1)
-		
+
+		// Lo añado a los heaps.
 		sistema.trasladosPorGanancia.encolar( añadir ) ;                     -> O(log(T))
 		sistema.trasladosPorAntiguedad.encolar( añadir ) ;                   -> O(log(T))
 		
@@ -144,9 +142,6 @@ Proc registrarTraslados ( inout sistema: BestEffort , in traslados: seq<InfoTras
 > [!NOTE]
 > El heap `mayorSuperavit` no se toca en este proc, ya que no se está despachando nada.
 > Recordar que una ciudad modifica su ganancia y pérdida (y por ende su superavit) sólo cuando se despacha un traslado.
-
-> [!IMPORTANT]
-> **Corregir** porque `trasladosTotales` (a priori) no vamos a utilizarla mas como variable de estado.
 
 ### `despacharMasRedituables`
 
