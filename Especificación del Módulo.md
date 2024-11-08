@@ -162,42 +162,37 @@ Proc registrarTraslados ( inout sistema: BestEffort , in traslados: seq<InfoTras
 ```
 Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int> {
 
-	arrayList<int> res = new ArrayList() ;                                       -> O( 1 )
+	arrayList<int> res = new ArrayList() ;                                             -> O( 1 )
 	
-	int index = 0 ;                                                              -> O( 1 )
-	while ( index != n && sistema.trasladoPorAntiguedad.length > 0)                                                         -> Ciclo se ejecuta n veces: O(n (log (T) + log (C))) 
+	int index = 0 ;                                                                    -> O( 1 )
+	while ( (index != n) && (not sistema.trasladoPorAntiguedad.estaVacio()) )          -> Ciclo se ejecuta n veces: O(n (log (T) + log (C))) 
 		
-		Traslado despachado = sistema.trasladosPorGanancia.desencolar() ;          -> O(log (T))
-		sistema.trasladosPorAntiguedad.eliminar( despachado[1|] ) ;                 -> O(log (T)) 
+		Traslado despachado = sistema.trasladosPorGanancia.desencolar() ;           	     -> O(log (T))
+		sistema.trasladosPorAntiguedad.eliminar( despachado.indiceAHeapAntiguedad ) ;        -> O(log (T)) 
 
-		res.add(despachado.id) ;                                                   -> O(1)
-		sistema.totalDespachados ++ ;                                              -> O(1)
+		res.add(despachado.id) ;                                                   	     -> O(1)
+		sistema.totalDespachados ++ ;                                              	     -> O(1)
 		
 		sistema.ciudadesTotales[ despachado.origen ].ganaciaNeta += despacho.ganaciaNeta ;   -> O(1)
-		sistema.ciudadesTotales[ despacho.destino ].perdidaNeta += despacho.gananciaNeta ;   -> O(1)
-		
 		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
 
-
-		if ( sistema.ciudadesTotales[ despachado.destino ].perdidaNeta >=  sistema.ciudadesTotales[ sistema.mayorPerdida ] ).perdidaNeta )    -> O(1)
-		sistema.mayorPerdida = sistema.ciudadesTotales[ despachado.destino ] ;							-> O(1)
-
-		//Acomodo superavit
-		// If (esMenosQueAlgunoHijo) { mayorSuperavit.bajarElemento( nombreCiudadModificada ) ; } -> O(log C)
-		// else if (esMenorQuePadre) { mayorSuperavit.subirElemento( nombreCiudadModificada ) ; } -> O(log C)
-
-		if ( sistema.ciudadesTotales[ despachado.origen ].gananciaNeta >=  sistema.ciudadesTotales[ sistema.mayorGanancia ] ).gananciaNeta )  -> O(1)
-		sistema.mayorGanancia = sistema.ciudadesTotales[ despachado.origen ] ;					-> O(1)
-
-		//Acomodo superavit
-		// If (esMenosQueAlgunoHijo) { mayorSuperavit.bajarElemento( nombreCiudadModificada ) ; } -> O(log C)
-		// else if (esMenorQuePadre) { mayorSuperavit.subirElemento( nombreCiudadModificada ) ; } -> O(log C)
-
-
+		sistema.ciudadesTotales[ despacho.destino ].perdidaNeta += despacho.gananciaNeta ;   -> O(1)
+		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
 		
-		index ++ ;                                                                   -> O(1)
+		// Actualizamos 'mayorPerdida' y 'mayorGanancia'
+		if ( sistema.mayorPerdida[1].gananciaNeta >= despachado.origen.gananciaNeta )        -> O(1)
+			ArrayList update = new ArrayList[int] ;					     -> O(1)
+			update.add(despachado.origen) ;						     -> O(1)
+			sistema.mayorGanancia = update ;					     -> O(1)
 
-	return res ;                                                                   -> O(1)
+		if ( sistema.mayorPerdida[1].perdidaNeta >= despachado.destino.perdidaNeta )         -> O(1)
+			ArrayList update2 = new ArrayList[int] ;				     -> O(1)
+			update2.add(despachado.destino) ;					     -> O(1)
+			sistema.mayorPerdida = update2 ; 					     -> O(1)
+
+		index ++ ;                                                                           -> O(1)
+
+	return res ;                                                                       -> O(1)
 }
 ```
 
