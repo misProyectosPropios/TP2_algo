@@ -125,6 +125,13 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return this.heap.get(0);
     }
 
+    //TIme complexity: O(n)
+    private void FloydAlgorithm() {
+        for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
+            this.bajar(i);
+        }
+    }
+
     private void bajar(int index) {
         while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayor(index)) {
             if (this.compararPrioridadHijos(index)) {
