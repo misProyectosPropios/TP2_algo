@@ -3,21 +3,17 @@ Especificación del módulo que vamos a implementar.
 ### Módulo BestEffort implementa SistemaEmpresarial {
 
 ```
-var trasladosPorGanancia: max-heap ( tuplas< Traslado , (1) > )
+var trasladosPorGanancia: max-heap ( Traslado )
 		// Heap que almacena 'traslados'.
 		// Ordena por 'gananciaNeta'.
 		// En caso de empate, ordena por 'id'.
-		// (1) -> posicion del Traslado en 'trasladoPorAntiguedad'.
-		// Para acceder a 'gananciaNeta' y 'perdidaNeta' y modificarlos, accedemos desde el Traslado indexando en [0] la tupla.
 ```
 
 ```
-var trasladosPorAntiguedad: max-heap ( tuplas< Traslado , (1) > )
+var trasladosPorAntiguedad: max-heap ( Traslado )
 		// Heap que almacena 'traslados'.
 		// Ordena por 'timestamp'.
 		// En caso de empate, ordena por 'id'.
-		// (1) -> posicion del Traslado en 'trasladoPorGanancia'.
-		// Para acceder a 'gananciaNeta' y 'perdidaNeta' y modificarlos, accedemos desde el Traslado indexando en [0] la tupla.
 ```
 
 ```
@@ -41,15 +37,17 @@ var totalDespachados: int
 ```
 
 ```
-var mayorPerdida: int 
-		// Nombre de la ciudad con mayor pérdida.
+var mayorPerdida: array < int > 
+		// Lista que tiene los nombres de la ciudad que presenta mayor pérdida.
+		// ¿Por qué es un array? Porque cuando hay mas de una ciudad con mayor pérdida, también va.
 		// Se actualiza cada vez que se despacha un Traslado.
 ```
 
 ```
-var mayorGanancia: int 
-		// Nombre de la ciudad con mayor ganancia.
-		// Se actualiza cada vez que se despacha.
+var mayorGanancia: array < int > 
+		// Lista que tiene los nombres de la ciudad que presenta mayor ganancia.
+		// ¿Por qué es un array? Porque cuando hay mas de una ciudad con mayor ganancia, también va.
+		// Se actualiza cada vez que se despacha un Traslado.
 ```
 
 > [!NOTE]
@@ -82,8 +80,10 @@ Class Traslado
 	var destino: int
 	var gananciaNeta: int
 	var timestamp: int
-	var handleRed : int
-	var handleAnt : int
+
+	// Estas dos variables tiene el índice donde se encuentra el Traslado en los heaps.
+	var indiceAHeapGanancia : int
+	var indiceAHeapAntiguedad : int
 ```
 ---
 
@@ -95,32 +95,34 @@ Proc nuevoSistema ( in cantCiudades: int , in traslados: seq< InfoTraslados > : 
 	BestEffort res = new BestEffort () ;
 
 	// Llenamos todas las variables de estado.
-	int index = 0 ;
+	int index = 0 ;                                                                    -> O(1)
+	res.mayorPerdida = new ArrayList(int) ;					           -> O(1)
+	res.mayorGanancia = new ArrayList(int) ;                                           -> O(1)
 	while ( index < cantCiudades )                                                     -> Ciclo que se ejecuta C  veces: O(|C|)
-		Ciudad añadirCiudad = new Ciudad ( index , 0 , 0 ) ;                       -> O(1)
-		res.mayorSuperavit.add( index ) ;			           	   -> O(1)
- 		res.ciudadesTotales.add( tupla< añadirCiudad , index > ) ;                 -> O(1)
-		index ++ ;                                                                 -> O(1)
+		Ciudad añadirCiudad = new Ciudad ( index , 0 , 0 ) ;                       	-> O(1)
+		res.mayorSuperavit.add( index ) ;			           	   	-> O(1)
+ 		res.ciudadesTotales.add( tupla< añadirCiudad , index > ) ;                 	-> O(1)
+		res.mayorPerdida.add( añadirCiudad.nombre ) ;                              	-> O(1)
+		res.mayorGanancia.add( añadirCiudad.nombre ) ;                             	-> O(1)
+		index ++ ;                                                                 	-> O(1)
 		
 	index = 0 ;                                                                        -> O(1)
 	while ( index < traslados.size() )                                     		   -> Ciclo que se ejecuta T  veces: O(|T|)
-		tupla trasladoEncuestion = traslados[ index ] ;                      	   -> O(1), igual que el de abajo (muy laga la línea jejeje)
-		Traslado añadirTranslados = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ) ;
-		res.trasladosPorGanancia.add( tupla< añadirTranslados , index > ) ;        -> O(1)
-		res.trasladosPorAntiguedad.add( tupla< añadirTranslados , i. > ) ;	   -> O(1)
-		index ++ ;                                                                 -> O(1)
+		tupla trasladoEncuestion = traslados[ index ] ;                      	   	-> O(1), igual que el de abajo (muy laga la línea jejeje)
+		Traslado añadirTranslados = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ,
+							   index , index ) ;
+		res.trasladosPorGanancia.add( añadirTranslados ) ;                         	-> O(1)
+		res.trasladosPorAntiguedad.add( añadirTranslados ) ;	                   	-> O(1)
+		index ++ ;                                                                 	-> O(1)
 
-	// Todas las ciudades están en ganacia y pérdida cero. Ubico cualquiera en estos campos.
-	res.mayorPerdida = 0 ;							           -> O(1)
-	res.mayorGanancia = 0 ;							           -> O(1)
 	res.totalDespachados = 0 ;						           -> O(1)
 
-	floydAlgorithm ( res.mayorSuperavit ) ;						-> O(|C|)
-	floydAlgorithm ( res.trasladosPorGanancia ) ;					-> O(|T|)
-	floydAlgorithm ( res.trasladosPorAntiguedad ) ;					-> O(|T|)
+	floydAlgorithm ( res.mayorSuperavit ) ;						   -> O(|C|)
+	floydAlgorithm ( res.trasladosPorGanancia ) ;					   -> O(|T|)
+	floydAlgorithm ( res.trasladosPorAntiguedad ) ;					   -> O(|T|)
 
 	
-	return res ;								-> O(1)
+	return res ;								           -> O(1)
 ```
 
 **Complejidad Total** -> O(|C| + |T|) 
