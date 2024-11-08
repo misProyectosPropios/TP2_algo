@@ -110,7 +110,7 @@ Proc nuevoSistema ( in cantCiudades: int , in traslados: seq< InfoTraslados > : 
 	while ( index < traslados.size() )                                     		   -> Ciclo que se ejecuta T  veces: O(|T|)
 		tupla trasladoEncuestion = traslados[ index ] ;                      	   	-> O(1), igual que el de abajo (muy laga la línea jejeje)
 		Traslado añadirTranslados = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ,
-							   index , index ) ;
+                                                           index, index ) ;
 		res.trasladosPorGanancia.add( añadirTranslados ) ;                         	-> O(1)
 		res.trasladosPorAntiguedad.add( añadirTranslados ) ;	                   	-> O(1)
 		index ++ ;                                                                 	-> O(1)
@@ -123,29 +123,30 @@ Proc nuevoSistema ( in cantCiudades: int , in traslados: seq< InfoTraslados > : 
 
 	
 	return res ;								           -> O(1)
+}
 ```
 
 **Complejidad Total** -> O(|C| + |T|) 
 - Al ser operaciones (ciclos) consecutivas, se suman sus complejidades.
 
-### `registratTraslados`
+### `registrarTraslados`
 
 ```
 Proc registrarTraslados ( inout sistema: BestEffort , in traslados: seq<InfoTraslado> ) { 
 
-	int index = 0 ;                                                       -> O(1)
-	while ( index < |traslados| )                                         -> Este ciclo se ejecuta n = |traslados| veces: O(n log(T))
+	int index = 0 ;                                                       		-> O(1)
+	while ( index < |traslados| )                                         		-> Este ciclo se ejecuta n = |traslados| veces: O(n log(T))
 		
 		// Tomo la tupla y fabrico el traslado.
-		tupla cuestion = traslados[ indice ] ;                               -> O(1), igual que el de abajo (muy larga la línea jejeje)
-		Traslado añadir = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4] ) ;
+		tupla cuestion = traslados[ indice ] ;                               		-> O(1), igual que el de abajo (muy larga la línea jejeje)
+		Traslado añadir = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4]
+						 sistema.trasladosPorGanancia.size() , sistema.trasladosPorAntiguedad.size() ) ;
 
 		// Lo añado a los heaps.
-		int positionAux = sistema.trasladosPorGanancia.encolar( < añadir , index , añadir.origen , añadir.destino > ) ;                            -> O(log(T))
-		int positionAux2 = sistema.trasladosPorAntiguedad.encolar( < añadir , posicionAux , añadir.origen , añadir.destino > ) ;                   -> O(log(T))
-		sistema.trasladosPorGanancia[positionAux][1] = positionAux2 ;                                                                              -> O(1)
+		sistema.trasladosPorGanancia.encolar( añadir ) ;                            	-> O(log(T))
+		sistema.trasladosPorAntiguedad.encolar( añadir ) ;                   		-> O(log(T))
 		
-		index ++ ;                                                           -> O(1)
+		index ++ ;                                                           	-> O(1)
 		
   }
 ```
