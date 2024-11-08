@@ -6,16 +6,19 @@ import java.util.Comparator;
 public class Heaps<T> implements ColaDePrioridad<T>{
     private ArrayList<T> heap = new ArrayList<T>(0);
     private Comparator<T> comparador;
+    
 
     public Heaps (Comparator<T> comparador) {
         this.comparador = comparador;
     }
+    
+
 
     public T proximo() {
         return this.heap.get(0);
     }
 
-    public void Encolar(T element) {
+    public void encolar(T element) {
         //Needs to be implemented
         //Adds element to the last position
         this.heap.add(element);
@@ -52,7 +55,8 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     //Implementarlo
     private boolean prioridadMayorQuePadre(int positionElement, int positionParentElement) {
-        return true;
+        //Si el elemento es menor que el parent, debe de devolver numero negativo
+        return comparador.compare(this.heap.get(positionElement), this.heap.get(positionParentElement)) < 0; 
     }
 
     private void swap(int position1, int position2) {
@@ -72,83 +76,101 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return returnValue;
     }
 
-    private void bajar(int p) {
-        while (!this.esHoja(p)) {
-
-        }
-    }
-
+    //Asumimos que no va a ser una hoja
     private boolean prioridadDeAlgunHijoEsMayor(int position) {
-        //Implementar
-        return !this.esHoja(position); //
+        //Implementar usando el comparador
+        return this.prioridadDeHijoIzquierdo(position) || this.prioridadDeHijoDerecho(position);
     }
 
-    private boolean prioridadDeHijoIzquierdo(int posicionHijoIzquierdo) {
-        //Implementarlo
-        return true;
+    //Asumimos que no es un null
+    private boolean prioridadDeHijoIzquierdo(int position) {
+        //Returns true if the left child is greater than the position value
+        return tieneHijoIzquierdo(position) && comparador.compare(this.heap.get(Heaps.calcularPosicionHijoIzquierdo(position)), this.heap.get(position)) > 0;
     }
 
-    private boolean prioridadDeHijoDerecho(int posicionHijoDerecho) {
+    //Asumimos que no es un null
+    private boolean prioridadDeHijoDerecho(int position) {
         //Implementarlo
-        return true;
+        //Returns true if the right child is greater than the position value
+        return tieneHijoDerecho(position) && comparador.compare(this.heap.get(Heaps.calcularPosicionHijoDerecho(position)), this.heap.get(position)) > 0;
+    }
+
+    //Devuelve true si es izquierda, si es false es derecha
+    private boolean compararPrioridadHijos(int position) {
+        //implementar
+        if (tieneHijoIzquierdo(position) && !tieneHijoDerecho(position)) {
+            return true;
+        } 
+        //Suponemos que tiene hijoDerecho ahora, así como izquierdo
+        T rightChild = this.heap.get(Heaps.calcularPosicionHijoDerecho(position));
+        T leftChild = this.heap.get(Heaps.calcularPosicionHijoIzquierdo(position));
+        return comparador.compare(rightChild, leftChild) >= 0; 
+        //Return true iff the leftChild is greater or equal than the rigthChild
     }
 
     private boolean esHoja(int indice) {
-        return indice * 2 >= this.heap.size(); //Verificar si es correcta esta cuenta
+        return indice * 2 + 2 >= this.heap.size(); //Verificar si es correcta esta cuenta
     }
 
-    public T quitar(int pos) {
-        return this.heap.get(0);
+    private boolean tieneHijoIzquierdo(int indice) {
+        return indice >= 0 && indice * 2 + 1 < this.heap.size();
     }
 
-    private void bajarElemento(int i){
-        //CASO BASE
-        if(izq(i)>=heap.size() && der(i)>=this.heap.size()){
-            return;}
-        
-        //CASO TIENE 2 hijos
-        if (izq(i)<heap.size() && der(i)<this.heap.size()){
-            if(this.heap.get(i)<this.heap.get(izq(i)) || this.heap.get(i)<this.heap.get(der(i))){
-                if(heap.get(izq(i))>this.heap.get(der(i))){
-                    swap(i , izq(i));
-                    bajarElemento( izq(i));} else{
-                    swap(i, der(i));
-                    bajarElemento(der(i));
-                        }
-                } else{return;}
-            } else{
-    
-            //Caso Izq null
-            if (izq(i)>=this.heap.size()){
-                //Nos fijamos si i es menor que su hijo derecho, si lo es hacemos swap y recursion
-                if (this.heap.get(i)<this.heap.get(der(i))){
-                    swap(i, der(i));
-                    bajarElemento(der(i));}
-                //Si no es menor, return
-                    else{ return;}}
-            //Caso Der null
-            if (der(i)>=this.heap.size()){
-                if(this.heap.get(i)<this.heap.get(izq(i))){
-                    swap( i, izq(i));
-                    bajarElemento( izq(i)); 
-                } else{return;}
+    private boolean tieneHijoDerecho(int indice) {
+        return indice >= 0 && indice * 2 + 2 < this.heap.size();
+    }
+
+    private boolean esNodoCompleto(int indice) {
+        return Heaps.calcularPosicionHijoDerecho(indice) < this.heap.size();
+    }
+
+    public T eliminar(int pos) {
+        //Implementar
+        T returnValue = this.heap.get(pos);
+        swap(pos, this.heap.size() - 1);
+        this.heap.remove(this.heap.size() - 1);
+        if (prioridadMayorQuePadre(pos, Heaps.calcularPosicionPadre(pos))) {
+            //Implementarlo para index
+            subirElemento();
+        } else {
+            bajar(pos);
+        }
+        return returnValue;
+    }
+
+
+    public void convertArrayOfTIntoHeap(T[] array) {
+        this.heap = new ArrayList<>(array.length);
+        for (T element : array) {
+            this.heap.add(element);
+        }
+        this.FloydAlgorithm();
+    }
+
+    //TIme complexity: O(n)
+    private void FloydAlgorithm() {
+        for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
+            this.bajar(i);
+        }
+    }
+
+    private void bajar(int index) {
+        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayor(index)) {
+            if (this.compararPrioridadHijos(index)) {
+                swap(index, Heaps.calcularPosicionHijoIzquierdo(index));
+                index = Heaps.calcularPosicionHijoIzquierdo(index);
+            } else {
+                swap(index, Heaps.calcularPosicionHijoDerecho(index));
+                index = Heaps.calcularPosicionHijoDerecho(index);
             }
         }
-        
-            
+    } 
+    public boolean estaVacio(){
+        return this.heap.size()==0;
     }
-    
-    private static int der(int i){
-        return  i*2+2;
-     }
-     
-    private static int izq(int i){
-         return i*2+1;
-     }
+
 
     
 
-
-}
 
 }
