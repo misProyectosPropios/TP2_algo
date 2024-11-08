@@ -279,11 +279,23 @@ Proc ciudadConMayorSuperavit ( in sistema: BestEffort ) : int {
 ### `ciudadesConMayorGanancia`
 
 ```
-Proc ciudadesConMayorGanancia ( in sistema: BestEffort ) : array<int>
+Proc ciudadesConMayorGanancia ( in sistema: BestEffort ) : array<int> {
 	return sistema.mayorGanancia ;                     -> O(1)
+}
 ```
 **Complejidad Total** -> O(1)
 
-### ``
+### `gananciaPromedioPorTraslado`
 
-**Fin**... por ahora.
+```
+Proc gananciaPromedioPorTraslado(in sistema: BestEffort): int {
+	return sistema.sumaDeGananciaDeDespachos / sistema.totalDespachados ;     -> O(1)
+}
+```
+
+**Complejidad Total** -> O(1)
+
+> [!NOTE]
+> Esa división es división entera -> OJO PERRITO MALVADO...
+
+**Fin**.
