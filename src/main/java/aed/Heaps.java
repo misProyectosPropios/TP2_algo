@@ -3,7 +3,7 @@ package aed;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Heaps<T> implements ColaDePrioridad<T>, Comparator<T>{
+public class Heaps<T> implements ColaDePrioridad<T>{
     private ArrayList<T> heap = new ArrayList<T>(0);
     private Comparator<T> comparador;
 
@@ -148,11 +148,6 @@ public class Heaps<T> implements ColaDePrioridad<T>, Comparator<T>{
     } 
 
 
-    @Override
-    public int compare(T o1, T o2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compare'");
-    }
 
     
 
