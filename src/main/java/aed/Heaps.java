@@ -3,13 +3,15 @@ package aed;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Heaps<T> implements ColaDePrioridad<T>{
+public class Heaps<T> implements ColaDePrioridad<T>, Comparator<T>{
     private ArrayList<T> heap = new ArrayList<T>(0);
     private Comparator<T> comparador;
 
     public Heaps (Comparator<T> comparador) {
         this.comparador = comparador;
     }
+    
+
 
     public T proximo() {
         return this.heap.get(0);
@@ -125,6 +127,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return this.heap.get(0);
     }
 
+
     //TIme complexity: O(n)
     private void FloydAlgorithm() {
         for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
@@ -141,71 +144,15 @@ public class Heaps<T> implements ColaDePrioridad<T>{
                 swap(index, Heaps.calcularPosicionHijoDerecho(index));
                 index = Heaps.calcularPosicionHijoDerecho(index);
             }
-            
-            
         }
     } 
 
-    /* 
-    private void bajarElemento(int i){
-        //CASO BASE
-        if (this.esHoja(i)) {
-            return;
-        }
 
-        //Es lo mismo que acá
-        if(izq(i)>=heap.size() && der(i)>=this.heap.size()){
-            return;
-        }
-
-        //No es hoja, veamos si tiene un hijo o dos
-        if (this.esNodoCompleto(i)) {
-
-        } 
-        else  //Tiene 1 solo nodo izquierdo. Por invariante, no puede ser nucna el derecho e que tenga
-        {
-
-        }
-        //CASO TIENE 2 hijos
-        if (izq(i)<heap.size() && der(i)<this.heap.size()){
-            if(this.heap.get(i)<this.heap.get(izq(i)) || this.heap.get(i)<this.heap.get(der(i))){
-                if(heap.get(izq(i))>this.heap.get(der(i))){
-                    swap(i , izq(i));
-                    bajarElemento( izq(i));} else{
-                    swap(i, der(i));
-                    bajarElemento(der(i));
-                        }
-                } else{return;}
-            } else{
-    
-            //Caso Izq null
-            if (izq(i)>=this.heap.size()){
-                //Nos fijamos si i es menor que su hijo derecho, si lo es hacemos swap y recursion
-                if (this.heap.get(i)<this.heap.get(der(i))){
-                    swap(i, der(i));
-                    bajarElemento(der(i));}
-                //Si no es menor, return
-                    else{ return;}}
-            //Caso Der null
-            if (der(i)>=this.heap.size()){
-                if(this.heap.get(i)<this.heap.get(izq(i))){
-                    swap( i, izq(i));
-                    bajarElemento( izq(i)); 
-                } else{return;}
-            }
-        }
-        
-            
+    @Override
+    public int compare(T o1, T o2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compare'");
     }
-    
-    */
-    private static int der(int i){
-        return  i*2+2;
-     }
-     
-    private static int izq(int i){
-         return i*2+1;
-     }
 
     
 
