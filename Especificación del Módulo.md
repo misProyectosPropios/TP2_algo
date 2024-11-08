@@ -39,6 +39,13 @@ var totalDespachados: int
 ```
 
 ```
+var sumaDeGananciaDeDespachos: int
+		// Suma total de las ganancias de cada traslado despachado.
+		// Se actualiza cada vez que se despacha un Traslado.
+```
+
+
+```
 var mayorPerdida: array < int > 
 		// Lista que tiene los nombres de la ciudad que presenta mayor pérdida.
 		// ¿Por qué es un array? Porque cuando hay mas de una ciudad con mayor pérdida, también va.
@@ -67,8 +74,9 @@ var mayorGanancia: array < int >
 Class Ciudad {
 	var nombre: int 
 	var gananciaNeta: int 
-	var perdidaNeta : int 
+	var perdidaNeta: int 
 	var superavit: int = gananciaNeta - perdidaNeta
+	var indiceAHeapSuperavit: int
 }
 
 // 'gananciaNeta' y 'perdidaNeta' se inicializan en cero.
@@ -101,7 +109,7 @@ Proc nuevoSistema ( in cantCiudades: int , in traslados: seq< InfoTraslados > : 
 	res.mayorPerdida = new ArrayList(int) ;					           -> O(1)
 	res.mayorGanancia = new ArrayList(int) ;                                           -> O(1)
 	while ( index < cantCiudades )                                                     -> Ciclo que se ejecuta C  veces: O(|C|)
-		Ciudad añadirCiudad = new Ciudad ( index , 0 , 0 ) ;                       	-> O(1)
+		Ciudad añadirCiudad = new Ciudad ( index , 0 , 0 , index ) ;                       	-> O(1)
 		res.mayorSuperavit.add( añadirCiudad ) ;			           	-> O(1)
  		res.ciudadesTotales.add( añadirCiudad ) ;                 	                -> O(1)
 		res.mayorPerdida.add( añadirCiudad.nombre ) ;                              	-> O(1)
@@ -174,20 +182,21 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 
 		res.add(despachado.id) ;                                                   	     -> O(1)
 		sistema.totalDespachados ++ ;                                              	     -> O(1)
+		sistema.sumaDeGananciaDeDespachos += despachado.ganaciaNeta;                         -> O(1)
 		
 		sistema.ciudadesTotales[ despachado.origen ].ganaciaNeta += despacho.ganaciaNeta ;   -> O(1)
-		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
+		sistema.mayorSuperavit.reOrdenar(sistema.ciudadesTotales[ despachado.origen ].indiceAHeapSuperavit) ;  -> O(log (C))
 
 		sistema.ciudadesTotales[ despacho.destino ].perdidaNeta += despacho.gananciaNeta ;   -> O(1)
-		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
+		sistema.mayorSuperavit.reOrdenar(sistema.ciudadesTotales[ despacho.destino ].indiceAHeapSuperavit) ;   -> O(log (C))
 		
 		// Actualizamos 'mayorPerdida' y 'mayorGanancia'
-		if ( sistema.mayorPerdida[1].gananciaNeta >= despachado.origen.gananciaNeta )        -> O(1)
+		if ( sistema.mayorPerdida[0].gananciaNeta >= despachado.origen.gananciaNeta )        -> O(1)
 			ArrayList update = new ArrayList[int] ;					     -> O(1)
 			update.add(despachado.origen) ;						     -> O(1)
 			sistema.mayorGanancia = update ;					     -> O(1)
 
-		if ( sistema.mayorPerdida[1].perdidaNeta >= despachado.destino.perdidaNeta )         -> O(1)
+		if ( sistema.mayorPerdida[0].perdidaNeta >= despachado.destino.perdidaNeta )         -> O(1)
 			ArrayList update2 = new ArrayList[int] ;				     -> O(1)
 			update2.add(despachado.destino) ;					     -> O(1)
 			sistema.mayorPerdida = update2 ; 					     -> O(1)
@@ -223,20 +232,21 @@ Proc despacharMasAntiguos ( inout sistema: BestEffort , in n: int ) : seq<int> {
 
 		res.add(despachado.id) ;                                                   	     -> O(1)
 		sistema.totalDespachados ++ ;                                              	     -> O(1)
+		sistema.sumaDeGananciaDeDespachos += despachado.ganaciaNeta;                         -> O(1)
 		
 		sistema.ciudadesTotales[ despachado.origen ].ganaciaNeta += despacho.ganaciaNeta ;   -> O(1)
-		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
+		sistema.mayorSuperavit.reOrdenar(sistema.ciudadesTotales[ despachado.origen ].indiceAHeapSuperavit) ;   -> O(log (C))
 
 		sistema.ciudadesTotales[ despacho.destino ].perdidaNeta += despacho.gananciaNeta ;   -> O(1)
-		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
+		sistema.mayorSuperavit.reOrdenar(sistema.ciudadesTotales[ despachado.destino ].indiceAHeapSuperavit) ;   -> O(log (C))
 		
 		// Actualizamos 'mayorPerdida' y 'mayorGanancia'
-		if ( sistema.mayorPerdida[1].gananciaNeta >= despachado.origen.gananciaNeta )        -> O(1)
+		if ( sistema.mayorPerdida[0].gananciaNeta >= despachado.origen.gananciaNeta )        -> O(1)
 			ArrayList update = new ArrayList[int] ;					     -> O(1)
 			update.add(despachado.origen) ;						     -> O(1)
 			sistema.mayorGanancia = update ;					     -> O(1)
 
-		if ( sistema.mayorPerdida[1].perdidaNeta >= despachado.destino.perdidaNeta )         -> O(1)
+		if ( sistema.mayorPerdida[0].perdidaNeta >= despachado.destino.perdidaNeta )         -> O(1)
 			ArrayList update2 = new ArrayList[int] ;				     -> O(1)
 			update2.add(despachado.destino) ;					     -> O(1)
 			sistema.mayorPerdida = update2 ; 					     -> O(1)
@@ -252,7 +262,7 @@ Proc despacharMasAntiguos ( inout sistema: BestEffort , in n: int ) : seq<int> {
 > [!NOTE] 
 > - `.eliminar(i)` de un heap -> este método toma el elemento de índice **i** (sabemos cuál es) , lo intercambia con el último (del array que modela el heap), mueve el puntero de `ultimoElemento` (del heap) y re-acomoda el heap.
 > Básicamente, es lo mismo que el `desencolar()`, pero con un elemento del medio (no la raíz).
-> - `reOrdenar()` es hacer `heapify-Up` o 'heapify-Down' segun corresponda. En este algoritmo, se hace ordenando por `ciudad.superavit`.
+> - `reOrdenar()` es hacer `heapify-Up` o `heapify-Down` segun corresponda. En este algoritmo, se hace ordenando por `ciudad.superavit`.
 
 > [!WARNING]
 > -`heapy-Up` y `heapy-Down` debe modificar handles (atributos de Traslados) cuando acomoda.
