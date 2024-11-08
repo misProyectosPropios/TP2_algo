@@ -17,17 +17,19 @@ var trasladosPorAntiguedad: max-heap ( Traslado )
 ```
 
 ```
-var mayorSuperavit: max-heap ( (1) ) 
-		// Heap que almacena 'ciudades' indirectamente (porque en realidad tiene el index de la ciudad en el array 'ciudadesTotales').
+var mayorSuperavit: max-heap ( Ciudad ) 
+		// Heap que almacena 'Ciudades'
 		// Ordena por 'superavit'.
 		// En caso de empate, ordena por 'nombre' (que es un número único).
-		// (1) -> index de la ciudad en 'ciudadesTotales'.
 ```
 
 ```
-var ciudadesTotales: array < tuplas< Ciudad , (1) > > 
+var ciudadesTotales: array < Ciudad > 
 		// 'Ciudades' ubicadas en el index de su 'nombre'.
-		// (1) -> index de la ciudad en 'mayorSuperavit'.
+		// La idea de esta variable es poder acceder de forma rápida a cada ciudad cuando necesitamos modificar
+		// su ganancia o pérdida.
+		// OBS -> Si quisiesemos buscar en el heap, debemos iterar (ya que no garantiza que la ciudad está en el
+		//        index de su nombre).
 ```
 
 ```
@@ -100,8 +102,8 @@ Proc nuevoSistema ( in cantCiudades: int , in traslados: seq< InfoTraslados > : 
 	res.mayorGanancia = new ArrayList(int) ;                                           -> O(1)
 	while ( index < cantCiudades )                                                     -> Ciclo que se ejecuta C  veces: O(|C|)
 		Ciudad añadirCiudad = new Ciudad ( index , 0 , 0 ) ;                       	-> O(1)
-		res.mayorSuperavit.add( index ) ;			           	   	-> O(1)
- 		res.ciudadesTotales.add( tupla< añadirCiudad , index > ) ;                 	-> O(1)
+		res.mayorSuperavit.add( añadirCiudad ) ;			           	-> O(1)
+ 		res.ciudadesTotales.add( añadirCiudad ) ;                 	                -> O(1)
 		res.mayorPerdida.add( añadirCiudad.nombre ) ;                              	-> O(1)
 		res.mayorGanancia.add( añadirCiudad.nombre ) ;                             	-> O(1)
 		index ++ ;                                                                 	-> O(1)
@@ -165,7 +167,7 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 	arrayList<int> res = new ArrayList() ;                                             -> O( 1 )
 	
 	int index = 0 ;                                                                    -> O( 1 )
-	while ( (index != n) && (not sistema.trasladoPorAntiguedad.estaVacio()) )          -> Ciclo se ejecuta n veces: O(n (log (T) + log (C))) 
+	while ( (index != n) && (not sistema.trasladoPorGanancia.estaVacio()) )          -> Ciclo se ejecuta n veces: O(n (log (T) + log (C))) 
 		
 		Traslado despachado = sistema.trasladosPorGanancia.desencolar() ;           	     -> O(log (T))
 		sistema.trasladosPorAntiguedad.eliminar( despachado.indiceAHeapAntiguedad ) ;        -> O(log (T)) 
@@ -201,13 +203,77 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 > [!NOTE] 
 > - `.eliminar(i)` de un heap -> este método toma el elemento de índice **i** (sabemos cuál es) , lo intercambia con el último (del array que modela el heap), mueve el puntero de `ultimoElemento` (del heap) y re-acomoda el heap.
 > Básicamente, es lo mismo que el `desencolar()`, pero con un elemento del medio (no la raíz).
-> - `reOrdenar()` es hacer `heapify`. En este algoritmo, el `heapify` se hace en función de `ciudad.superavit`.
+> - `reOrdenar()` es hacer `heapify-Up` o 'heapify-Down' segun corresponda. En este algoritmo, se hace ordenando por `ciudad.superavit`.
 
->[!WARNING]
-> - No estamos acomodando el heap de trasladosMasAntiguos a medida que vamos sacando elemento, ni los handles
+> [!WARNING]
+> -`heapy-Up` y `heapy-Down` debe modificar handles (atributos de Traslados) cuando acomoda.
 
-**Comentarios Generales**
--`floyd` debe modificar handles cuando acomoda.
-- `encolar` debe devolver la posición (en el heap-array) donde queda acomodado el elemento añadido (para poder mantener el handles).
+### `despacharMasAntiguos`
+
+```
+Proc despacharMasAntiguos ( inout sistema: BestEffort , in n: int ) : seq<int> {
+
+	arrayList<int> res = new ArrayList() ;                                             -> O( 1 )
+	
+	int index = 0 ;                                                                    -> O( 1 )
+	while ( (index != n) && (not sistema.trasladoPorAntiguedad.estaVacio()) )          -> Ciclo se ejecuta n veces: O(n (log (T) + log (C))) 
+		
+		Traslado despachado = sistema.trasladosPorAntihuedad.desencolar() ;           	     -> O(log (T))
+		sistema.trasladosPorGanancia.eliminar( despachado.indiceAHeapGanancia ) ;            -> O(log (T)) 
+
+		res.add(despachado.id) ;                                                   	     -> O(1)
+		sistema.totalDespachados ++ ;                                              	     -> O(1)
+		
+		sistema.ciudadesTotales[ despachado.origen ].ganaciaNeta += despacho.ganaciaNeta ;   -> O(1)
+		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
+
+		sistema.ciudadesTotales[ despacho.destino ].perdidaNeta += despacho.gananciaNeta ;   -> O(1)
+		sistema.mayorSuperavit.reOrdenar() ;                                                 -> O(log (C))
+		
+		// Actualizamos 'mayorPerdida' y 'mayorGanancia'
+		if ( sistema.mayorPerdida[1].gananciaNeta >= despachado.origen.gananciaNeta )        -> O(1)
+			ArrayList update = new ArrayList[int] ;					     -> O(1)
+			update.add(despachado.origen) ;						     -> O(1)
+			sistema.mayorGanancia = update ;					     -> O(1)
+
+		if ( sistema.mayorPerdida[1].perdidaNeta >= despachado.destino.perdidaNeta )         -> O(1)
+			ArrayList update2 = new ArrayList[int] ;				     -> O(1)
+			update2.add(despachado.destino) ;					     -> O(1)
+			sistema.mayorPerdida = update2 ; 					     -> O(1)
+
+		index ++ ;                                                                           -> O(1)
+
+	return res ;                                                                       -> O(1)
+}
+```
+**Complejidad Total** -> O(n (log (T) + log (C)))
+
+
+> [!NOTE] 
+> - `.eliminar(i)` de un heap -> este método toma el elemento de índice **i** (sabemos cuál es) , lo intercambia con el último (del array que modela el heap), mueve el puntero de `ultimoElemento` (del heap) y re-acomoda el heap.
+> Básicamente, es lo mismo que el `desencolar()`, pero con un elemento del medio (no la raíz).
+> - `reOrdenar()` es hacer `heapify-Up` o 'heapify-Down' segun corresponda. En este algoritmo, se hace ordenando por `ciudad.superavit`.
+
+> [!WARNING]
+> -`heapy-Up` y `heapy-Down` debe modificar handles (atributos de Traslados) cuando acomoda.
+
+### `ciudadConMayorSuperavit`
+
+```
+Proc ciudadConMayorSuperavit ( in sistema: BestEffort ) : int {
+	return sistema.mayorSuperavit.consultarMax() ;     -> O(1)
+}
+```
+**Complejidad Total** -> O(1)
+
+### `ciudadesConMayorGanancia`
+
+```
+Proc ciudadesConMayorGanancia ( in sistema: BestEffort ) : array<int>
+	return sistema.mayorGanancia ;                     -> O(1)
+```
+**Complejidad Total** -> O(1)
+
+### ``
 
 **Fin**... por ahora.
