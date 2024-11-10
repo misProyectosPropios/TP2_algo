@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Heaps<T> implements ColaDePrioridad<T>{
-    private ArrayList<T> heap = new ArrayList<T>(0);
+     ArrayList<T> heap = new ArrayList<T>(0);
     private Comparator<T> comparador;
 
     public Heaps (Comparator<T> comparador) {
@@ -129,7 +129,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
 
     //TIme complexity: O(n)
-    private void FloydAlgorithm() {
+    public void FloydAlgorithm() {
         for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
             this.bajar(i);
         }
@@ -146,10 +146,9 @@ public class Heaps<T> implements ColaDePrioridad<T>{
             }
         }
     } 
-
-
-
-    
+    public void add(T elem){
+        this.heap.add(elem);
+    }
 
 
 }
