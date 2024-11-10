@@ -149,8 +149,7 @@ Proc registrarTraslados ( inout sistema: BestEffort , in traslados: seq<InfoTras
 		
 		// Tomo la tupla y fabrico el traslado.
 		tupla cuestion = traslados[ indice ] ;                               		-> O(1), igual que el de abajo (muy larga la línea jejeje)
-		Traslado añadir = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4]
-						 sistema.trasladosPorGanancia.size() , sistema.trasladosPorAntiguedad.size() ) ;
+		Traslado añadir = new Traslado ( trasladoEnCuestion[0] , trasladoEnCuestion[1] , trasladoEnCuestion[2] , trasladoEnCuestion[3] , trasladoEnCuestion[4], transladoEnCuestion[5], sistema.trasladosPorGanancia.size() , sistema.trasladosPorAntiguedad.size() ) ;
 
 		// Lo añado a los heaps.
 		sistema.trasladosPorGanancia.encolar( añadir ) ;                            	-> O(log(T))
