@@ -10,7 +10,7 @@ var trasladosPorGanancia: max-heap ( Traslado )
 ```
 
 ```
-var trasladosPorAntiguedad: max-heap ( Traslado )
+var trasladosPorAntiguedad: min-heap ( Traslado )
 		// Heap que almacena 'traslados'.
 		// Ordena por 'timestamp'.
 		// En caso de empate, ordena por 'id'.
