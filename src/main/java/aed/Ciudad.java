@@ -18,6 +18,16 @@ public class Ciudad<T> {
 
     }
 
+    // Constructor por copia.
+    public Ciudad (Ciudad copiado) {
+
+        this.nombre = copiado.nombre ;
+        this.gananciaNeta = copiado.gananciaNeta ;
+        this.perdidaNeta = copiado.perdidaNeta ;
+        this.superavit = copiado.superavit ;
+        
+    }
+
     public void aumentarPerdida (int monto) {
 
         this.perdidaNeta += monto ;

@@ -25,6 +25,19 @@ public class Traslado {
         
     } 
 
+    // Constructor por copia.
+    public Traslado(Traslado copiado) {
+
+        this.id = copiado.id ;
+        this.origen = copiado.origen ;
+        this.destino = copiado.destino ;
+        this.gananciaNeta = copiado.gananciaNeta ;
+        this.timestamp = copiado.timestamp ;
+        this.indiceAHeapGanancia = copiado.indiceAHeapGanancia ;
+        this.indiceAHeapAntiguedad = copiado.indiceAHeapAntiguedad ;
+        
+    } 
+
     public int obtenerId() {
 
         return this.id ;
