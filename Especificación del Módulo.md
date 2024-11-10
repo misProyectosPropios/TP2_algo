@@ -190,16 +190,19 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 		sistema.mayorSuperavit.reOrdenar(sistema.ciudadesTotales[ despacho.destino ].indiceAHeapSuperavit) ;   -> O(log (C))
 		
 		// Actualizamos 'mayorPerdida' y 'mayorGanancia'
-		if ( sistema.mayorPerdida[0].gananciaNeta >= despachado.origen.gananciaNeta )        -> O(1)
-			ArrayList update = new ArrayList[int] ;					     -> O(1)
-			update.add(despachado.origen) ;						     -> O(1)
-			sistema.mayorGanancia = update ;					     -> O(1)
+		if ( sistema.mayorGanancia[0].gananciaNeta < despachado.origen.gananciaNeta )        -> O(1)
+			{sistema.mayorGanancia.clear();					     	     -> O(1)
+			sistema.mayorGanancia.add(despachado.origen)}
+		else if(sistema.mayorGanancia[0].gananciaNeta==despachado.origen.gananciaNeta){	     -> O(1)
+			sistema.mayorGanancia.add(despachado.origen.gananciaNeta)}		     -> O(1)
+		else{}
 
-		if ( sistema.mayorPerdida[0].perdidaNeta >= despachado.destino.perdidaNeta )         -> O(1)
-			ArrayList update2 = new ArrayList[int] ;				     -> O(1)
-			update2.add(despachado.destino) ;					     -> O(1)
-			sistema.mayorPerdida = update2 ; 					     -> O(1)
-
+		if ( sistema.mayorPerdida[0].perdidaNeta < despachado.destino.perdidaNeta )         -> O(1)
+			sistema.mayorPerdida.clear();						     -> O(1)
+			sistema.mayorPerdida.add(despachado.origen)				     -> O(1)
+		else if(sistema.mayorPerdida[0].perdidaNeta==despachado.destino.perdidaNeta)	      -> O(1)
+			sistema.mayorPerdida.add(despachado.destino.perdidaNeta)
+		else{}
 		index ++ ;                                                                           -> O(1)
 
 	return res ;                                                                       -> O(1)
@@ -240,16 +243,19 @@ Proc despacharMasAntiguos ( inout sistema: BestEffort , in n: int ) : seq<int> {
 		sistema.mayorSuperavit.reOrdenar(sistema.ciudadesTotales[ despachado.destino ].indiceAHeapSuperavit) ;   -> O(log (C))
 		
 		// Actualizamos 'mayorPerdida' y 'mayorGanancia'
-		if ( sistema.mayorPerdida[0].gananciaNeta >= despachado.origen.gananciaNeta )        -> O(1)
-			ArrayList update = new ArrayList[int] ;					     -> O(1)
-			update.add(despachado.origen) ;						     -> O(1)
-			sistema.mayorGanancia = update ;					     -> O(1)
+		if ( sistema.mayorGanancia[0].gananciaNeta < despachado.origen.gananciaNeta )        -> O(1)
+			{sistema.mayorGanancia.clear();					     	     -> O(1)
+			sistema.mayorGanancia.add(despachado.origen)}
+		else if(sistema.mayorGanancia[0].gananciaNeta==despachado.origen.gananciaNeta){	     -> O(1)
+			sistema.mayorGanancia.add(despachado.origen.gananciaNeta)}		     -> O(1)
+		else{}
 
-		if ( sistema.mayorPerdida[0].perdidaNeta >= despachado.destino.perdidaNeta )         -> O(1)
-			ArrayList update2 = new ArrayList[int] ;				     -> O(1)
-			update2.add(despachado.destino) ;					     -> O(1)
-			sistema.mayorPerdida = update2 ; 					     -> O(1)
-
+		if ( sistema.mayorPerdida[0].perdidaNeta < despachado.destino.perdidaNeta )         -> O(1)
+			sistema.mayorPerdida.clear();						     -> O(1)
+			sistema.mayorPerdida.add(despachado.origen)				     -> O(1)
+		else if(sistema.mayorPerdida[0].perdidaNeta==despachado.destino.perdidaNeta)	      -> O(1)
+			sistema.mayorPerdida.add(despachado.destino.perdidaNeta)
+		else{}
 		index ++ ;                                                                           -> O(1)
 
 	return res ;                                                                       -> O(1)
