@@ -41,9 +41,7 @@ public class Ciudad<T> {
     public int obtenerSuperavit() {
 
         return this.superavit ;
-        
-    }
 
-    public int nombre() { return this.nombre; }
+    }
 
 }
