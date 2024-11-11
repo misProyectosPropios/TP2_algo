@@ -15,39 +15,7 @@ public class BestEffort {
 
     public BestEffort nuevoSistema(int cantCiudades, Traslado[] traslados){
         // Implementar
-        BestEffort res = new BestEffort () ;
-        
-        int index = 0 ;                                                                    
-	    
-        res.mayorPerdida = new ArrayList<Integer>();					           
-	    
-        res.mayorGanancia = new ArrayList<Integer>() ; 
-        
-        this.ciudadesTotales= new Ciudad[cantCiudades];                                          
-	    
-        while ( index < cantCiudades )    {                                                 
-		    Ciudad añadirCiudad = new Ciudad (index) ; 
-            res.mayorSuperavit.add(añadirCiudad) ;			           	
- 		    res.ciudadesTotales[index]= añadirCiudad;                 	                
-		    res.mayorPerdida.add(añadirCiudad.nombre) ;                              	
-		    res.mayorGanancia.add(añadirCiudad.nombre) ;                             	
-		    index ++ ;                         
-        } 
-        
-        index = 0 ;                                                                       
-	    while ( index < traslados.length ){
-		Traslado trasladoEnCuestion = traslados[ index ] ;                      	   	
-		Traslado añadirTranslados = new Traslado ( trasladoEnCuestion.id , trasladoEnCuestion.origen , trasladoEnCuestion.destino , trasladoEnCuestion.gananciaNeta,trasladoEnCuestion.timestamp);
-		res.trasladosPorGanancia.add( añadirTranslados ) ;                         	
-		res.trasladosPorAntiguedad.add( añadirTranslados ) ;	                   	
-		index ++ ;   }                                                              	
-
-	    res.totalDespachados = 0 ;						           
-
-	    res.mayorSuperavit.FloydAlgorithm();						   
-	    res.trasladosPorGanancia.FloydAlgorithm() ;					   
-	    res.trasladosPorAntiguedad.FloydAlgorithm();					   
-        return res;				
+        			
 
     }
 
