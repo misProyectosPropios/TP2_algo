@@ -20,13 +20,13 @@ public class BestEffortTests {
         //Reiniciamos los valores de las ciudades y traslados antes de cada test
         cantCiudades = 7;
         listaTraslados = new Traslado[] {
-                                            new Traslado(1, 0, 1, 100, 10, 0, 0),
-                                            new Traslado(2, 0, 1, 400, 20, 1, 1),
-                                            new Traslado(3, 3, 4, 500, 50, 2, 2),
-                                            new Traslado(4, 4, 3, 500, 11, 3, 3),
-                                            new Traslado(5, 1, 0, 1000, 40, 4, 4),
-                                            new Traslado(6, 1, 0, 1000, 41, 5, 5),
-                                            new Traslado(7, 6, 3, 2000, 42, 6, 6)
+                                            new Traslado(1, 0, 1, 100, 10),
+                                            new Traslado(2, 0, 1, 400, 20),
+                                            new Traslado(3, 3, 4, 500, 50),
+                                            new Traslado(4, 4, 3, 500, 11),
+                                            new Traslado(5, 1, 0, 1000, 40),
+                                            new Traslado(6, 1, 0, 1000, 41),
+                                            new Traslado(7, 6, 3, 2000, 42)
                                         };
     }
 
@@ -125,11 +125,11 @@ public class BestEffortTests {
         BestEffort sis = new BestEffort(this.cantCiudades, this.listaTraslados);
 
         Traslado[] nuevos = new Traslado[] {
-            new Traslado(8, 0, 1, 10001, 5, 7, 7),
-            new Traslado(9, 0, 1, 40000, 2, 8, 8),
-            new Traslado(10, 0, 1, 50000, 3, 9, 9),
-            new Traslado(11, 0, 1, 50000, 4, 10, 10),
-            new Traslado(12, 1, 0, 150000, 1, 11, 12)
+            new Traslado(8, 0, 1, 10001, 5),
+            new Traslado(9, 0, 1, 40000, 2),
+            new Traslado(10, 0, 1, 50000, 3),
+            new Traslado(11, 0, 1, 50000, 4),
+            new Traslado(12, 1, 0, 150000, 1)
         };
 
         sis.registrarTraslados(nuevos);
@@ -155,11 +155,11 @@ public class BestEffortTests {
         assertEquals(833, sis.gananciaPromedioPorTraslado());
 
         Traslado[] nuevos = new Traslado[] {
-            new Traslado(8, 1, 2, 1452, 5, 7, 7),
-            new Traslado(9, 1, 2, 334, 2, 8, 8),
-            new Traslado(10, 1, 2, 24, 3,9 , 9),
-            new Traslado(11, 1, 2, 333, 4, 10, 10),
-            new Traslado(12, 2, 1, 9000, 1, 11, 11)
+            new Traslado(8, 1, 2, 1452, 5),
+            new Traslado(9, 1, 2, 334, 2),
+            new Traslado(10, 1, 2, 24, 3),
+            new Traslado(11, 1, 2, 333, 4),
+            new Traslado(12, 2, 1, 9000, 1)
         };
 
         sis.registrarTraslados(nuevos);
