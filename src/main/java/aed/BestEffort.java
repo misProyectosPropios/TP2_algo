@@ -15,7 +15,10 @@ public class BestEffort {
 
     public BestEffort nuevoSistema(int cantCiudades, Traslado[] traslados){
         // Implementar
-        			
+        
+
+
+        return new BestEffort();
 
     }
 
