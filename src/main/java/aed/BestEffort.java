@@ -17,6 +17,38 @@ public class BestEffort {
 
     public BestEffort (int cantCiudades, Traslado[] traslados){
         // Implementar
+        //BestEffort res = new BestEffort () ;
+        
+        int index = 0 ;                                                                    
+	    
+        this.mayorPerdida = new ArrayList<Integer>();					           
+	    
+        this.mayorGanancia = new ArrayList<Integer>() ; 
+        
+        this.ciudadesTotales= new Ciudad[cantCiudades];                                          
+	    
+        while ( index < cantCiudades )    {                                                 
+		    Ciudad añadirCiudad = new Ciudad (index) ; 
+            //res.mayorSuperavit.add(añadirCiudad) ;			           	
+ 		    this.ciudadesTotales[index]= añadirCiudad;                 	                
+		    this.mayorPerdida.add(añadirCiudad.nombre) ;                              	
+		    this.mayorGanancia.add(añadirCiudad.nombre) ;                             	
+		    index ++ ;                         
+        } 
+        
+        index = 0 ;                                                                       
+	    while ( index < traslados.length ){
+		Traslado trasladoEnCuestion = traslados[ index ] ;                      	   	
+		Traslado añadirTranslados = new Traslado ( trasladoEnCuestion.id , trasladoEnCuestion.origen , trasladoEnCuestion.destino , trasladoEnCuestion.gananciaNeta,trasladoEnCuestion.timestamp);
+		//this.trasladosPorGanancia.add( añadirTranslados ) ;                         	
+		//this.trasladosPorAntiguedad.add( añadirTranslados ) ;	                   	
+		index ++ ;   }                                                              	
+
+	    this.totalDespachados = 0 ;						           
+
+	    //this.mayorSuperavit.FloydAlgorithm();						   
+	    //this.trasladosPorGanancia.FloydAlgorithm() ;					   
+	    //this.trasladosPorAntiguedad.FloydAlgorithm();					   		
 
     }
 

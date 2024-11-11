@@ -23,7 +23,7 @@ public class HeapsTest {
 
     @Test
     void crearHeapVacio() {
-        
+        Heaps<> heap = new Heaps<Integer>();
     }
 
 }
