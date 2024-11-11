@@ -12,7 +12,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         this.comparador = comparador;
     }
 
-    public Heaps(Comparator<T> comparador, T[] array) {
+    public Heaps (Comparator<T> comparador, T[] array) {
         this.heap = new ArrayList<>(array.length);
         for (T element : array) {
             this.heap.add(element);
@@ -144,6 +144,14 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return returnValue;
     }
 
+    public void convertArrayOfTIntoHeap(T[] array) {
+        this.heap = new ArrayList<>(array.length);
+        for (T element : array) {
+            this.heap.add(element);
+        }
+        this.FloydAlgorithm();
+    }
+
     //TIme complexity: O(n)
     private void FloydAlgorithm() {
         for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
@@ -167,9 +175,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return this.heap.size()==0;
     }
 
-    public int length() {
-        return this.heap.size();
-    }
+
     
 
 
