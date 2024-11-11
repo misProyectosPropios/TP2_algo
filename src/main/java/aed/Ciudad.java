@@ -1,6 +1,6 @@
 package aed;
 
-public class Ciudad<T> {
+public class Ciudad {
     int nombre;
     int gananciaNeta;
     int perdidaNeta;

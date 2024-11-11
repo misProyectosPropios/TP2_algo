@@ -18,7 +18,7 @@ public class BestEffort {
     public BestEffort (int cantCiudades, Traslado[] traslados){
         // Implementar
         //BestEffort res = new BestEffort () ;
-        
+        /*
         int index = 0 ;                                                                    
 	    
         this.mayorPerdida = new ArrayList<Integer>();					           
@@ -49,7 +49,7 @@ public class BestEffort {
 	    //this.mayorSuperavit.FloydAlgorithm();						   
 	    //this.trasladosPorGanancia.FloydAlgorithm() ;					   
 	    //this.trasladosPorAntiguedad.FloydAlgorithm();					   		
-
+*/
     }
 
     public void registrarTraslados(Traslado[] traslados){

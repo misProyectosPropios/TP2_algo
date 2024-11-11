@@ -167,7 +167,9 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return this.heap.size()==0;
     }
 
-
+    public int length() {
+        return this.heap.size();
+    }
     
 
 
