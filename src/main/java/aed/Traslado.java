@@ -59,7 +59,7 @@ public class Traslado {
         return this.timestamp ; 
     
     }
-
+/*
     public int obtenerIndiceAHeapGanancia() {
 
         return this.indiceAHeapGanancia ;
@@ -71,5 +71,5 @@ public class Traslado {
         return this.indiceAHeapAntiguedad ;
 
     }
-
+*/
 }

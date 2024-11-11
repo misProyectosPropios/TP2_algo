@@ -173,13 +173,13 @@ public class BestEffortTests {
     @Test
     void mayor_superavit(){
         Traslado[] nuevos = new Traslado[] {
-            new Traslado(1, 3, 4, 1, 7, 7, 7),
-            new Traslado(7, 6, 5, 40, 6, 8, 8),
-            new Traslado(6, 5, 6, 3, 5, 9, 9),
-            new Traslado(2, 2, 1, 41, 4, 10, 10),
-            new Traslado(3, 3, 4, 100, 3, 11, 11),
-            new Traslado(4, 1, 2, 30, 2, 12, 12),
-            new Traslado(5, 2, 1, 90, 1, 13, 13)
+            new Traslado(1, 3, 4, 1, 7),
+            new Traslado(7, 6, 5, 40, 6),
+            new Traslado(6, 5, 6, 3, 5),
+            new Traslado(2, 2, 1, 41, 4),
+            new Traslado(3, 3, 4, 100, 3),
+            new Traslado(4, 1, 2, 30, 2),
+            new Traslado(5, 2, 1, 90, 1)
         };
         BestEffort sis = new BestEffort(this.cantCiudades, nuevos);
 
