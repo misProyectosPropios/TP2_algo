@@ -136,7 +136,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return returnValue;
     }
 
-
     public void convertArrayOfTIntoHeap(T[] array) {
         this.heap = new ArrayList<>(array.length);
         for (T element : array) {
@@ -163,6 +162,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
             }
         }
     } 
+    
     public boolean estaVacio(){
         return this.heap.size()==0;
     }
