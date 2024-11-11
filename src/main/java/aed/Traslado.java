@@ -27,8 +27,6 @@ public class Traslado {
         this.destino = copiado.destino ;
         this.gananciaNeta = copiado.gananciaNeta ;
         this.timestamp = copiado.timestamp ;
-        this.indiceAHeapGanancia = copiado.indiceAHeapGanancia ;
-        this.indiceAHeapAntiguedad = copiado.indiceAHeapAntiguedad ;
         
     } 
 

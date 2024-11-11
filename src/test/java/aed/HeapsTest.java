@@ -25,6 +25,13 @@ public class HeapsTest {
     void crearHeapVacio() {
         Comparator<Integer> comp = Comparator.naturalOrder();
         Heaps<Integer> heap = new Heaps<>(comp);
+
+        assertTrue(heap.estaVacio());
+    }
+
+    @Test 
+    void crearHeapAPartirDeArray() {
+        
     }
 
 }
