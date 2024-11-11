@@ -15,7 +15,7 @@ public class BestEffort {
 
 
 
-    public BestEffort (int cantCiudades, Traslado[] traslados){
+     public BestEffort (int cantCiudades, Traslado[] traslados){
         // Implementar
         //BestEffort res = new BestEffort () ;
         
@@ -39,13 +39,11 @@ public class BestEffort {
         index = 0 ;                                                                       
 	    while ( index < traslados.length ){
 		Traslado trasladoEnCuestion = traslados[ index ] ;                      	   	
-		Traslado añadirTranslados = new Traslado ( trasladoEnCuestion.id , trasladoEnCuestion.origen , trasladoEnCuestion.destino , trasladoEnCuestion.gananciaNeta,trasladoEnCuestion.timestamp);
+		Traslado añadirTranslados = new Traslado (trasladoEnCuestion);
 		//this.trasladosPorGanancia.add( añadirTranslados ) ;                         	
 		//this.trasladosPorAntiguedad.add( añadirTranslados ) ;	                   	
 		index ++ ;   }                                                              	
-
 	    this.totalDespachados = 0 ;						           
-
 	    //this.mayorSuperavit.FloydAlgorithm();						   
 	    //this.trasladosPorGanancia.FloydAlgorithm() ;					   
 	    //this.trasladosPorAntiguedad.FloydAlgorithm();					   		
