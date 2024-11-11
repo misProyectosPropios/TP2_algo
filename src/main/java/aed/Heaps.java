@@ -6,18 +6,17 @@ import java.util.Comparator;
 public class Heaps<T> implements ColaDePrioridad<T>{
      ArrayList<T> heap = new ArrayList<T>(0);
     private Comparator<T> comparador;
+    
 
     public Heaps (Comparator<T> comparador) {
         this.comparador = comparador;
     }
-    
-
 
     public T proximo() {
         return this.heap.get(0);
     }
 
-    public void Encolar(T element) {
+    public void encolar(T element) {
         //Needs to be implemented
         //Adds element to the last position
         this.heap.add(element);
@@ -123,13 +122,31 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return Heaps.calcularPosicionHijoDerecho(indice) < this.heap.size();
     }
 
-    public T quitar(int pos) {
-        return this.heap.get(0);
+    public T eliminar(int pos) {
+        //Implementar
+        T returnValue = this.heap.get(pos);
+        swap(pos, this.heap.size() - 1);
+        this.heap.remove(this.heap.size() - 1);
+        if (prioridadMayorQuePadre(pos, Heaps.calcularPosicionPadre(pos))) {
+            //Implementarlo para index
+            subirElemento();
+        } else {
+            bajar(pos);
+        }
+        return returnValue;
     }
 
 
+    public void convertArrayOfTIntoHeap(T[] array) {
+        this.heap = new ArrayList<>(array.length);
+        for (T element : array) {
+            this.heap.add(element);
+        }
+        this.FloydAlgorithm();
+    }
+
     //TIme complexity: O(n)
-    public void FloydAlgorithm() {
+    private void FloydAlgorithm() {
         for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
             this.bajar(i);
         }
@@ -146,9 +163,12 @@ public class Heaps<T> implements ColaDePrioridad<T>{
             }
         }
     } 
-    public void add(T elem){
-        this.heap.add(elem);
+    public boolean estaVacio(){
+        return this.heap.size()==0;
     }
+
+
+    
 
 
 }
