@@ -13,12 +13,10 @@ public class BestEffort {
     ArrayList<Integer> mayorPerdida;
 
 
-    public BestEffort nuevoSistema(int cantCiudades, Traslado[] traslados){
+
+
+    public BestEffort (int cantCiudades, Traslado[] traslados){
         // Implementar
-        
-
-
-        return new BestEffort();
 
     }
 

@@ -1,7 +1,5 @@
 package aed;
 
-import java.util.Comparator;
-
 public class Traslado {
     
     private int id ;
@@ -9,19 +7,15 @@ public class Traslado {
     private int destino ;
     private int gananciaNeta ;
     private int timestamp ;
-    private int indiceAHeapGanancia ;
-    private int indiceAHeapAntiguedad ;
 
     // Constructor.
-    public Traslado(int id, int origen, int destino, int gananciaNeta, int timestamp, int indexAHeapGanancia, int indexAHeapAntiguedad) {
+    public Traslado(int id, int origen, int destino, int gananciaNeta, int timestamp) {
 
         this.id = id ;
         this.origen = origen ;
         this.destino = destino ;
         this.gananciaNeta = gananciaNeta ;
         this.timestamp = timestamp ;
-        this.indiceAHeapGanancia = indexAHeapGanancia ;
-        this.indiceAHeapAntiguedad = indexAHeapAntiguedad ;
         
     } 
 
