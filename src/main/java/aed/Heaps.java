@@ -32,11 +32,10 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         //Needs to be implemented
         //Adds element to the last position
         this.heap.add(element);
-        this.subirElemento();
+        this.subirElemento(this.heap.size() - 1);
     }
 
-    private void subirElemento() {
-        int position = this.heap.size() - 1;
+    private void subirElemento(int position) {
         int positionParent = calcularPosicionPadre(position);
         while (position != 0 && prioridadMayorQuePadre(position, positionParent)) {
             swap(position, positionParent);
@@ -141,7 +140,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         this.heap.remove(this.heap.size() - 1);
         if (prioridadMayorQuePadre(pos, Heaps.calcularPosicionPadre(pos))) {
             //Implementarlo para index
-            subirElemento();
+            //subirElemento();
         } else {
             bajar(pos);
         }
