@@ -25,6 +25,23 @@ public class HeapsTest {
     void crearHeapVacio() {
         Comparator<Integer> comp = Comparator.naturalOrder();
         Heaps<Integer> heap = new Heaps<>(comp);
+
+        assertTrue(heap.estaVacio());
+    }
+
+    @Test 
+    void crearHeapAPartirDeArray() {
+        Integer[] array = {8, 7, 2, 3, 5, 6, 4, 10, 1};
+        Comparator<Integer> comp = Comparator.naturalOrder();
+        comp = comp.reversed();
+        Heaps<Integer> heap = new Heaps<>(comp, array);
+        assertEquals(heap.length(), 9);
+        assertEquals(10, heap.desencolar());
+        assertEquals(8, heap.desencolar());
+        assertEquals(7, heap.desencolar());
+        assertEquals(6, heap.desencolar());
+        assertEquals(5, heap.desencolar());
+        assertEquals(4, heap.desencolar());
     }
 
 }
