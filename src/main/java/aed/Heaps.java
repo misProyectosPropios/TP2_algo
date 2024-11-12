@@ -22,7 +22,10 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     public T proximo() {
-        return this.heap.get(0);
+        if (this.heap.size() > 0) {
+            return this.heap.get(0);
+        }
+        return null;
     }
 
     public void encolar(T element) {
