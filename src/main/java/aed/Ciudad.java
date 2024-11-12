@@ -1,35 +1,68 @@
 package aed;
 
 public class Ciudad {
-    int nombre;
-    int gananciaNeta;
-    int perdidaNeta;
-    int superavit;
 
+    private int nombre ;
+    private int gananciaNeta ;
+    private int perdidaNeta ;
+    private int superavit ;
 
-    public Ciudad(int posicion){
-    this.nombre=posicion;
-    this.gananciaNeta=0;
-    this.perdidaNeta=0;
-    this.superavit=gananciaNeta-perdidaNeta;
-}
+    // Constructor.
+    public Ciudad (int posicion) {
 
-   //Capaz hay un nombre para estos metodos que los haga menos confuso?
-    public void compro(int gasto){
-        this.perdidaNeta += gasto;
-        this.superavit = gananciaNeta - perdidaNeta;
+    this.nombre = posicion ;
+    this.gananciaNeta = 0 ;
+    this.perdidaNeta = 0 ;
+    this.superavit = gananciaNeta - perdidaNeta ;
+
+    }
+
+    // Constructor por copia.
+    public Ciudad (Ciudad copiado) {
+
+        this.nombre = copiado.nombre ;
+        this.gananciaNeta = copiado.gananciaNeta ;
+        this.perdidaNeta = copiado.perdidaNeta ;
+        this.superavit = copiado.superavit ;
+        
+    }
+
+    public void aumnetarPerdida (int monto) {
+
+        this.perdidaNeta += monto ;
+        this.superavit = gananciaNeta - perdidaNeta ;
+
     }
     
-    public void vendio(int ganancia){
-        this.gananciaNeta += ganancia;
-        this.superavit = gananciaNeta - perdidaNeta;
+    public void aumentarGanancia (int monto) {
+
+        this.gananciaNeta += monto ;
+        this.superavit = gananciaNeta - perdidaNeta ;
+
     }
 
-    public int gananciaNeta() {
-        return this.gananciaNeta;
+    public int gananciaNeta () {
+
+        return this.gananciaNeta ;
+
     }
-    public int superavit(){
-        return this.superavit;
+
+    public int perdidaNeta () {
+
+        return this.perdidaNeta ;
+        
+    }
+
+    public int superavit() {
+
+        return this.superavit ;
+
+    }
+
+    public int nombre() {
+
+        return this.nombre ;
+
     }
 
 }
