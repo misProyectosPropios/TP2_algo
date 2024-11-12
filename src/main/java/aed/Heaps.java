@@ -78,7 +78,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     public T desencolar(){
         T returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
         this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
-        
         //Bajar el elemento hasta la posición deseada
         this.bajar(0);
 
@@ -138,14 +137,20 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         T returnValue = this.heap.get(pos);
         swap(pos, this.heap.size() - 1);
         this.heap.remove(this.heap.size() - 1);
-        if (prioridadMayorQuePadre(pos, Heaps.calcularPosicionPadre(pos))) {
-            //Implementarlo para index
-            //subirElemento();
-        } else {
-            bajar(pos);
-        }
+        mover(pos);
         return returnValue;
     }
+
+    private void mover(int index) {
+        if (index == 0) {
+            bajar(index);
+        } else if (prioridadDeAlgunHijoEsMayor(index)) {
+            bajar(index);
+        } else {
+            subirElemento(index);
+        }
+    }
+
 
     //TIme complexity: O(n)
     private void FloydAlgorithm() {
@@ -173,6 +178,14 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     public int length() {
         return this.heap.size();
     }
+
+    public void modificar(int index, T newValue) {
+        this.heap.set(index, newValue);
+        this.mover(index);
+    }
+
+    
+
 
 
 }
