@@ -13,6 +13,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     public Heaps(Comparator<T> comparador, T[] array) {
+        this.comparador = comparador;
         this.heap = new ArrayList<>(array.length);
         for (T element : array) {
             this.heap.add(element);
@@ -74,7 +75,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     public T desencolar(){
         T returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
-        this.heap.set(0, this.heap.get(this.heap.size())); // O(1) Pasamos el ultimo al primeor
+        this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
         
         //Bajar el elemento hasta la posición deseada
         this.bajar(0);
@@ -170,7 +171,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     public int length() {
         return this.heap.size();
     }
-    
 
 
 }

@@ -12,9 +12,6 @@ public class BestEffort {
     ArrayList<Integer> mayorGanancia;
     ArrayList<Integer> mayorPerdida;
 
-
-
-
     public BestEffort (int cantCiudades, Traslado[] traslados){
         // Implementar
         //BestEffort res = new BestEffort () ;
