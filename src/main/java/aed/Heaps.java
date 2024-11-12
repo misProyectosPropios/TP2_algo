@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Heaps<T> implements ColaDePrioridad<T>{
-     ArrayList<T> heap = new ArrayList<T>(0);
+     ArrayList<T> heap;
     private Comparator<T> comparador;
     
 
     public Heaps (Comparator<T> comparador) {
         this.comparador = comparador;
+        this.heap = new ArrayList<T>(0);
     }
 
     public Heaps(Comparator<T> comparador, T[] array) {
