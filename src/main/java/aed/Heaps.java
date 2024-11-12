@@ -12,8 +12,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         this.comparador = comparador;
     }
 
-    public Heaps(Comparator<T> comparador, T[] array) {
-        this.comparador = comparador;
+    public Heaps (Comparator<T> comparador, T[] array) {
         this.heap = new ArrayList<>(array.length);
         for (T element : array) {
             this.heap.add(element);
@@ -75,7 +74,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     public T desencolar(){
         T returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
-        this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
+        this.heap.set(0, this.heap.get(this.heap.size())); // O(1) Pasamos el ultimo al primeor
         
         //Bajar el elemento hasta la posición deseada
         this.bajar(0);
@@ -145,6 +144,14 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return returnValue;
     }
 
+    public void convertArrayOfTIntoHeap(T[] array) {
+        this.heap = new ArrayList<>(array.length);
+        for (T element : array) {
+            this.heap.add(element);
+        }
+        this.FloydAlgorithm();
+    }
+
     //TIme complexity: O(n)
     private void FloydAlgorithm() {
         for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
@@ -168,9 +175,8 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return this.heap.size()==0;
     }
 
-    public int length() {
-        return this.heap.size();
-    }
+
+    
 
 
 }
