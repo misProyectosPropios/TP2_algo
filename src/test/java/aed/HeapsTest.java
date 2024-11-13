@@ -31,16 +31,16 @@ public class HeapsTest {
 
     @Test 
     void crearHeapAPartirDeArray() {
-        Integer[] array = {8, 3, 2, 7, 5, 6, 4, 1, 10};
+        Integer[] array = {8, 7, 2, 3, 5, 6, 4, 10, 1};
         Comparator<Integer> comp = Comparator.naturalOrder();
         Heaps<Integer> heap = new Heaps<>(comp, array);
         assertEquals(heap.length(), 9);
-        assertEquals(heap.desencolar(), 10);
-        assertEquals(heap.desencolar(), 8);
-        assertEquals(heap.desencolar(), 7);
-        assertEquals(heap.desencolar(), 6);
-        assertEquals(heap.desencolar(), 5);
-        assertEquals(heap.desencolar(), 4);
+        assertEquals(10, heap.desencolar());
+        assertEquals(8, heap.desencolar());
+        assertEquals(7, heap.desencolar());
+        assertEquals(6, heap.desencolar());
+        assertEquals(5, heap.desencolar());
+        assertEquals(4, heap.desencolar());
     }
 
 }
