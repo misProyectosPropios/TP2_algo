@@ -7,7 +7,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
      ArrayList<T> heap;
     private Comparator<T> comparador;
     
-
     public Heaps (Comparator<T> comparador) {
         this.comparador = comparador;
         this.heap = new ArrayList<T>(0);
@@ -36,6 +35,20 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         this.heap.add(element);
         this.subirElemento(this.heap.size() - 1);
     }
+
+    public boolean estaVacio(){
+        return this.heap.size()==0;
+    }
+
+    public int length() {
+        return this.heap.size();
+    }
+
+    public void modificar(int index, T newValue) {
+        this.heap.set(index, newValue);
+        this.mover(index);
+    }
+    
 
     private void subirElemento(int position) {
         int positionParent = calcularPosicionPadre(position);
@@ -202,18 +215,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         }
     } 
     
-    public boolean estaVacio(){
-        return this.heap.size()==0;
-    }
-
-    public int length() {
-        return this.heap.size();
-    }
-
-    public void modificar(int index, T newValue) {
-        this.heap.set(index, newValue);
-        this.mover(index);
-    }
+    
 
     
 
