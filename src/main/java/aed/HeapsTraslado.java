@@ -4,68 +4,72 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class HeapsTraslado<Traslado> implements ColaDePrioridad<Traslado>{
-     ArrayList<Traslado> heap;
+     ArrayList<Traslado> heapPorGanancia;
+     ArrayList<Traslado> heapPorTime;
     private Comparator<Traslado> comparador;
     
     public HeapsTraslado (Comparator<Traslado> comparador) {
-        this.comparador = comparador;
-        this.heap = new ArrayList<Traslado>(0);
+      //  this.comparador = comparador;
+      //  this.heap = new ArrayList<Traslado>(0);
     }
 
     public HeapsTraslado(Comparator<Traslado> comparador, Traslado[] array) {
-        this.comparador = comparador;
-        this.heap = new ArrayList<>(array.length);
-        for (Traslado element : array) {
-            this.heap.add(element);
-        }
-        this.FloydAlgorithm();
+      //  this.comparador = comparador;
+      //  this.heap = new ArrayList<>(array.length);
+      //  for (Traslado element : array) {
+      //      this.heap.add(element);
+      //  }
+      //  this.FloydAlgorithm();
     }
 
     public Traslado proximo() {
-
-        if (this.heap.size() > 0) {
-            return this.heap.get(0);
-        }
-        return null;
+        Traslado returnValue = this.heapPorGanancia.get(0);
+        return returnValue;
+     //   if (this.heap.size() > 0) {
+     //       return this.heap.get(0);
+     //   }
+     //   return null;
     }
 
     public void encolar(Traslado element) {
         //Needs to be implemented
         //Adds element to the last position
-        this.heap.add(element);
-        this.subirElemento(this.heap.size() - 1);
+      //  this.heap.add(element);
+        //this.subirElemento(this.heap.size() - 1);
     }
 
     public boolean estaVacio(){
-        return this.heap.size()==0;
+        return true;
+       //  return this.heap.size()==0;
     }
 
     public int length() {
-        return this.heap.size();
+        return 1;
+      //  return this.heap.size();
     }
 
     public void modificar(int index, Traslado newValue) {
-        this.heap.set(index, newValue);
-        this.mover(index);
+      //  this.heap.set(index, newValue);
+      //  this.mover(index);
     }
 
     public Traslado desencolar() {
-        Traslado returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
-        this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
-        //Bajar el elemento hasta la posición deseada
-        this.bajar(0);
+        Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
+    //    this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
+    //    //Bajar el elemento hasta la posición deseada
+    //    this.bajar(0);
 
         return returnValue;
     }
 
     public Traslado eliminar(int pos) {
-        Traslado returnValue = this.heap.get(pos);
-        swap(pos, this.heap.size() - 1);
-        this.heap.remove(this.heap.size() - 1);
-        mover(pos);
+        Traslado returnValue = this.heapPorGanancia.get(pos);
+    //    swap(pos, this.heap.size() - 1);
+    //    this.heap.remove(this.heap.size() - 1);
+    //    mover(pos);
         return returnValue;
     }
-
+/* 
     private void subirElemento(int position) {
         int positionParent = calcularPosicionPadre(position);
         while (position != 0 && prioridadMayorQuePadre(position)) {
@@ -200,4 +204,5 @@ public class HeapsTraslado<Traslado> implements ColaDePrioridad<Traslado>{
 
         }
     }
+    */
 }
