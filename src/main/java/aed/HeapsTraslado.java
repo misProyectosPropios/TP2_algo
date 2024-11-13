@@ -5,37 +5,35 @@ import java.util.Comparator;
 
 public class HeapsTraslado{
     private ArrayList<Traslado> heapPorGanancia;
-    private ArrayList<Traslado> heapPorTime;
+    private ArrayList<Traslado> heapPorTiempo;
     private Comparator<Traslado> comparadorPorGanancia;
-    private Comparator<Traslado> comparadorPorTime;
+    private Comparator<Traslado> comparadorPorTiempo;
     
     public HeapsTraslado (Comparator<Traslado> comparador) {
         //Inicializando los arrays
         heapPorGanancia = new ArrayList<>(0);
-        heapPorTime = new ArrayList<>(0);
+        heapPorTiempo = new ArrayList<>(0);
 
         //Craaciòn del comparador por ganancia
         comparadorPorGanancia = Comparator.comparing(Traslado :: gananciaNeta);
         comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
 
         //Craaciòn del comparador por tiempo
-        comparadorPorTime = Comparator.comparing(Traslado :: timestamp);
-        comparadorPorTime = comparadorPorTime.reversed();
-        comparadorPorTime = comparadorPorTime.thenComparing(Traslado::id);
+        comparadorPorTiempo = Comparator.comparing(Traslado :: timestamp);
+        comparadorPorTiempo = comparadorPorTiempo.reversed();
+        comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);
     }
 
     public HeapsTraslado(Traslado[] array) {
         heapPorGanancia = new ArrayList<>(array.length);
-        heapPorTime = new ArrayList<>(array.length);
+        heapPorTiempo = new ArrayList<>(array.length);
 
-        //Agrego los elementos al array de heapPorGanancia para despuès ordenarlo
-        for (Traslado element : array) {
-            this.heapPorGanancia.add(element);
-        }
-
-        //Agrego los elementos al array de heapPorGanancia para despuès ordenarlo
-        for (Traslado element : array) {
-            this.heapPorTime.add(element);
+        //Agrego los elementos al array de heapPorGanancia y heapPorTiempo para despuès ordenarlo
+        for (int i = 0; i < array.length; i++) {
+            array[i].setIndiceAHeapAntiguedad(i);
+            array[i].setIndiceAHeapGanancia(i);
+            this.heapPorGanancia.add(array[i]);
+            this.heapPorTiempo.add(array[i]);
         }
 
         //Craaciòn del comparador por ganancia
@@ -43,9 +41,9 @@ public class HeapsTraslado{
         comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
 
         //Craaciòn del comparador por tiempo
-        comparadorPorTime = Comparator.comparing(Traslado :: timestamp);
-        comparadorPorTime = comparadorPorTime.reversed();
-        comparadorPorTime = comparadorPorTime.thenComparing(Traslado::id);
+        comparadorPorTiempo = Comparator.comparing(Traslado :: timestamp);
+        comparadorPorTiempo = comparadorPorTiempo.reversed();
+        comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);
 
         //Ordenarlos usando el heapify
 
@@ -59,8 +57,8 @@ public class HeapsTraslado{
     }
 
     public Traslado proximoPorTiempo() {
-        if (this.heapPorTime.size() > 0) {
-            return this.heapPorTime.get(0);
+        if (this.heapPorTiempo.size() > 0) {
+            return this.heapPorTiempo.get(0);
         }
         return null;
     }
@@ -69,7 +67,7 @@ public class HeapsTraslado{
         //Needs to be implemented
         //Adds element to the last position
         this.heapPorGanancia.add(element);
-        this.heapPorTime.add(element); 
+        this.heapPorTiempo.add(element); 
         //Ordenarlo ahora
         
         //this.subirElemento(this.heap.size() - 1);

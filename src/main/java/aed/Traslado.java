@@ -7,6 +7,8 @@ public class Traslado {
     private int destino ;
     private int gananciaNeta ;
     private int timestamp ;
+    private int indiceAHeapGanancia;
+    private int indiceAHeapAntiguedad;
 
     // Constructor.
     public Traslado(int id, int origen, int destino, int gananciaNeta, int timestamp) {
@@ -59,7 +61,8 @@ public class Traslado {
         return this.timestamp ; 
     
     }
-/*
+
+
     public int obtenerIndiceAHeapGanancia() {
 
         return this.indiceAHeapGanancia ;
@@ -71,5 +74,13 @@ public class Traslado {
         return this.indiceAHeapAntiguedad ;
 
     }
-*/
+
+
+    public void setIndiceAHeapAntiguedad(int index) {
+        this.indiceAHeapAntiguedad = index;
+    }
+
+    public void setIndiceAHeapGanancia(int index) {
+        this.indiceAHeapGanancia = index;
+    }
 }
