@@ -33,7 +33,6 @@ public class HeapsTest {
     void crearHeapAPartirDeArray() {
         Integer[] array = {8, 7, 2, 3, 5, 6, 4, 10, 1};
         Comparator<Integer> comp = Comparator.naturalOrder();
-        comp = comp.reversed();
         Heaps<Integer> heap = new Heaps<>(comp, array);
         assertEquals(heap.length(), 9);
         assertEquals(10, heap.desencolar());
