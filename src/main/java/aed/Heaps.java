@@ -48,7 +48,24 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         this.heap.set(index, newValue);
         this.mover(index);
     }
-    
+
+    public T desencolar(){
+        T returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
+        this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
+        //Bajar el elemento hasta la posición deseada
+        this.bajar(0);
+
+        return returnValue;
+    }
+
+    public T eliminar(int pos) {
+        //Implementar
+        T returnValue = this.heap.get(pos);
+        swap(pos, this.heap.size() - 1);
+        this.heap.remove(this.heap.size() - 1);
+        mover(pos);
+        return returnValue;
+    }
 
     private void subirElemento(int position) {
         int positionParent = calcularPosicionPadre(position);
@@ -91,14 +108,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     }
 
-    public T desencolar(){
-        T returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
-        this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
-        //Bajar el elemento hasta la posición deseada
-        this.bajar(0);
-
-        return returnValue;
-    }
+    
 
     //Asumimos que no va a ser una hoja
     private boolean prioridadDeAlgunHijoEsMayor(int position) {
@@ -163,14 +173,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return Heaps.calcularPosicionHijoDerecho(indice) < this.heap.size();
     }
 
-    public T eliminar(int pos) {
-        //Implementar
-        T returnValue = this.heap.get(pos);
-        swap(pos, this.heap.size() - 1);
-        this.heap.remove(this.heap.size() - 1);
-        mover(pos);
-        return returnValue;
-    }
+    
 
     private void mover(int index) {
         if (index == 0) {
