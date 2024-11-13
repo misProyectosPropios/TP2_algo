@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Heaps<T> implements ColaDePrioridad<T>{
-     ArrayList<T> heap = new ArrayList<T>(0);
+     ArrayList<T> heap;
     private Comparator<T> comparador;
     
 
     public Heaps (Comparator<T> comparador) {
         this.comparador = comparador;
+        this.heap = new ArrayList<T>(0);
     }
 
     public Heaps (Comparator<T> comparador, T[] array) {
@@ -21,20 +22,23 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     public T proximo() {
-        return this.heap.get(0);
+
+        if (this.heap.size() > 0) {
+            return this.heap.get(0);
+        }
+        return null;
     }
 
     public void encolar(T element) {
         //Needs to be implemented
         //Adds element to the last position
         this.heap.add(element);
-        this.subirElemento();
+        this.subirElemento(this.heap.size() - 1);
     }
 
-    private void subirElemento() {
-        int position = this.heap.size() - 1;
+    private void subirElemento(int position) {
         int positionParent = calcularPosicionPadre(position);
-        while (position != 0 && prioridadMayorQuePadre(position, positionParent)) {
+        while (position != 0 && prioridadMayorQuePadre(position)) {
             swap(position, positionParent);
             position = positionParent;
             positionParent = calcularPosicionPadre(position);
@@ -60,9 +64,10 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     //Implementarlo
-    private boolean prioridadMayorQuePadre(int positionElement, int positionParentElement) {
+    private boolean prioridadMayorQuePadre(int positionElement) {
         //Si el elemento es menor que el parent, debe de devolver numero negativo
-        return comparador.compare(this.heap.get(positionElement), this.heap.get(positionParentElement)) < 0; 
+        int positionPadre = calcularPosicionPadre(positionElement);
+        return comparador.compare(this.heap.get(positionElement), this.heap.get(positionPadre)) > 0;
     }
 
     private void swap(int position1, int position2) {
@@ -74,8 +79,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     public T desencolar(){
         T returnValue = this.heap.get(0); //Obtenemos el Objecto a devovler O(1)
-        this.heap.set(0, this.heap.get(this.heap.size())); // O(1) Pasamos el ultimo al primeor
-        
+        this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
         //Bajar el elemento hasta la posición deseada
         this.bajar(0);
 
@@ -85,7 +89,22 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     //Asumimos que no va a ser una hoja
     private boolean prioridadDeAlgunHijoEsMayor(int position) {
         //Implementar usando el comparador
-        return this.prioridadDeHijoIzquierdo(position) || this.prioridadDeHijoDerecho(position);
+        boolean res = false;
+        if (tieneHijoDerecho(position)){
+            T valueRightChild = heap.get(calcularPosicionHijoDerecho(position));
+            T valuePosition = heap.get(position);
+            if (comparador.compare(valueRightChild, valuePosition) > 0) {
+                res = true;
+            }
+        }
+        if (tieneHijoIzquierdo(position)) {
+            T valueLeftChild = heap.get(calcularPosicionHijoIzquierdo(position));
+            T valuePosition = heap.get(position);
+            if (comparador.compare(valueLeftChild, valuePosition) > 0) {
+                res = true;
+            }
+        }
+        return res;
     }
 
     //Asumimos que no es un null
@@ -135,13 +154,18 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         T returnValue = this.heap.get(pos);
         swap(pos, this.heap.size() - 1);
         this.heap.remove(this.heap.size() - 1);
-        if (prioridadMayorQuePadre(pos, Heaps.calcularPosicionPadre(pos))) {
-            //Implementarlo para index
-            subirElemento();
-        } else {
-            bajar(pos);
-        }
+        mover(pos);
         return returnValue;
+    }
+
+    private void mover(int index) {
+        if (index == 0) {
+            bajar(index);
+        } else if (prioridadDeAlgunHijoEsMayor(index)) {
+            bajar(index);
+        } else {
+            subirElemento(index);
+        }
     }
 
     public void convertArrayOfTIntoHeap(T[] array) {
@@ -160,14 +184,27 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     private void bajar(int index) {
-        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayor(index)) {
+        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayor(index)) {/*
             if (this.compararPrioridadHijos(index)) {
                 swap(index, Heaps.calcularPosicionHijoIzquierdo(index));
                 index = Heaps.calcularPosicionHijoIzquierdo(index);
             } else {
                 swap(index, Heaps.calcularPosicionHijoDerecho(index));
                 index = Heaps.calcularPosicionHijoDerecho(index);
+            }*/
+            if (tieneHijoIzquierdo(index) && !tieneHijoDerecho(index)) {
+                swap(index, calcularPosicionHijoIzquierdo(index));
+                index =calcularPosicionHijoIzquierdo (index);
+                //El hijo izquierdo es mayor que el derecho
+            } else if (comparador.compare(this.heap.get(calcularPosicionHijoIzquierdo(index)), this.heap.get(calcularPosicionHijoDerecho(index))) > 0 ){
+                swap(index, calcularPosicionHijoIzquierdo(index));
+                index = calcularPosicionHijoIzquierdo(index);
+                //El hijo derecho o es mayor o es igual al izquierdo
+            } else {
+                swap(index, calcularPosicionHijoDerecho(index));
+                index = calcularPosicionHijoDerecho(index);
             }
+
         }
     } 
     
@@ -177,6 +214,14 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
 
     
+
+    public void modificar(int index, T newValue) {
+        this.heap.set(index, newValue);
+        this.mover(index);
+    }
+
+    
+
 
 
 }
