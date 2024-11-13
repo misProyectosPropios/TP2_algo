@@ -85,11 +85,17 @@ public class HeapsTraslado{
 
     public Traslado desencolarPorGanancia() {
         Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
+        swapGanancia(0, this.length() - 1);
+        //this.bajarGanancia(0);
         return returnValue;
     }
 
     public Traslado desencolarPorTiempo() {
-        Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
+        Traslado returnValue = this.heapPorTiempo.get(0); //Obtenemos el Objecto a devovler O(1)
+
+        swapTiempo(0, this.length() - 1);
+        //this.bajarTiempo(0);
+
         return returnValue;
     }
 
@@ -106,7 +112,7 @@ public class HeapsTraslado{
 
         return returnValue;
     }*/
-    
+
 /*     //Me parece que no hará falta un eliminar en pos que sea publico, 
     //SI que sea privado
    // public Traslado eliminar(int pos) {
@@ -162,7 +168,62 @@ public class HeapsTraslado{
         this.heapPorTiempo.set(position2, guardar);
     }
 
+    private void bajarGanancia(int index) {
+        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayorGanancia(index)) {
+        
+        }
+    }
 
+
+    private boolean prioridadDeAlgunHijoEsMayorGanancia(int position) {
+        boolean res = false;
+        if (tieneHijoDerecho(position)){
+            Traslado valueRightChild = heapPorGanancia.get(calcularPosicionHijoDerecho(position));
+            Traslado valuePosition = heapPorGanancia.get(position);
+            if (comparadorPorGanancia.compare(valueRightChild, valuePosition) > 0) {
+                res = true;
+            }
+        }
+        if (tieneHijoIzquierdo(position)) {
+            Traslado valueLeftChild = heapPorGanancia.get(calcularPosicionHijoIzquierdo(position));
+            Traslado valuePosition = heapPorGanancia.get(position);
+            if (comparadorPorGanancia.compare(valueLeftChild, valuePosition) > 0) {
+                res = true;
+            }
+        }
+        return res;
+    }
+
+    private boolean prioridadDeAlgunHijoEsMayorTiempo(int position) {
+        boolean res = false;
+        if (tieneHijoDerecho(position)){
+            Traslado valueRightChild = heapPorTiempo.get(calcularPosicionHijoDerecho(position));
+            Traslado valuePosition = heapPorTiempo.get(position);
+            if (comparadorPorTiempo.compare(valueRightChild, valuePosition) > 0) {
+                res = true;
+            }
+        }
+        if (tieneHijoIzquierdo(position)) {
+            Traslado valueLeftChild = heapPorTiempo.get(calcularPosicionHijoIzquierdo(position));
+            Traslado valuePosition = heapPorTiempo.get(position);
+            if (comparadorPorTiempo.compare(valueLeftChild, valuePosition) > 0) {
+                res = true;
+            }
+        }
+        return res;
+    }
+
+    private boolean esHoja(int indice) {
+        return indice * 2 + 2 >= this.length();
+    }
+
+    private boolean tieneHijoIzquierdo(int indice) {
+        return indice >= 0 && indice * 2 + 1 < this.length();
+    }
+
+    private boolean tieneHijoDerecho(int indice) {
+        return indice >= 0 && indice * 2 + 2 < this.length();
+    }
 
     // Metodos estáticos
     private static int calcularPosicionPadre(int position) {
