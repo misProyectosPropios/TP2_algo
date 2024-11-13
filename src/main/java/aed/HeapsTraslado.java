@@ -51,6 +51,20 @@ public class HeapsTraslado{
 
     }
 
+    public Traslado proximoPorGanancia() {
+        if (this.heapPorGanancia.size() > 0) {
+            return this.heapPorGanancia.get(0);
+        }
+        return null;
+    }
+
+    public Traslado proximoPorTiempo() {
+        if (this.heapPorTime.size() > 0) {
+            return this.heapPorTime.get(0);
+        }
+        return null;
+    }
+
     public Traslado proximo() {
         Traslado returnValue = this.heapPorGanancia.get(0);
         return returnValue;
