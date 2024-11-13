@@ -7,6 +7,8 @@ public class Traslado {
     private int destino ;
     private int gananciaNeta ;
     private int timestamp ;
+    private int indiceAHeapGanancia ;
+    private int indiceAHeapAntiguedad ;
 
     // Constructor.
     public Traslado(int id, int origen, int destino, int gananciaNeta, int timestamp) {
@@ -27,49 +29,51 @@ public class Traslado {
         this.destino = copiado.destino ;
         this.gananciaNeta = copiado.gananciaNeta ;
         this.timestamp = copiado.timestamp ;
+        this.indiceAHeapGanancia = copiado.indiceAHeapGanancia ;
+        this.indiceAHeapAntiguedad = copiado.indiceAHeapAntiguedad ;
         
     } 
 
-    public int obtenerId() {
+    public int id() {
 
         return this.id ;
         
     }
 
-    public int obtenerCiudadOrigen() {
+    public int origen() {
 
         return this.origen ;
 
     }
 
-    public int obtenerCiudadDestino() {
+    public int destino() {
 
         return this.destino ;
 
     }
 
-    public int obtenerGananciaNeta() { 
+    public int gananciaNeta() { 
         
         return this.gananciaNeta ;
 
     }
 
-    public int obtenerTimestamp() {
+    public int timestamp() {
         
         return this.timestamp ; 
     
     }
-/*
-    public int obtenerIndiceAHeapGanancia() {
+
+    public int indiceAHeapGanancia() {
 
         return this.indiceAHeapGanancia ;
 
     }
 
-    public int obtenerIndexAHeapAntiguedad() {
+    public int indexAHeapAntiguedad() {
 
         return this.indiceAHeapAntiguedad ;
 
     }
-*/
+
 }
