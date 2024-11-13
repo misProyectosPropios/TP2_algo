@@ -30,7 +30,7 @@ public class Traslado {
         
     } 
 
-    public int obtenerId() {
+    public int id() {
 
         return this.id ;
         
@@ -48,13 +48,13 @@ public class Traslado {
 
     }
 
-    public int obtenerGananciaNeta() { 
+    public int gananciaNeta() { 
         
         return this.gananciaNeta ;
 
     }
 
-    public int obtenerTimestamp() {
+    public int timestamp() {
         
         return this.timestamp ; 
     

@@ -3,14 +3,25 @@ package aed;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class HeapsTraslado<Traslado> implements ColaDePrioridad<Traslado>{
-     ArrayList<Traslado> heapPorGanancia;
-     ArrayList<Traslado> heapPorTime;
-    private Comparator<Traslado> comparador;
+public class HeapsTraslado{
+    private ArrayList<Traslado> heapPorGanancia;
+    private ArrayList<Traslado> heapPorTime;
+    private Comparator<Traslado> comparadorPorGanancia;
+    private Comparator<Traslado> comparadorPorTime;
     
     public HeapsTraslado (Comparator<Traslado> comparador) {
-      //  this.comparador = comparador;
-      //  this.heap = new ArrayList<Traslado>(0);
+        //Inicializando los arrays
+        heapPorGanancia = new ArrayList<>(0);
+        heapPorTime = new ArrayList<>(0);
+
+        //Craaciòn del comparador por ganancia
+        comparadorPorGanancia = Comparator.comparing(Traslado :: gananciaNeta);
+        comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
+
+        //Craaciòn del comparador por tiempo
+        comparadorPorTime = Comparator.comparing(Traslado :: timestamp);
+        comparadorPorTime = comparadorPorTime.reversed();
+        comparadorPorTime = comparadorPorTime.thenComparing(Traslado::id);
     }
 
     public HeapsTraslado(Comparator<Traslado> comparador, Traslado[] array) {
