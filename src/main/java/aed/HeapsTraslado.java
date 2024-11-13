@@ -68,18 +68,15 @@ public class HeapsTraslado{
         //Adds element to the last position
         this.heapPorGanancia.add(element);
         this.heapPorTiempo.add(element); 
-        //Ordenarlo ahora
+
         
+        //Ordenarlo ahora
+        this.subirElementoGanancia(this.heapPorGanancia.size() - 1);
+        this.subirElementoTiempo(this.heapPorGanancia.size() - 1);
         //this.subirElemento(this.heap.size() - 1);
     }
 
-    public boolean estaVacio(){
-        return this.heapPorGanancia.size()==0; // Tendrían los mismos elementos el de tiempo y ganancia
-    }
-
-    public int length() {
-        return this.heapPorGanancia.size(); // Tendrían los mismos elementos el de tiempo y ganancia
-    }
+    
 
     public void modificar(int index, Traslado newValue) {
       //  this.heap.set(index, newValue);
@@ -96,6 +93,11 @@ public class HeapsTraslado{
         return returnValue;
     }
 
+    public int length() {
+        return this.heapPorGanancia.size(); // Tendrían los mismos elementos el de tiempo y ganancia
+    }
+
+    /*
     public Traslado desencolar() {
         Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
     //    this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
@@ -103,10 +105,9 @@ public class HeapsTraslado{
     //    this.bajar(0);
 
         return returnValue;
-    }
-
-
-    //Me parece que no hará falta un eliminar en pos que sea publico, 
+    }*/
+    
+/*     //Me parece que no hará falta un eliminar en pos que sea publico, 
     //SI que sea privado
    // public Traslado eliminar(int pos) {
    //     Traslado returnValue = this.heapPorGanancia.get(pos);
@@ -115,9 +116,55 @@ public class HeapsTraslado{
    // //    mover(pos);
    //     return returnValue;
    // }
+*/
+
+    private void subirElementoGanancia(int posicion) {
+        int positionParent = calcularPosicionPadre(posicion);
+        while (posicion != 0 && prioridadMayorQuePadrePorGanancia(posicion)) {
+            swapGanancia(posicion, positionParent);
+            posicion = positionParent;
+            positionParent = calcularPosicionPadre(posicion);
+        }
+    }
+
+    private boolean prioridadMayorQuePadrePorGanancia(int positionElement) {
+        //Si el elemento es menor que el parent, debe de devolver numero negativo
+        int positionPadre = calcularPosicionPadre(positionElement);
+        return comparadorPorGanancia.compare(this.heapPorGanancia.get(positionElement), this.heapPorGanancia.get(positionPadre)) > 0;
+    }
+
+    private void swapGanancia(int position1, int position2) {
+        //Falta adaptar los handles todavia del heap por tiempo
+        Traslado guardar = this.heapPorGanancia.get(position1);
+        this.heapPorGanancia.set(position1, this.heapPorGanancia.get(position2));
+        this.heapPorGanancia.set(position2, guardar);
+    }
+
+    private void subirElementoTiempo(int posicion) {
+        int positionParent = calcularPosicionPadre(posicion);
+        while (posicion != 0 && prioridadMayorQuePadrePorTiempo(posicion)) {
+            swapTiempo(positionParent, positionParent);
+            posicion = positionParent;
+            positionParent = calcularPosicionPadre(posicion);
+        }
+    }
+
+    private boolean prioridadMayorQuePadrePorTiempo(int positionElement) {
+        //Si el elemento es menor que el parent, debe de devolver numero negativo
+        int positionPadre = calcularPosicionPadre(positionElement);
+        return comparadorPorTiempo.compare(this.heapPorTiempo.get(positionElement), this.heapPorTiempo.get(positionPadre)) > 0;
+    }
+
+    private void swapTiempo(int position1, int position2) {
+        //Falta adaptar los handles todavia del heap por tiempo
+        Traslado guardar = this.heapPorTiempo.get(position1);
+        this.heapPorTiempo.set(position1, this.heapPorTiempo.get(position2));
+        this.heapPorTiempo.set(position2, guardar);
+    }
 
 
 
+    // Metodos estáticos
     private static int calcularPosicionPadre(int position) {
         int positionParent;
         if (position % 2 == 0) {
