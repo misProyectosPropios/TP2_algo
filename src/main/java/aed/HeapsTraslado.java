@@ -24,13 +24,31 @@ public class HeapsTraslado{
         comparadorPorTime = comparadorPorTime.thenComparing(Traslado::id);
     }
 
-    public HeapsTraslado(Comparator<Traslado> comparador, Traslado[] array) {
-      //  this.comparador = comparador;
-      //  this.heap = new ArrayList<>(array.length);
-      //  for (Traslado element : array) {
-      //      this.heap.add(element);
-      //  }
-      //  this.FloydAlgorithm();
+    public HeapsTraslado(Traslado[] array) {
+        heapPorGanancia = new ArrayList<>(array.length);
+        heapPorTime = new ArrayList<>(array.length);
+
+        //Agrego los elementos al array de heapPorGanancia para despuès ordenarlo
+        for (Traslado element : array) {
+            this.heapPorGanancia.add(element);
+        }
+
+        //Agrego los elementos al array de heapPorGanancia para despuès ordenarlo
+        for (Traslado element : array) {
+            this.heapPorTime.add(element);
+        }
+
+        //Craaciòn del comparador por ganancia
+        comparadorPorGanancia = Comparator.comparing(Traslado :: gananciaNeta);
+        comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
+
+        //Craaciòn del comparador por tiempo
+        comparadorPorTime = Comparator.comparing(Traslado :: timestamp);
+        comparadorPorTime = comparadorPorTime.reversed();
+        comparadorPorTime = comparadorPorTime.thenComparing(Traslado::id);
+
+        //Ordenarlos usando el heapify
+
     }
 
     public Traslado proximo() {
