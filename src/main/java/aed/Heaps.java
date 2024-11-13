@@ -59,7 +59,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     public T eliminar(int pos) {
-        //Implementar
         T returnValue = this.heap.get(pos);
         swap(pos, this.heap.size() - 1);
         this.heap.remove(this.heap.size() - 1);
@@ -94,7 +93,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return position * 2 + 2;
     }
 
-    //Implementarlo
     private boolean prioridadMayorQuePadre(int positionElement) {
         //Si el elemento es menor que el parent, debe de devolver numero negativo
         int positionPadre = calcularPosicionPadre(positionElement);
@@ -108,11 +106,8 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     }
 
-    
-
     //Asumimos que no va a ser una hoja
     private boolean prioridadDeAlgunHijoEsMayor(int position) {
-        //Implementar usando el comparador
         boolean res = false;
         if (tieneHijoDerecho(position)){
             T valueRightChild = heap.get(calcularPosicionHijoDerecho(position));
@@ -139,14 +134,12 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
     //Asumimos que no es un null
     private boolean prioridadDeHijoDerecho(int position) {
-        //Implementarlo
         //Returns true if the right child is greater than the position value
         return tieneHijoDerecho(position) && comparador.compare(this.heap.get(Heaps.calcularPosicionHijoDerecho(position)), this.heap.get(position)) > 0;
     }
 
     //Devuelve true si es izquierda, si es false es derecha
     private boolean compararPrioridadHijos(int position) {
-        //implementar
         if (tieneHijoIzquierdo(position) && !tieneHijoDerecho(position)) {
             return true;
         } 
@@ -173,8 +166,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         return Heaps.calcularPosicionHijoDerecho(indice) < this.heap.size();
     }
 
-    
-
     private void mover(int index) {
         if (index == 0) {
             bajar(index);
@@ -185,7 +176,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         }
     }
 
-
     //TIme complexity: O(n)
     private void FloydAlgorithm() {
         for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
@@ -194,14 +184,7 @@ public class Heaps<T> implements ColaDePrioridad<T>{
     }
 
     private void bajar(int index) {
-        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayor(index)) {/*
-            if (this.compararPrioridadHijos(index)) {
-                swap(index, Heaps.calcularPosicionHijoIzquierdo(index));
-                index = Heaps.calcularPosicionHijoIzquierdo(index);
-            } else {
-                swap(index, Heaps.calcularPosicionHijoDerecho(index));
-                index = Heaps.calcularPosicionHijoDerecho(index);
-            }*/
+        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayor(index)) {
             if (tieneHijoIzquierdo(index) && !tieneHijoDerecho(index)) {
                 swap(index, calcularPosicionHijoIzquierdo(index));
                 index =calcularPosicionHijoIzquierdo (index);
@@ -217,11 +200,4 @@ public class Heaps<T> implements ColaDePrioridad<T>{
 
         }
     } 
-    
-    
-
-    
-
-
-
 }
