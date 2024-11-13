@@ -65,35 +65,37 @@ public class HeapsTraslado{
         return null;
     }
 
-    public Traslado proximo() {
-        Traslado returnValue = this.heapPorGanancia.get(0);
-        return returnValue;
-     //   if (this.heap.size() > 0) {
-     //       return this.heap.get(0);
-     //   }
-     //   return null;
-    }
-
     public void encolar(Traslado element) {
         //Needs to be implemented
         //Adds element to the last position
-      //  this.heap.add(element);
+        this.heapPorGanancia.add(element);
+        this.heapPorTime.add(element); 
+        //Ordenarlo ahora
+        
         //this.subirElemento(this.heap.size() - 1);
     }
 
     public boolean estaVacio(){
-        return true;
-       //  return this.heap.size()==0;
+        return this.heapPorGanancia.size()==0; // Tendrían los mismos elementos el de tiempo y ganancia
     }
 
     public int length() {
-        return 1;
-      //  return this.heap.size();
+        return this.heapPorGanancia.size(); // Tendrían los mismos elementos el de tiempo y ganancia
     }
 
     public void modificar(int index, Traslado newValue) {
       //  this.heap.set(index, newValue);
       //  this.mover(index);
+    }
+
+    public Traslado desencolarPorGanancia() {
+        Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
+        return returnValue;
+    }
+
+    public Traslado desencolarPorTiempo() {
+        Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
+        return returnValue;
     }
 
     public Traslado desencolar() {
@@ -105,22 +107,18 @@ public class HeapsTraslado{
         return returnValue;
     }
 
-    public Traslado eliminar(int pos) {
-        Traslado returnValue = this.heapPorGanancia.get(pos);
-    //    swap(pos, this.heap.size() - 1);
-    //    this.heap.remove(this.heap.size() - 1);
-    //    mover(pos);
-        return returnValue;
-    }
-/* 
-    private void subirElemento(int position) {
-        int positionParent = calcularPosicionPadre(position);
-        while (position != 0 && prioridadMayorQuePadre(position)) {
-            swap(position, positionParent);
-            position = positionParent;
-            positionParent = calcularPosicionPadre(position);
-        }
-    }
+
+    //Me parece que no hará falta un eliminar en pos que sea publico, 
+    //SI que sea privado
+   // public Traslado eliminar(int pos) {
+   //     Traslado returnValue = this.heapPorGanancia.get(pos);
+   // //    swap(pos, this.heap.size() - 1);
+   // //    this.heap.remove(this.heap.size() - 1);
+   // //    mover(pos);
+   //     return returnValue;
+   // }
+
+
 
     private static int calcularPosicionPadre(int position) {
         int positionParent;
@@ -139,6 +137,18 @@ public class HeapsTraslado{
     private static int calcularPosicionHijoDerecho(int position) {
         return position * 2 + 2;
     }
+
+    /* 
+    private void subirElemento(int position) {
+        int positionParent = calcularPosicionPadre(position);
+        while (position != 0 && prioridadMayorQuePadre(position)) {
+            swap(position, positionParent);
+            position = positionParent;
+            positionParent = calcularPosicionPadre(position);
+        }
+    }
+
+    
 
     private boolean prioridadMayorQuePadre(int positionElement) {
         //Si el elemento es menor que el parent, debe de devolver numero negativo
