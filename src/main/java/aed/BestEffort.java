@@ -55,24 +55,40 @@ public class BestEffort {
 
         int index = 0;
         while (n > 0 && traslados.length() > 0) {
+
             Traslado despachado = traslados.desencolarPorGanancia();
+            res[index] = despachado.id();
             Traslado[] despachados = {new Traslado(despachado)}; //O (1)
+
+
+            sumaDeGananciaDeDespachos = despachado.gananciaNeta();
+            totalDespachados++;
 
             mayorSuperavit.despacharTraslados(despachados);
 
-            res[index] = despachado.id();
+            //Modifico el de mayorGanancia si cambia
+            int otraGanancia = mayorSuperavit.getGanancia(despachado.obtenerCiudadOrigen());
+            int gananciaMaxima = mayorSuperavit.getGanancia(mayorGanancia.get(0));
+            if (otraGanancia > gananciaMaxima) {
+                mayorGanancia = new ArrayList<>(1);
+                mayorGanancia.add(despachado.obtenerCiudadOrigen());
+            }
+            else if (otraGanancia == gananciaMaxima) {
+                mayorGanancia.add(despachado.obtenerCiudadOrigen());
+            }
+
+            int otraPerdida = mayorSuperavit.getPerdida(despachado.obtenerCiudadDestino());
+            int perdidaMaxima = mayorSuperavit.getGanancia(mayorPerdida.get(0));
+            if (otraPerdida > perdidaMaxima) {
+                mayorPerdida = new ArrayList<>(1);
+                mayorGanancia.add(despachado.obtenerCiudadDestino());
+            }
+            else if (otraPerdida == perdidaMaxima) {
+                mayorGanancia.add(despachado.obtenerCiudadDestino());
+            }
+            n--;
+            index++;
         }
-
-        //Modificar el heapDeSuperativ
-
-
-
-        //Modificar el mayorPerdida
-
-        //Modificar el mayorGanancia
-
-        //Modificar cantDeTraslados realizados asi como su ganancia
-
         return res;
     }
 
@@ -89,16 +105,37 @@ public class BestEffort {
         while (n > 0 && traslados.length() > 0) {
             Traslado despachado = traslados.desencolarPorTiempo();
             res[index] = despachado.id();
+            Traslado[] despachados = {new Traslado(despachado)}; //O (1)
+
+            sumaDeGananciaDeDespachos = despachado.gananciaNeta();
+            totalDespachados++;
+
+            mayorSuperavit.despacharTraslados(despachados);
+
+            //Modifico el de mayorGanancia si cambia
+            int otraGanancia = mayorSuperavit.getGanancia(despachado.obtenerCiudadOrigen());
+            int gananciaMaxima = mayorSuperavit.getGanancia(mayorGanancia.get(0));
+            if (otraGanancia > gananciaMaxima) {
+                mayorGanancia = new ArrayList<>(1);
+                mayorGanancia.add(despachado.obtenerCiudadOrigen());
+            }
+            else if (otraGanancia == gananciaMaxima) {
+                mayorGanancia.add(despachado.obtenerCiudadOrigen());
+            }
+
+            int otraPerdida = mayorSuperavit.getPerdida(despachado.obtenerCiudadDestino());
+            int perdidaMaxima = mayorSuperavit.getGanancia(mayorPerdida.get(0));
+            if (otraPerdida > perdidaMaxima) {
+                mayorPerdida = new ArrayList<>(1);
+                mayorGanancia.add(despachado.obtenerCiudadDestino());
+            }
+            else if (otraPerdida == perdidaMaxima) {
+                mayorGanancia.add(despachado.obtenerCiudadDestino());
+            }
+            index++;
+            n--;
         }
 
-        //Modificar el heapDeSuperativ
-
-        //Modificar el mayorPerdida
-
-
-        //Modificar el mayorGanancia
-
-        //Modificar cantDeTraslados realizados asi como su ganancia
         return res;
     }
 
@@ -111,12 +148,10 @@ public class BestEffort {
     }
 
     public ArrayList<Integer> ciudadesConMayorPerdida(){
-        // Implementar
         return this.mayorPerdida;
     }
 
     public int gananciaPromedioPorTraslado(){
-        // Implementar
         return this.sumaDeGananciaDeDespachos / this.totalDespachados;
     }
     

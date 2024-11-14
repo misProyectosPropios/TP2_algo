@@ -47,6 +47,14 @@ public class HeapCiudad {
         }
     }
 
+    public int getGanancia(int index) {
+        return this.arrayCiudad[index].gananciaNeta();
+    }
+
+    public int getPerdida(int index) {
+        return this.arrayCiudad[index].perdidaNeta();
+    }
+
     private void modificar(int index) {
         //M
         //  this.heap.set(index, newValue);
