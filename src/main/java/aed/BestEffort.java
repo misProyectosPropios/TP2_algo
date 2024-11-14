@@ -3,8 +3,7 @@ package aed;
 import java.util.ArrayList;
 
 public class BestEffort {
-    Heaps trasladosPorGanancia;
-    Heaps trasladosPorAntiguedad;
+    HeapsTraslado traslados;
     Heaps mayorSuperavit;
     Ciudad[] ciudadesTotales;
     int totalDespachados;

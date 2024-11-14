@@ -6,6 +6,7 @@ public class Ciudad {
     private int gananciaNeta ;
     private int perdidaNeta ;
     private int superavit ;
+    private int posicionEnHeap;
 
     // Constructor.
     public Ciudad (int posicion) {
@@ -14,7 +15,7 @@ public class Ciudad {
     this.gananciaNeta = 0 ;
     this.perdidaNeta = 0 ;
     this.superavit = gananciaNeta - perdidaNeta ;
-
+    this.posicionEnHeap = posicion;
     }
 
     // Constructor por copia.
@@ -63,6 +64,14 @@ public class Ciudad {
 
         return this.nombre ;
 
+    }
+
+    public int getPosicionEnHeap() {
+        return this.posicionEnHeap;
+    }
+
+    public void setPosicionEnHeap(int posicion) {
+        this.posicionEnHeap = posicion;
     }
 
 }
