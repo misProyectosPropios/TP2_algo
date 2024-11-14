@@ -59,6 +59,39 @@ public class CiudadesTests {
         // assertEquals(ciudadConMayorSuperavit(sis),3);
         }
     
+    @Test 
+    void sinCambios() {
+        int cantCiudades = 10;
+        HeapCiudad ciudad = new HeapCiudad(cantCiudades);
+
+        assertEquals(0, ciudad.mayorSuperavit().nombre());
+        
+        for(int i = 0; i < cantCiudades; i++) {
+            assertEquals(0, ciudad.getGanancia(i));
+            assertEquals(0, ciudad.getPerdida(i));
+        }
+    }
+
+    @Test
+    void unSoloTraslado() {
+        int cantCiudades = 10;
+        HeapCiudad ciudad = new HeapCiudad(cantCiudades);
+        Traslado traslado = new Traslado(1, 0, 1, 1000, 10);
+        ciudad.despacharTraslados(traslado);
+
+        assertEquals(0, ciudad.mayorSuperavit().nombre());
+    }
+
+    @Test
+    void variosTraslados() {
+        int cantCiudades = 10;
+        HeapCiudad ciudad = new HeapCiudad(cantCiudades);
+        Traslado traslado = new Traslado(1, 0, 1, 1000, 10);
+        ciudad.despacharTraslados(traslado);
+
+        assertEquals(0, ciudad.mayorSuperavit().nombre());
+    }
+
     @Test
     void despachar_con_mas_ganancia_de_a_varios(){
 
