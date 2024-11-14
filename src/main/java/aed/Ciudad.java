@@ -9,8 +9,9 @@ public class Ciudad {
     private int posicionEnHeap;
 
     // Constructor.
-    public Ciudad (int posicion) {
+    public Ciudad (int posicion) {        
 
+    //Inicializar todos estos variables es O(1) para cada variable
     this.nombre = posicion ;
     this.gananciaNeta = 0 ;
     this.perdidaNeta = 0 ;
@@ -19,8 +20,7 @@ public class Ciudad {
     }
 
     // Constructor por copia.
-    public Ciudad (Ciudad copiado) {
-
+    public Ciudad (Ciudad copiado) {                                    //Inicializar todos estos variables es O(1) para cada variable
         this.nombre = copiado.nombre ;
         this.gananciaNeta = copiado.gananciaNeta ;
         this.perdidaNeta = copiado.perdidaNeta ;
@@ -30,48 +30,48 @@ public class Ciudad {
 
     public void aumnetarPerdida (int monto) {
 
-        this.perdidaNeta += monto ;
-        this.superavit = gananciaNeta - perdidaNeta ;
+        this.perdidaNeta += monto ;                                     //O(1)
+        this.superavit = gananciaNeta - perdidaNeta ;                   //O(1)
 
     }
     
     public void aumentarGanancia (int monto) {
 
-        this.gananciaNeta += monto ;
-        this.superavit = gananciaNeta - perdidaNeta ;
+        this.gananciaNeta += monto ;//O(1)
+        this.superavit = gananciaNeta - perdidaNeta ;                   //O(1)
 
     }
 
     public int gananciaNeta () {
 
-        return this.gananciaNeta ;
+        return this.gananciaNeta ;                                      //O(1)
 
     }
 
     public int perdidaNeta () {
 
-        return this.perdidaNeta ;
+        return this.perdidaNeta ;                                       //O(1)
         
     }
 
     public int superavit() {
 
-        return this.superavit ;
+        return this.superavit ;                                         //O(1)
 
     }
 
     public int nombre() {
 
-        return this.nombre ;
+        return this.nombre ;                                            //O(1)
 
     }
 
     public int getPosicionEnHeap() {
-        return this.posicionEnHeap;
+        return this.posicionEnHeap;                                     //O(1)
     }
 
     public void setPosicionEnHeap(int posicion) {
-        this.posicionEnHeap = posicion;
+        this.posicionEnHeap = posicion;                                 //O(1)
     }
 
 }

@@ -194,7 +194,7 @@ Proc despacharMasRedituables ( inout sistema: BestEffort , in n: int ) : seq<int
 			{sistema.mayorGanancia.clear();					     	     -> O(1)
 			sistema.mayorGanancia.add(despachado.origen)}
 		else if(sistema.mayorGanancia[0].gananciaNeta==despachado.origen.gananciaNeta){	     -> O(1)
-			sistema.mayorGanancia.add(despachado.origen.gananciaNeta)}		     -> O(1)
+			sistema.mayorGanancia.add(despachado.origen)}		     		     -> O(1)
 		else{}
 
 		if ( sistema.mayorPerdida[0].perdidaNeta < despachado.destino.perdidaNeta )         -> O(1)
