@@ -3,23 +3,23 @@ package aed;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class HeapsTraslado{
+public class HeapsTraslado {
     private ArrayList<Traslado> heapPorGanancia;
     private ArrayList<Traslado> heapPorTiempo;
     private Comparator<Traslado> comparadorPorGanancia;
     private Comparator<Traslado> comparadorPorTiempo;
-    
-    public HeapsTraslado () {
+
+    public HeapsTraslado() {
         //Inicializando los arrays
         heapPorGanancia = new ArrayList<>(0);
         heapPorTiempo = new ArrayList<>(0);
 
         //Craaciòn del comparador por ganancia
-        comparadorPorGanancia = Comparator.comparing(Traslado :: gananciaNeta);
+        comparadorPorGanancia = Comparator.comparing(Traslado::gananciaNeta);
         comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
 
         //Craaciòn del comparador por tiempo
-        comparadorPorTiempo = Comparator.comparing(Traslado :: timestamp);
+        comparadorPorTiempo = Comparator.comparing(Traslado::timestamp);
         comparadorPorTiempo = comparadorPorTiempo.reversed();
         comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);
     }
@@ -37,11 +37,11 @@ public class HeapsTraslado{
         }
 
         //Craaciòn del comparador por ganancia
-        comparadorPorGanancia = Comparator.comparing(Traslado :: gananciaNeta);
+        comparadorPorGanancia = Comparator.comparing(Traslado::gananciaNeta);
         comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
 
         //Craaciòn del comparador por tiempo
-        comparadorPorTiempo = Comparator.comparing(Traslado :: timestamp);
+        comparadorPorTiempo = Comparator.comparing(Traslado::timestamp);
         comparadorPorTiempo = comparadorPorTiempo.reversed();
         comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);
 
@@ -51,13 +51,13 @@ public class HeapsTraslado{
     }
 
     private void floydGanancia() {
-        for(int i = this.length() / 2 + 1; i >= 0; i--) {
+        for (int i = this.length() / 2 + 1; i >= 0; i--) {
             this.bajarGanancia(i);
         }
     }
 
     private void floydTiempo() {
-        for(int i = this.length() / 2 + 1; i >= 0; i--) {
+        for (int i = this.length() / 2 + 1; i >= 0; i--) {
             this.bajarTiempo(i);
         }
     }
@@ -80,20 +80,19 @@ public class HeapsTraslado{
         //Needs to be implemented
         //Adds element to the last position
         this.heapPorGanancia.add(element);
-        this.heapPorTiempo.add(element); 
+        this.heapPorTiempo.add(element);
 
-        
+
         //Ordenarlo ahora
         this.subirElementoGanancia(this.heapPorGanancia.size() - 1);
         this.subirElementoTiempo(this.heapPorGanancia.size() - 1);
         //this.subirElemento(this.heap.size() - 1);
     }
 
-    
 
     public void modificar(int index, Traslado newValue) {
-      //  this.heap.set(index, newValue);
-      //  this.mover(index);
+        //  this.heap.set(index, newValue);
+        //  this.mover(index);
     }
 
     public Traslado desencolarPorGanancia() {
@@ -155,9 +154,54 @@ public class HeapsTraslado{
 
     private void swapGanancia(int position1, int position2) {
         //Falta adaptar los handles todavia del heap por tiempo
-        Traslado guardar = this.heapPorGanancia.get(position1);
+        Traslado guardarPosicion1 = this.heapPorGanancia.get(position1);
+        Traslado guardarPosicion2 = this.heapPorGanancia.get(position2);
+
+        //Ponemos sus nuevas posiciones
+        guardarPosicion1.setIndiceAHeapGanancia(position2);
+        guardarPosicion2.setIndiceAHeapGanancia(position1);
+
+        //Guardamos los handles del otro heap en las variables
+        int handleAlOtroHeap1 = guardarPosicion1.obtenerIndexAHeapAntiguedad();
+        int handleAlOtroHeap2 = guardarPosicion2.obtenerIndexAHeapAntiguedad();
+
+        // Cambiar los handles ahora
+        // Cambiamos del 1
+        Traslado trasladoAntiguedadEn1 = heapPorTiempo.get(handleAlOtroHeap1);
+        trasladoAntiguedadEn1.setIndiceAHeapGanancia(position2);
+
+        //Cambiamos del 2
+        Traslado trasladoAntiguedadEn2 = heapPorTiempo.get(handleAlOtroHeap2);
+        trasladoAntiguedadEn2.setIndiceAHeapGanancia(position2);
+
         this.heapPorGanancia.set(position1, this.heapPorGanancia.get(position2));
-        this.heapPorGanancia.set(position2, guardar);
+        this.heapPorGanancia.set(position2, guardarPosicion1);
+    }
+
+    private void swapTiempo(int position1, int position2) {
+        //Falta adaptar los handles todavia del heap por tiempo
+        Traslado guardarPosicion1 = this.heapPorTiempo.get(position1);
+        Traslado guardarPosicion2 = this.heapPorTiempo.get(position2);
+
+        //Ponemos sus nuevas posiciones
+        guardarPosicion1.setIndiceAHeapAntiguedad(position2);
+        guardarPosicion2.setIndiceAHeapAntiguedad(position1);
+
+        //Guardamos los handles en las variables
+        int handleAlOtroHeap1 =  guardarPosicion1.obtenerIndiceAHeapGanancia();
+        int handleAlOtroHeap2 =  guardarPosicion2.obtenerIndiceAHeapGanancia();
+
+        // Cambiar los handles ahora
+        //Cambiamos del 1
+        Traslado trasladoGananciaEn1 =  heapPorGanancia.get(handleAlOtroHeap1);
+        trasladoGananciaEn1.setIndiceAHeapAntiguedad(position2);
+
+        //Cambiamos del 2
+        Traslado trasladoGananciaEn2 =  heapPorGanancia.get(handleAlOtroHeap2);
+        trasladoGananciaEn2.setIndiceAHeapAntiguedad(position2);
+
+        this.heapPorTiempo.set(position1, this.heapPorTiempo.get(position2));
+        this.heapPorTiempo.set(position2, guardarPosicion1);
     }
 
     private void subirElementoTiempo(int posicion) {
@@ -175,12 +219,6 @@ public class HeapsTraslado{
         return comparadorPorTiempo.compare(this.heapPorTiempo.get(positionElement), this.heapPorTiempo.get(positionPadre)) > 0;
     }
 
-    private void swapTiempo(int position1, int position2) {
-        //Falta adaptar los handles todavia del heap por tiempo
-        Traslado guardar = this.heapPorTiempo.get(position1);
-        this.heapPorTiempo.set(position1, this.heapPorTiempo.get(position2));
-        this.heapPorTiempo.set(position2, guardar);
-    }
 
     private Traslado eliminarGanancia(int index) {
         //Implementar que borre el de los otros
@@ -300,6 +338,8 @@ public class HeapsTraslado{
         return indice >= 0 && indice * 2 + 2 < this.length();
     }
 
+
+
     // Metodos estáticos
     private static int calcularPosicionPadre(int position) {
         int positionParent;
@@ -318,125 +358,4 @@ public class HeapsTraslado{
     private static int calcularPosicionHijoDerecho(int position) {
         return position * 2 + 2;
     }
-
-    /* 
-    private void subirElemento(int position) {
-        int positionParent = calcularPosicionPadre(position);
-        while (position != 0 && prioridadMayorQuePadre(position)) {
-            swap(position, positionParent);
-            position = positionParent;
-            positionParent = calcularPosicionPadre(position);
-        }
-    }
-
-    
-
-    private boolean prioridadMayorQuePadre(int positionElement) {
-        //Si el elemento es menor que el parent, debe de devolver numero negativo
-        int positionPadre = calcularPosicionPadre(positionElement);
-        return comparador.compare(this.heap.get(positionElement), this.heap.get(positionPadre)) > 0;
-    }
-
-    private void swap(int position1, int position2) {
-        Traslado guardar = this.heap.get(position1);
-        this.heap.set(position1, this.heap.get(position2));
-        this.heap.set(position2, guardar);
-
-    }
-
-    //Asumimos que no va a ser una hoja
-    private boolean prioridadDeAlgunHijoEsMayor(int position) {
-        boolean res = false;
-        if (tieneHijoDerecho(position)){
-            Traslado valueRightChild = heap.get(calcularPosicionHijoDerecho(position));
-            Traslado valuePosition = heap.get(position);
-            if (comparador.compare(valueRightChild, valuePosition) > 0) {
-                res = true;
-            }
-        }
-        if (tieneHijoIzquierdo(position)) {
-            Traslado valueLeftChild = heap.get(calcularPosicionHijoIzquierdo(position));
-            Traslado valuePosition = heap.get(position);
-            if (comparador.compare(valueLeftChild, valuePosition) > 0) {
-                res = true;
-            }
-        }
-        return res;
-    }
-
-    //Asumimos que no es un null
-    private boolean prioridadDeHijoIzquierdo(int position) {
-        //Returns true if the left child is greater than the position value
-        return tieneHijoIzquierdo(position) && comparador.compare(this.heap.get(HeapsTraslado.calcularPosicionHijoIzquierdo(position)), this.heap.get(position)) > 0;
-    }
-
-    //Asumimos que no es un null
-    private boolean prioridadDeHijoDerecho(int position) {
-        //Returns true if the right child is greater than the position value
-        return tieneHijoDerecho(position) && comparador.compare(this.heap.get(HeapsTraslado.calcularPosicionHijoDerecho(position)), this.heap.get(position)) > 0;
-    }
-
-    //Devuelve true si es izquierda, si es false es derecha
-    private boolean compararPrioridadHijos(int position) {
-        if (tieneHijoIzquierdo(position) && !tieneHijoDerecho(position)) {
-            return true;
-        } 
-        //Suponemos que tiene hijoDerecho ahora, así como izquierdo
-        Traslado rightChild = this.heap.get(HeapsTraslado.calcularPosicionHijoDerecho(position));
-        Traslado leftChild = this.heap.get(HeapsTraslado.calcularPosicionHijoIzquierdo(position));
-        return comparador.compare(rightChild, leftChild) >= 0; 
-        //Return true iff the leftChild is greater or equal than the rigthChild
-    }
-
-    private boolean esHoja(int indice) {
-        return indice * 2 + 2 >= this.heap.size(); //Verificar si es correcta esta cuenta
-    }
-
-    private boolean tieneHijoIzquierdo(int indice) {
-        return indice >= 0 && indice * 2 + 1 < this.heap.size();
-    }
-
-    private boolean tieneHijoDerecho(int indice) {
-        return indice >= 0 && indice * 2 + 2 < this.heap.size();
-    }
-
-    private boolean esNodoCompleto(int indice) {
-        return HeapsTraslado.calcularPosicionHijoDerecho(indice) < this.heap.size();
-    }
-
-    private void mover(int index) {
-        if (index == 0) {
-            bajar(index);
-        } else if (prioridadDeAlgunHijoEsMayor(index)) {
-            bajar(index);
-        } else {
-            subirElemento(index);
-        }
-    }
-
-    //TIme complexity: O(n)
-    private void FloydAlgorithm() {
-        for(int i = this.heap.size() / 2 + 1; i >= 0; i--) {
-            this.bajar(i);
-        }
-    }
-
-    private void bajar(int index) {
-        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayor(index)) {
-            if (tieneHijoIzquierdo(index) && !tieneHijoDerecho(index)) {
-                swap(index, calcularPosicionHijoIzquierdo(index));
-                index =calcularPosicionHijoIzquierdo (index);
-                //El hijo izquierdo es mayor que el derecho
-            } else if (comparador.compare(this.heap.get(calcularPosicionHijoIzquierdo(index)), this.heap.get(calcularPosicionHijoDerecho(index))) > 0 ){
-                swap(index, calcularPosicionHijoIzquierdo(index));
-                index = calcularPosicionHijoIzquierdo(index);
-                //El hijo derecho o es mayor o es igual al izquierdo
-            } else {
-                swap(index, calcularPosicionHijoDerecho(index));
-                index = calcularPosicionHijoDerecho(index);
-            }
-
-        }
-    }
-    */
 }
