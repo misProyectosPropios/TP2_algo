@@ -69,6 +69,27 @@ public class HeapsTrasladoTest {
     }
 
     @Test
+    void crearHeapAPartirDeTrasladosConMismoTiempo() {
+        listaTraslados = new Traslado[] {
+                new Traslado(1, 0, 1, 1000, 10),
+                new Traslado(2, 0, 1, 1000, 20),
+                new Traslado(3, 3, 4, 1000, 50),
+                new Traslado(4, 4, 3, 1000, 11),
+                new Traslado(5, 1, 0, 1000, 40),
+                new Traslado(6, 1, 0, 1000, 41),
+                new Traslado(7, 6, 3, 1000, 42)
+        };
+        HeapsTraslado cola = new HeapsTraslado(listaTraslados);
+        assertEquals(listaTraslados[0], cola.desencolarPorGanancia());
+        assertEquals(listaTraslados[1], cola.desencolarPorGanancia());
+        assertEquals(listaTraslados[2], cola.desencolarPorGanancia());
+        assertEquals(listaTraslados[3], cola.desencolarPorGanancia());
+        assertEquals(listaTraslados[4], cola.desencolarPorGanancia());
+        assertEquals(listaTraslados[5], cola.desencolarPorGanancia());
+        assertEquals(listaTraslados[6], cola.desencolarPorGanancia());
+    }
+
+    @Test
     void encolarObjetosContiguos() {
 
     }

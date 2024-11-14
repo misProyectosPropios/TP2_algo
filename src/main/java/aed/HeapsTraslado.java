@@ -38,7 +38,9 @@ public class HeapsTraslado {
 
         //Craaciòn del comparador por ganancia
         comparadorPorGanancia = Comparator.comparing(Traslado::gananciaNeta);
+        comparadorPorGanancia = comparadorPorGanancia.reversed();
         comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
+        comparadorPorGanancia = comparadorPorGanancia.reversed();
 
         //Craaciòn del comparador por tiempo
         comparadorPorTiempo = Comparator.comparing(Traslado::timestamp);
@@ -139,13 +141,12 @@ public class HeapsTraslado {
 
     private void swapTiempo(int position1, int position2) {
         //Falta adaptar los handles todavia del heap por tiempo
-        Traslado guardarPosicion1 = this.heapPorTiempo.get(position1);
+        Traslado guardarPosicion1 = this.heapPorTiempo.get(position1); // O (1)
         Traslado guardarPosicion2 = this.heapPorTiempo.get(position2);
 
         //Ponemos sus nuevas posiciones
         guardarPosicion1.setIndiceAHeapAntiguedad(position2);
         guardarPosicion2.setIndiceAHeapAntiguedad(position1);
-
 
         this.heapPorTiempo.set(position1, this.heapPorTiempo.get(position2));
         this.heapPorTiempo.set(position2, guardarPosicion1);

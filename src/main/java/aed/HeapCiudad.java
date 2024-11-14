@@ -42,15 +42,23 @@ public class HeapCiudad {
         }
     }
 
-    private void modificar(int index, Traslado newValue) {
+    private void modificar(int index) {
         //M
         //  this.heap.set(index, newValue);
-        //  this.mover(index)
+        this.mover(index);
     }
 
-    private void swap(int position) {
-        Ciudad guardarCiudad = this.heapPorSuperavit.get(position);
+    private void swap(int position1, int position2) {
+        Ciudad guardarCiudad1 = this.heapPorSuperavit.get(position1);
+        Ciudad guardarCiudad2 = this.heapPorSuperavit.get(position2);
 
+        //Vamso con los handles
+        guardarCiudad1.setPosicionEnHeap(position2);
+        guardarCiudad2.setPosicionEnHeap(position1);
+
+        //Los intercambiosamos
+        this.heapPorSuperavit.set(position1, this.heapPorSuperavit.get(position2));
+        this.heapPorSuperavit.set(position2, guardarCiudad1);
     }
 
     private void mover(int index) {
