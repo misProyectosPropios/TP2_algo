@@ -86,7 +86,9 @@ public class HeapsTraslado{
     public Traslado desencolarPorGanancia() {
         Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
         swapGanancia(0, this.length() - 1);
-        //this.bajarGanancia(0);
+        this.eliminarGanancia(0);
+        //Falta desencolar del otro heap todavia
+
         return returnValue;
     }
 
@@ -94,8 +96,10 @@ public class HeapsTraslado{
         Traslado returnValue = this.heapPorTiempo.get(0); //Obtenemos el Objecto a devovler O(1)
 
         swapTiempo(0, this.length() - 1);
-        //this.bajarTiempo(0);
+        this.eliminarTiempo(0);
+        //Falta desencolar del otro heap todavia
 
+        
         return returnValue;
     }
 
@@ -168,12 +172,73 @@ public class HeapsTraslado{
         this.heapPorTiempo.set(position2, guardar);
     }
 
-    private void bajarGanancia(int index) {
-        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayorGanancia(index)) {
-        
+    private Traslado eliminarGanancia(int index) {
+        //Implementar que borre el de los otros
+        Traslado returnValue = this.heapPorGanancia.get(index);
+        swapGanancia(index, this.length() - 1);
+        this.heapPorGanancia.remove(this.length() - 1);
+        this.moverGanancia(index);
+        return returnValue;
+    }
+
+    private Traslado eliminarTiempo(int index) {
+        //Implementar
+        Traslado returnValue = this.heapPorTiempo.get(index);
+        swapTiempo(index, this.length() - 1);
+        this.heapPorTiempo.remove(this.length() - 1);
+        this.moverTiempo(index);
+        return returnValue;
+    }
+
+    private void moverGanancia(int index) {
+        if (index == 0) {
+            bajarGanancia(index);
+        } else if (prioridadDeAlgunHijoEsMayorGanancia(index)) {
+            bajarGanancia(index);
+        } else {
+            subirElementoGanancia(index);
         }
     }
 
+    private void moverTiempo(int index) {
+        if (index == 0) {
+            bajarTiempo(index);
+        } else if (prioridadDeAlgunHijoEsMayorTiempo(index)) {
+            bajarTiempo(index);
+        } else {
+            subirElementoTiempo(index);
+        }
+    }
+
+    private void bajarGanancia(int index) {
+        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayorGanancia(index)) {
+            if (tieneHijoIzquierdo(index) && !tieneHijoDerecho(index)) {
+                swapGanancia(index, calcularPosicionHijoIzquierdo(index));
+                index =calcularPosicionHijoIzquierdo (index);
+            } else if (comparadorPorGanancia.compare(this.heapPorGanancia.get(calcularPosicionHijoIzquierdo(index)), this.heapPorGanancia.get(calcularPosicionHijoDerecho(index))) > 0) {
+                swapGanancia(index, calcularPosicionHijoIzquierdo(index));
+                index = calcularPosicionHijoIzquierdo(index);
+            } else {
+                swapGanancia(index, calcularPosicionHijoDerecho(index));
+                index = calcularPosicionHijoDerecho(index);
+            }
+        }
+    }
+
+    private void bajarTiempo(int index) {
+        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayorTiempo(index)) {
+            if (tieneHijoIzquierdo(index) && !tieneHijoDerecho(index)) {
+                swapTiempo(index, calcularPosicionHijoIzquierdo(index));
+                index =calcularPosicionHijoIzquierdo (index);
+            } else if (comparadorPorTiempo.compare(this.heapPorTiempo.get(calcularPosicionHijoIzquierdo(index)), this.heapPorTiempo.get(calcularPosicionHijoDerecho(index))) > 0) {
+                swapTiempo(index, calcularPosicionHijoIzquierdo(index));
+                index = calcularPosicionHijoIzquierdo(index);
+            } else {
+                swapTiempo(index, calcularPosicionHijoDerecho(index));
+                index = calcularPosicionHijoDerecho(index);
+            }
+        }
+    }
 
     private boolean prioridadDeAlgunHijoEsMayorGanancia(int position) {
         boolean res = false;

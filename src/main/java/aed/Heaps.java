@@ -103,7 +103,6 @@ public class Heaps<T> implements ColaDePrioridad<T>{
         T guardar = this.heap.get(position1);
         this.heap.set(position1, this.heap.get(position2));
         this.heap.set(position2, guardar);
-
     }
 
     //Asumimos que no va a ser una hoja
