@@ -11,6 +11,7 @@ public class HeapCiudad {
 
     public HeapCiudad(int cantCiudades) {
         comparator = Comparator.comparing(Ciudad :: superavit);
+        comparator = comparator.reversed();
         comparator = comparator.thenComparing(Ciudad :: nombre);
 
         arrayCiudad = new Ciudad[cantCiudades];
@@ -29,10 +30,9 @@ public class HeapCiudad {
         return this.heapPorSuperavit.get(0);
     }
 
-    public void despacharTraslados(Traslado[] traslados) {
+    public void despacharTraslados(Traslado traslado) {
         //Implementar
         //Debe modificar tanto al que compra como al que vende
-        for(Traslado traslado : traslados) {
             int posicionOrigenEnHeap = traslado.obtenerCiudadOrigen();
             posicionOrigenEnHeap = arrayCiudad[posicionOrigenEnHeap].getPosicionEnHeap();
 
@@ -44,7 +44,7 @@ public class HeapCiudad {
 
             arrayCiudad[traslado.obtenerCiudadDestino()].aumnetarPerdida(traslado.gananciaNeta());
             modificar(posicionDestinoEnHeap);
-        }
+
     }
 
     public int getGanancia(int index) {
