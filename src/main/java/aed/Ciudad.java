@@ -1,5 +1,7 @@
 package aed;
 
+//TODOS LOS PROCS DE ESTA CLASE CUESTAN O(1)
+
 public class Ciudad {
 
     private int nombre ;
@@ -11,7 +13,7 @@ public class Ciudad {
     // Constructor.
     public Ciudad (int posicion) {        
 
-    //Inicializar todos estos variables es O(1) para cada variable
+   
     this.nombre = posicion ;
     this.gananciaNeta = 0 ;
     this.perdidaNeta = 0 ;
@@ -20,7 +22,7 @@ public class Ciudad {
     }
 
     // Constructor por copia.
-    public Ciudad (Ciudad copiado) {                                    //Inicializar todos estos variables es O(1) para cada variable
+    public Ciudad (Ciudad copiado) {                                   
         this.nombre = copiado.nombre ;
         this.gananciaNeta = copiado.gananciaNeta ;
         this.perdidaNeta = copiado.perdidaNeta ;
@@ -30,48 +32,49 @@ public class Ciudad {
 
     public void aumnetarPerdida (int monto) {
 
-        this.perdidaNeta += monto ;                                     //O(1)
-        this.superavit = gananciaNeta - perdidaNeta ;                   //O(1)
+        this.perdidaNeta += monto ;                                     
+        this.superavit = gananciaNeta - perdidaNeta ;                   
 
     }
     
     public void aumentarGanancia (int monto) {
 
-        this.gananciaNeta += monto ;//O(1)
-        this.superavit = gananciaNeta - perdidaNeta ;                   //O(1)
+        this.gananciaNeta += monto ;                                    
+        this.superavit = gananciaNeta - perdidaNeta ;                   
 
     }
 
     public int gananciaNeta () {
 
-        return this.gananciaNeta ;                                      //O(1)
+        return this.gananciaNeta ;                                      
 
     }
 
     public int perdidaNeta () {
 
-        return this.perdidaNeta ;                                       //O(1)
+        return this.perdidaNeta ;                                       
         
     }
 
     public int superavit() {
 
-        return this.superavit ;                                         //O(1)
+        return this.superavit ;                                         
 
     }
 
     public int nombre() {
 
-        return this.nombre ;                                            //O(1)
+        return this.nombre ;                                            
 
     }
 
     public int getPosicionEnHeap() {
-        return this.posicionEnHeap;                                     //O(1)
+        return this.posicionEnHeap;                                     
     }
 
+    //setPosicionEnHeap cuesta O(1)
     public void setPosicionEnHeap(int posicion) {
-        this.posicionEnHeap = posicion;                                 //O(1)
+        this.posicionEnHeap = posicion;                                 
     }
 
 }
