@@ -155,7 +155,7 @@ public class HeapsTraslado {
     private void subirElementoTiempo(int posicion) {
         int positionParent = calcularPosicionPadre(posicion);
         while (posicion != 0 && prioridadMayorQuePadrePorTiempo(posicion)) {
-            swapTiempo(positionParent, positionParent);
+            swapTiempo(positionParent, posicion);
             posicion = positionParent;
             positionParent = calcularPosicionPadre(posicion);
         }

@@ -33,12 +33,17 @@ public class HeapCiudad {
         //Implementar
         //Debe modificar tanto al que compra como al que vende
         for(Traslado traslado : traslados) {
-            arrayCiudad[traslado.obtenerCiudadOrigen()].aumentarGanancia(traslado.gananciaNeta());
-            //Modificar el heap
+            int posicionOrigenEnHeap = traslado.obtenerCiudadOrigen();
+            posicionOrigenEnHeap = arrayCiudad[posicionOrigenEnHeap].getPosicionEnHeap();
 
+            int posicionDestinoEnHeap = traslado.obtenerCiudadDestino();
+            posicionDestinoEnHeap = arrayCiudad[posicionDestinoEnHeap].getPosicionEnHeap();
+
+            arrayCiudad[traslado.obtenerCiudadOrigen()].aumentarGanancia(traslado.gananciaNeta());
+            modificar(posicionOrigenEnHeap);
 
             arrayCiudad[traslado.obtenerCiudadDestino()].aumnetarPerdida(traslado.gananciaNeta());
-            //Modificar el heap
+            modificar(posicionDestinoEnHeap);
         }
     }
 
@@ -72,11 +77,32 @@ public class HeapCiudad {
     }
 
     private void bajarSuperavit(int index) {
-
+        while (!this.esHoja(index) && this.prioridadDeAlgunHijoEsMayorSuperavit(index)){
+            if (tieneHijoIzquierdo(index) && !tieneHijoDerecho(index)) {
+                swap(index, calcularPosicionHijoIzquierdo(index));
+                index =calcularPosicionHijoIzquierdo (index);
+            } else if (comparator.compare(this.heapPorSuperavit.get(calcularPosicionHijoIzquierdo(index)), this.heapPorSuperavit.get(calcularPosicionHijoDerecho(index))) > 0) {
+                swap(index, calcularPosicionHijoIzquierdo(index));
+                index = calcularPosicionHijoIzquierdo(index);
+            } else {
+                swap(index, calcularPosicionHijoDerecho(index));
+                index = calcularPosicionHijoDerecho(index);
+            }
+        }
     }
 
     private void subirElementoSuperavit(int index) {
+        int positionParent = calcularPosicionPadre(index);
+        while (index != 0 && prioridadMayorQuePadrePorSuperavit(index)) {
+            swap(index, positionParent);
+            index = positionParent;
+            positionParent = calcularPosicionPadre(index);
+        }
+    }
 
+    private boolean prioridadMayorQuePadrePorSuperavit(int index) {
+        int positionPadre = calcularPosicionPadre(index);
+        return comparator.compare(this.heapPorSuperavit.get(index), this.heapPorSuperavit.get(positionPadre)) > 0;
     }
 
     private boolean prioridadDeAlgunHijoEsMayorSuperavit(int index) {
