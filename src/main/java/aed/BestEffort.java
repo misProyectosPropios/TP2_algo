@@ -39,40 +39,85 @@ public class BestEffort {
             arrayCopiaTraslados[i] = new Traslado(traslados[i]);
         }
 
-        for(Traslado traslado : traslados) {
+        for(Traslado traslado : arrayCopiaTraslados) {
             this.traslados.encolar(traslado);
         }
     }
 
     public int[] despacharMasRedituables(int n){
         // Implementar
+        int[] res;
+        if (n > traslados.length()) {
+            res = new int[traslados.length()];
+        } else {
+            res = new int[n];
+        }
 
-        return null;
+        int index = 0;
+        while (n > 0 && traslados.length() > 0) {
+            Traslado despachado = traslados.desencolarPorGanancia();
+            Traslado[] despachados = {new Traslado(despachado)}; //O (1)
+
+            mayorSuperavit.despacharTraslados(despachados);
+
+            res[index] = despachado.id();
+        }
+
+        //Modificar el heapDeSuperativ
+
+
+
+        //Modificar el mayorPerdida
+
+        //Modificar el mayorGanancia
+
+        //Modificar cantDeTraslados realizados asi como su ganancia
+
+        return res;
     }
 
     public int[] despacharMasAntiguos(int n){
         // Implementar
-        return null;
+        int[] res;
+        if (n > traslados.length()) {
+            res = new int[traslados.length()];
+        } else {
+            res = new int[n];
+        }
+
+        int index = 0;
+        while (n > 0 && traslados.length() > 0) {
+            Traslado despachado = traslados.desencolarPorTiempo();
+            res[index] = despachado.id();
+        }
+
+        //Modificar el heapDeSuperativ
+
+        //Modificar el mayorPerdida
+
+
+        //Modificar el mayorGanancia
+
+        //Modificar cantDeTraslados realizados asi como su ganancia
+        return res;
     }
 
     public int ciudadConMayorSuperavit(){
-        // Implementar
-        return 0;
+        return mayorSuperavit.mayorSuperavit().nombre();
     }
 
     public ArrayList<Integer> ciudadesConMayorGanancia(){
-        // Implementar
-        return null;
+        return this.mayorGanancia;
     }
 
     public ArrayList<Integer> ciudadesConMayorPerdida(){
         // Implementar
-        return null;
+        return this.mayorPerdida;
     }
 
     public int gananciaPromedioPorTraslado(){
         // Implementar
-        return 0;
+        return this.sumaDeGananciaDeDespachos / this.totalDespachados;
     }
     
 }
