@@ -9,7 +9,7 @@ public class HeapsTraslado{
     private Comparator<Traslado> comparadorPorGanancia;
     private Comparator<Traslado> comparadorPorTiempo;
     
-    public HeapsTraslado (Comparator<Traslado> comparador) {
+    public HeapsTraslado () {
         //Inicializando los arrays
         heapPorGanancia = new ArrayList<>(0);
         heapPorTiempo = new ArrayList<>(0);
@@ -46,7 +46,20 @@ public class HeapsTraslado{
         comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);
 
         //Ordenarlos usando el heapify
+        floydGanancia();
+        floydTiempo();
+    }
 
+    private void floydGanancia() {
+        for(int i = this.length() / 2 + 1; i >= 0; i--) {
+            this.bajarGanancia(i);
+        }
+    }
+
+    private void floydTiempo() {
+        for(int i = this.length() / 2 + 1; i >= 0; i--) {
+            this.bajarTiempo(i);
+        }
     }
 
     public Traslado proximoPorGanancia() {
@@ -85,7 +98,6 @@ public class HeapsTraslado{
 
     public Traslado desencolarPorGanancia() {
         Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
-        swapGanancia(0, this.length() - 1);
         this.eliminarGanancia(0);
         //Falta desencolar del otro heap todavia
 
@@ -94,12 +106,10 @@ public class HeapsTraslado{
 
     public Traslado desencolarPorTiempo() {
         Traslado returnValue = this.heapPorTiempo.get(0); //Obtenemos el Objecto a devovler O(1)
-
-        swapTiempo(0, this.length() - 1);
         this.eliminarTiempo(0);
         //Falta desencolar del otro heap todavia
 
-        
+
         return returnValue;
     }
 
@@ -279,7 +289,7 @@ public class HeapsTraslado{
     }
 
     private boolean esHoja(int indice) {
-        return indice * 2 + 2 >= this.length();
+        return indice * 2 + 1 >= this.length();
     }
 
     private boolean tieneHijoIzquierdo(int indice) {
