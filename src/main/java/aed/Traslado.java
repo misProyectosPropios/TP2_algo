@@ -1,5 +1,7 @@
 package aed;
 
+//TODOS LOS PROCS EN TRANSLADO CUESTAN O(1)
+
 public class Traslado {
     
     private int id ;
@@ -10,7 +12,7 @@ public class Traslado {
     private int indiceAHeapGanancia;
     private int indiceAHeapAntiguedad;
 
-    // Constructor.
+    // Constructor
     public Traslado(int id, int origen, int destino, int gananciaNeta, int timestamp) {
         this.id = id ;
         this.origen = origen ;
@@ -19,7 +21,7 @@ public class Traslado {
         this.timestamp = timestamp ;
     } 
 
-    // Constructor por copia.
+    // Constructor por copia
     public Traslado(Traslado copiado) {
         this.id = copiado.id ;
         this.origen = copiado.origen ;
