@@ -72,7 +72,7 @@ public class Ciudad {
         return this.posicionEnHeap;                                     
     }
 
-    //setPosicionEnHeap cuesta O(1)
+ 
     public void setPosicionEnHeap(int posicion) {
         this.posicionEnHeap = posicion;                                 
     }
