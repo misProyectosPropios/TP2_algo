@@ -82,11 +82,9 @@ public class HeapsTraslado {
         this.heapPorGanancia.add(element);
         this.heapPorTiempo.add(element);
 
-
         //Ordenarlo ahora
         this.subirElementoGanancia(this.heapPorGanancia.size() - 1);
         this.subirElementoTiempo(this.heapPorGanancia.size() - 1);
-        //this.subirElemento(this.heap.size() - 1);
     }
 
 
@@ -98,44 +96,18 @@ public class HeapsTraslado {
     public Traslado desencolarPorGanancia() {
         Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
         this.eliminarGanancia(0);
-        //Falta desencolar del otro heap todavia
-
         return returnValue;
     }
 
     public Traslado desencolarPorTiempo() {
         Traslado returnValue = this.heapPorTiempo.get(0); //Obtenemos el Objecto a devovler O(1)
         this.eliminarTiempo(0);
-        //Falta desencolar del otro heap todavia
-
-
         return returnValue;
     }
 
     public int length() {
         return this.heapPorGanancia.size(); // Tendrían los mismos elementos el de tiempo y ganancia
     }
-
-    /*
-    public Traslado desencolar() {
-        Traslado returnValue = this.heapPorGanancia.get(0); //Obtenemos el Objecto a devovler O(1)
-    //    this.heap.set(0, this.heap.get(this.heap.size() - 1)); // O(1) Pasamos el ultimo al primeor
-    //    //Bajar el elemento hasta la posición deseada
-    //    this.bajar(0);
-
-        return returnValue;
-    }*/
-
-/*     //Me parece que no hará falta un eliminar en pos que sea publico, 
-    //SI que sea privado
-   // public Traslado eliminar(int pos) {
-   //     Traslado returnValue = this.heapPorGanancia.get(pos);
-   // //    swap(pos, this.heap.size() - 1);
-   // //    this.heap.remove(this.heap.size() - 1);
-   // //    mover(pos);
-   //     return returnValue;
-   // }
-*/
 
     private void subirElementoGanancia(int posicion) {
         int positionParent = calcularPosicionPadre(posicion);
@@ -161,19 +133,6 @@ public class HeapsTraslado {
         guardarPosicion1.setIndiceAHeapGanancia(position2);
         guardarPosicion2.setIndiceAHeapGanancia(position1);
 
-        //Guardamos los handles del otro heap en las variables
-        int handleAlOtroHeap1 = guardarPosicion1.obtenerIndexAHeapAntiguedad();
-        int handleAlOtroHeap2 = guardarPosicion2.obtenerIndexAHeapAntiguedad();
-
-        // Cambiar los handles ahora
-        // Cambiamos del 1
-        Traslado trasladoAntiguedadEn1 = heapPorTiempo.get(handleAlOtroHeap1);
-        trasladoAntiguedadEn1.setIndiceAHeapGanancia(position2);
-
-        //Cambiamos del 2
-        Traslado trasladoAntiguedadEn2 = heapPorTiempo.get(handleAlOtroHeap2);
-        trasladoAntiguedadEn2.setIndiceAHeapGanancia(position2);
-
         this.heapPorGanancia.set(position1, this.heapPorGanancia.get(position2));
         this.heapPorGanancia.set(position2, guardarPosicion1);
     }
@@ -187,18 +146,6 @@ public class HeapsTraslado {
         guardarPosicion1.setIndiceAHeapAntiguedad(position2);
         guardarPosicion2.setIndiceAHeapAntiguedad(position1);
 
-        //Guardamos los handles en las variables
-        int handleAlOtroHeap1 =  guardarPosicion1.obtenerIndiceAHeapGanancia();
-        int handleAlOtroHeap2 =  guardarPosicion2.obtenerIndiceAHeapGanancia();
-
-        // Cambiar los handles ahora
-        //Cambiamos del 1
-        Traslado trasladoGananciaEn1 =  heapPorGanancia.get(handleAlOtroHeap1);
-        trasladoGananciaEn1.setIndiceAHeapAntiguedad(position2);
-
-        //Cambiamos del 2
-        Traslado trasladoGananciaEn2 =  heapPorGanancia.get(handleAlOtroHeap2);
-        trasladoGananciaEn2.setIndiceAHeapAntiguedad(position2);
 
         this.heapPorTiempo.set(position1, this.heapPorTiempo.get(position2));
         this.heapPorTiempo.set(position2, guardarPosicion1);
@@ -221,20 +168,57 @@ public class HeapsTraslado {
 
 
     private Traslado eliminarGanancia(int index) {
-        //Implementar que borre el de los otros
         Traslado returnValue = this.heapPorGanancia.get(index);
+        int indexTiempo = returnValue.obtenerIndexAHeapAntiguedad();
+        //Forzamos a que ambos estén en la ultima posición para evitar perdida de información
         swapGanancia(index, this.length() - 1);
-        this.heapPorGanancia.remove(this.length() - 1);
-        this.moverGanancia(index);
+        swapTiempo(indexTiempo, this.length() - 1);
+
+        //Borramos los valores
+        this.heapPorGanancia.remove(this.heapPorGanancia.size() - 1);
+        this.heapPorTiempo.remove(this.heapPorTiempo.size() - 1);
+
+        //Ajustamos los heaps
+        if (index >= length() && indexTiempo >= length()) {
+            return returnValue;
+        }
+        if (index >= length()) {
+            this.moverTiempo(indexTiempo);
+        } else if (indexTiempo >= length()) {
+            this.moverGanancia(index);
+        } else {
+            this.moverGanancia(index);
+            this.moverTiempo(indexTiempo);
+        }
         return returnValue;
     }
 
     private Traslado eliminarTiempo(int index) {
         //Implementar
         Traslado returnValue = this.heapPorTiempo.get(index);
+        int indexGanancia = returnValue.obtenerIndiceAHeapGanancia();
+
+        //Forzamos a que ambos sean 0
         swapTiempo(index, this.length() - 1);
-        this.heapPorTiempo.remove(this.length() - 1);
-        this.moverTiempo(index);
+        swapGanancia(indexGanancia, this.length() - 1);
+
+        //Borramos los valores
+        this.heapPorGanancia.remove(this.heapPorGanancia.size() - 1);
+        this.heapPorTiempo.remove(this.heapPorTiempo.size() - 1);
+
+        if (index >= length() && indexGanancia >= length()) {
+            return returnValue;
+        }
+
+        //Ajustamos los heaps
+        if (index >= length()) {
+            this.moverGanancia(indexGanancia);
+        } else if (indexGanancia >= length()) {
+            this.moverTiempo(index);
+        } else {
+            this.moverGanancia(indexGanancia);
+            this.moverTiempo(index);
+        }
         return returnValue;
     }
 
