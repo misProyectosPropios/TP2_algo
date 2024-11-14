@@ -20,15 +20,33 @@ public class BestEffort {
             arrayCopiaTraslados[i] = new Traslado(traslados[i]);
         }
 
+        mayorGanancia = new ArrayList<>(cantCiudades);
+        mayorPerdida = new ArrayList<>(cantCiudades);
+
+        for(int i = 0; i < cantCiudades; i++) {
+            mayorGanancia.add(i);
+            mayorPerdida.add(i);
+        }
+
         this.traslados = new HeapsTraslado(traslados);
     }
 
     public void registrarTraslados(Traslado[] traslados){
         // Implementar
+        //Evitamso el aliasing
+        Traslado[] arrayCopiaTraslados = new Traslado[traslados.length];
+        for(int i = 0; i < arrayCopiaTraslados.length; i++) {
+            arrayCopiaTraslados[i] = new Traslado(traslados[i]);
+        }
+
+        for(Traslado traslado : traslados) {
+            this.traslados.encolar(traslado);
+        }
     }
 
     public int[] despacharMasRedituables(int n){
         // Implementar
+
         return null;
     }
 
