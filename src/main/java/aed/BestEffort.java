@@ -32,7 +32,6 @@ public class BestEffort {
     }
 
     public void registrarTraslados(Traslado[] traslados){
-        // Implementar
         //Evitamso el aliasing
         Traslado[] arrayCopiaTraslados = new Traslado[traslados.length];
         for(int i = 0; i < arrayCopiaTraslados.length; i++) {
@@ -45,7 +44,6 @@ public class BestEffort {
     }
 
     public int[] despacharMasRedituables(int n){
-        // Implementar
         int[] res;
         if (n > traslados.length()) {
             res = new int[traslados.length()];
@@ -131,27 +129,26 @@ public class BestEffort {
             else if (otraPerdida == perdidaMaxima) {
                 mayorPerdida.add(despachado.obtenerCiudadDestino());
             }
-            index++;
-            n--;
+            index++;                                                                                 // O(1)
+            n--;                                                                                     // O(1)
         }
-
-        return res;
+        return res;                                                                                  // O(1)
     }
 
     public int ciudadConMayorSuperavit(){
-        return mayorSuperavit.mayorSuperavit().nombre();
+        return mayorSuperavit.mayorSuperavit().nombre();                            // O(1)
     }
 
     public ArrayList<Integer> ciudadesConMayorGanancia(){
-        return this.mayorGanancia;
+        return this.mayorGanancia;                                                  // O(1)
     }
 
     public ArrayList<Integer> ciudadesConMayorPerdida(){
-        return this.mayorPerdida;
+        return this.mayorPerdida;                                                   // O(1)
     }
 
     public int gananciaPromedioPorTraslado(){
-        return this.sumaDeGananciaDeDespachos / this.totalDespachados;
+        return this.sumaDeGananciaDeDespachos / this.totalDespachados;              // O(1)
     }
-    
+
 }
