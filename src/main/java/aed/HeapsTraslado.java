@@ -9,55 +9,59 @@ public class HeapsTraslado {
     private Comparator<Traslado> comparadorPorGanancia;
     private Comparator<Traslado> comparadorPorTiempo;
 
+    //HeapsTraslado cuesta O(1)
     public HeapsTraslado() {
         //Inicializando los arrays
-        heapPorGanancia = new ArrayList<>(0);
-        heapPorTiempo = new ArrayList<>(0);
+        heapPorGanancia = new ArrayList<>(0);                                                     //O(1)
+        heapPorTiempo = new ArrayList<>(0);                                                       //O(1)
 
         //Craaciòn del comparador por ganancia
-        comparadorPorGanancia = Comparator.comparing(Traslado::gananciaNeta);
-        comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
+        comparadorPorGanancia = Comparator.comparing(Traslado::gananciaNeta);                     //O(1)
+        comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);                //O(1)
 
         //Craaciòn del comparador por tiempo
-        comparadorPorTiempo = Comparator.comparing(Traslado::timestamp);
-        comparadorPorTiempo = comparadorPorTiempo.reversed();
-        comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);
+        comparadorPorTiempo = Comparator.comparing(Traslado::timestamp);                          //O(1)
+        comparadorPorTiempo = comparadorPorTiempo.reversed();                                     //O(1)
+        comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);                    //O(1)
     }
 
+    //Heaps Traslado cuesta O(t)
     public HeapsTraslado(Traslado[] array) {
-        heapPorGanancia = new ArrayList<>(array.length);
-        heapPorTiempo = new ArrayList<>(array.length);
+        heapPorGanancia = new ArrayList<>(array.length);                                          //O(1)
+        heapPorTiempo = new ArrayList<>(array.length);                                            //O(1)
 
         //Agrego los elementos al array de heapPorGanancia y heapPorTiempo para despuès ordenarlo
-        for (int i = 0; i < array.length; i++) {
-            array[i].setIndiceAHeapAntiguedad(i);
-            array[i].setIndiceAHeapGanancia(i);
-            this.heapPorGanancia.add(array[i]);
-            this.heapPorTiempo.add(array[i]);
+        for (int i = 0; i < array.length; i++) {                                                 //itera t veces
+            array[i].setIndiceAHeapAntiguedad(i);                                                //O(1)
+            array[i].setIndiceAHeapGanancia(i);                                                  //O(1)
+            this.heapPorGanancia.add(array[i]);                                                  //O(1)      
+            this.heapPorTiempo.add(array[i]);                                                    //O(1)
         }
+        //el for loop cuesta O(t)
 
         //Craaciòn del comparador por ganancia
-        comparadorPorGanancia = Comparator.comparing(Traslado::gananciaNeta);
-        comparadorPorGanancia = comparadorPorGanancia.reversed();
-        comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);
-        comparadorPorGanancia = comparadorPorGanancia.reversed();
+        comparadorPorGanancia = Comparator.comparing(Traslado::gananciaNeta);                    //O(1)
+        comparadorPorGanancia = comparadorPorGanancia.reversed();                                //O(1)
+        comparadorPorGanancia = comparadorPorGanancia.thenComparing(Traslado::id);               //O(1)
+        comparadorPorGanancia = comparadorPorGanancia.reversed();                                //O(1)
 
         //Craaciòn del comparador por tiempo
-        comparadorPorTiempo = Comparator.comparing(Traslado::timestamp);
-        comparadorPorTiempo = comparadorPorTiempo.reversed();
-        comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);
+        comparadorPorTiempo = Comparator.comparing(Traslado::timestamp);                        //O(1)
+        comparadorPorTiempo = comparadorPorTiempo.reversed();                                   //O(1)
+        comparadorPorTiempo = comparadorPorTiempo.thenComparing(Traslado::id);                  //O(1)    
 
         //Ordenarlos usando el heapify
-        floydGanancia();
-        floydTiempo();
+        floydGanancia();                                                                        //O(t)
+        floydTiempo();                                                                          //O(t)
     }
 
+    //floydGanancia cuesta 
     private void floydGanancia() {
-        for (int i = this.length() / 2 + 1; i >= 0; i--) {
-            this.bajarGanancia(i);
+        for (int i = this.length() / 2 + 1; i >= 0; i--) {                                      
+            this.bajarGanancia(i);                                                             
         }
     }
-
+    //floyd
     private void floydTiempo() {
         for (int i = this.length() / 2 + 1; i >= 0; i--) {
             this.bajarTiempo(i);
