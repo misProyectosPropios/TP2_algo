@@ -43,21 +43,6 @@ public class CiudadesTests {
             assertTrue(encontrado, "No se encontró el elemento " +  e1 + " en el arreglo " + s2.toString());
         }
     }
-
-    @Test
-    void raiz_cambia_por_hijo_derecho(){
-
-        Traslado t1= new Traslado(1,3,1,1000,1);
-
-
-        BestEffort sis = new BestEffort(3, this.listaTraslados);
-        
-       // assertEquals(ciudadConMayorSuperavit(sis),1);
-
-        sis.despacharMasRedituables(1);
-
-        // assertEquals(ciudadConMayorSuperavit(sis),3);
-        }
     
     @Test 
     void sinCambios() {
@@ -93,22 +78,43 @@ public class CiudadesTests {
     }
 
     @Test
-    void despachar_con_mas_ganancia_de_a_varios(){
-
-        BestEffort sis = new BestEffort(7, this.listaTraslados);
-        //Tenemos 7 ciudades organizadas de 1 a 7, hacemos traslados para ordenarlas de 7 a 1 y luego las desencolamos todas
-        Traslado t1= new Traslado(1,7,1,100000,1);
-        Traslado t2= new Traslado(1,6,2,10000,1);
-        Traslado t3= new Traslado(1,5,3,1000,1);
-        sis.despacharMasRedituables(3);
-
-        // assertEquals(ciudadConMayorSuperavit(sis),7);
-        
-
-
-     
-
+    void ciudadesCadaUnaDespachadaConElSiguiente(){
+        int cantCiudades = 10;
+        HeapCiudad ciudad = new HeapCiudad(cantCiudades);
+        for(int i = 0; i < cantCiudades - 1; i++) {
+            Traslado traslado = new Traslado(i, i, i + 1, 1000, 10);
+            ciudad.despacharTraslados(traslado);
+        }
+        assertEquals(0, ciudad.mayorSuperavit().nombre());
     }
+
+    @Test
+    void ciudadesConMismoSuperavitSeparadasPorID() {
+        int cantCiudades = 10;
+        HeapCiudad ciudad = new HeapCiudad(cantCiudades);
+
+        ciudad.despacharTraslados(new Traslado(0, 4, 5, 100, 20));
+        ciudad.despacharTraslados(new Traslado(0, 7, 8, 100, 20));
+
+        assertEquals(4, ciudad.mayorSuperavit().nombre());
+    }
+
+
+    Integer NCLAVES = 1000;
     
-    
+    private int[] generateTwoNumbes(int n) {
+        int numero = (int) (Math.random() * n);
+        int numero2 = (int) (Math.random() * n);
+        return new int[] {numero, numero2};
+    }
+
+    @Test
+    void stress() {
+        int cantCiudades = 100;
+
+        Ciudad[] arrayCiudades = new Ciudad[cantCiudades];
+        for(int i = 0; i < cantCiudades; i++) {
+            arrayCiudades[i] = new Ciudad(i);
+        }
+    }
 }
