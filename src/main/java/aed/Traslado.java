@@ -1,4 +1,7 @@
 package aed;
+ 
+// Todos los Procs de esta clase cuestan O(1) (son todas asignaciones y operaciones 
+// aritméticas básicas, sin ningún ciclo).
 
 public class Traslado {
     
@@ -7,10 +10,10 @@ public class Traslado {
     private int destino ;
     private int gananciaNeta ;
     private int timestamp ;
-    private int indiceAHeapGanancia;
-    private int indiceAHeapAntiguedad;
+    private int indiceAHeapGanancia ;
+    private int indiceAHeapAntiguedad ;
 
-    // Constructor.
+    // Constructor
     public Traslado(int id, int origen, int destino, int gananciaNeta, int timestamp) {
         this.id = id ;
         this.origen = origen ;
@@ -19,7 +22,7 @@ public class Traslado {
         this.timestamp = timestamp ;
     } 
 
-    // Constructor por copia.
+    // Constructor por copia
     public Traslado(Traslado copiado) {
         this.id = copiado.id ;
         this.origen = copiado.origen ;
@@ -57,10 +60,11 @@ public class Traslado {
     }
 
     public void setIndiceAHeapAntiguedad(int index) {
-        this.indiceAHeapAntiguedad = index;
+        this.indiceAHeapAntiguedad = index ;
     }
 
     public void setIndiceAHeapGanancia(int index) {
-        this.indiceAHeapGanancia = index;
+        this.indiceAHeapGanancia = index ;
     }
+
 }

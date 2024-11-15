@@ -1,77 +1,65 @@
 package aed;
 
+// Todos los Procs de esta clase cuestan O(1) (son todas asignaciones y operaciones 
+// aritméticas básicas, sin ningún ciclo).
+
 public class Ciudad {
 
     private int nombre ;
     private int gananciaNeta ;
     private int perdidaNeta ;
     private int superavit ;
-    private int posicionEnHeap;
+    private int posicionEnHeap ;
 
     // Constructor.
-    public Ciudad (int posicion) {        
-
-    //Inicializar todos estos variables es O(1) para cada variable
-    this.nombre = posicion ;
-    this.gananciaNeta = 0 ;
-    this.perdidaNeta = 0 ;
-    this.superavit = gananciaNeta - perdidaNeta ;
-    this.posicionEnHeap = posicion;
+    public Ciudad (int posicion) {   
+        this.nombre = posicion ;
+        this.gananciaNeta = 0 ;
+        this.perdidaNeta = 0 ;
+        this.superavit = gananciaNeta - perdidaNeta ;
+        this.posicionEnHeap = posicion ;
     }
 
     // Constructor por copia.
-    public Ciudad (Ciudad copiado) {                                    //Inicializar todos estos variables es O(1) para cada variable
+    public Ciudad (Ciudad copiado) {                                   
         this.nombre = copiado.nombre ;
         this.gananciaNeta = copiado.gananciaNeta ;
         this.perdidaNeta = copiado.perdidaNeta ;
         this.superavit = copiado.superavit ;
-        
     }
 
     public void aumnetarPerdida (int monto) {
-
-        this.perdidaNeta += monto ;                                     //O(1)
-        this.superavit = gananciaNeta - perdidaNeta ;                   //O(1)
-
+        this.perdidaNeta += monto ;                                     
+        this.superavit = gananciaNeta - perdidaNeta ;                   
     }
     
     public void aumentarGanancia (int monto) {
-
-        this.gananciaNeta += monto ;//O(1)
-        this.superavit = gananciaNeta - perdidaNeta ;                   //O(1)
-
+        this.gananciaNeta += monto ;                                    
+        this.superavit = gananciaNeta - perdidaNeta ;                   
     }
 
     public int gananciaNeta () {
-
-        return this.gananciaNeta ;                                      //O(1)
-
+        return this.gananciaNeta ;                                      
     }
 
     public int perdidaNeta () {
-
-        return this.perdidaNeta ;                                       //O(1)
-        
+        return this.perdidaNeta ;                                          
     }
 
     public int superavit() {
-
-        return this.superavit ;                                         //O(1)
-
+        return this.superavit ;                                         
     }
 
     public int nombre() {
-
-        return this.nombre ;                                            //O(1)
-
+        return this.nombre ;                                            
     }
 
     public int getPosicionEnHeap() {
-        return this.posicionEnHeap;                                     //O(1)
+        return this.posicionEnHeap;                                     
     }
 
     public void setPosicionEnHeap(int posicion) {
-        this.posicionEnHeap = posicion;                                 //O(1)
+        this.posicionEnHeap = posicion;                                 
     }
 
 }
