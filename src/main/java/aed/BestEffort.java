@@ -10,6 +10,8 @@ public class BestEffort {
     ArrayList<Integer> mayorGanancia;
     ArrayList<Integer> mayorPerdida;
 
+
+    // O(|C| + |T |)
     public BestEffort (int cantCiudades, Traslado[] traslados){
         mayorSuperavit = new HeapCiudad(cantCiudades);
 
@@ -31,6 +33,7 @@ public class BestEffort {
         this.traslados = new HeapsTraslado(traslados);
     }
 
+    // O(|traslados| log(|T |))
     public void registrarTraslados(Traslado[] traslados){
         //Evitamso el aliasing
         Traslado[] arrayCopiaTraslados = new Traslado[traslados.length];
@@ -43,6 +46,7 @@ public class BestEffort {
         }
     }
 
+    // O(n (log(|T |) + log(|C|)))
     public int[] despacharMasRedituables(int n){
         int[] res;
         if (n > traslados.length()) {
@@ -89,6 +93,7 @@ public class BestEffort {
         return res;
     }
 
+    // O(n (log(|T |) + log(|C|)))
     public int[] despacharMasAntiguos(int n){
         // Implementar
         int[] res;
@@ -135,14 +140,17 @@ public class BestEffort {
         return res;                                                                                  // O(1)
     }
 
+    // O(1)
     public int ciudadConMayorSuperavit(){
         return mayorSuperavit.mayorSuperavit().nombre();                            // O(1)
     }
 
+    // O(1)
     public ArrayList<Integer> ciudadesConMayorGanancia(){
         return this.mayorGanancia;                                                  // O(1)
     }
 
+    // O(1)
     public ArrayList<Integer> ciudadesConMayorPerdida(){
         return this.mayorPerdida;                                                   // O(1)
     }
