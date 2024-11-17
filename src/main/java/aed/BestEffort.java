@@ -155,6 +155,7 @@ public class BestEffort {
         return this.mayorPerdida;                                                   // O(1)
     }
 
+    // O(1)s
     public int gananciaPromedioPorTraslado(){
         return this.sumaDeGananciaDeDespachos / this.totalDespachados;              // O(1)
     }
