@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class CiudadesTests {
 
-    int cantCiudades;
+    int cantCiudades = 7;
     Traslado[] listaTraslados;
     ArrayList<Integer> actual;
 
@@ -21,7 +21,6 @@ public class CiudadesTests {
     @BeforeEach
     void init(){
         //Reiniciamos los valores de las ciudades y traslados antes de cada test
-        cantCiudades = 7;
        Ciudad[] listaCiudades = new Ciudad[] {
                                             new Ciudad(1),
                                             new Ciudad(2),
@@ -94,27 +93,25 @@ public class CiudadesTests {
         HeapCiudad ciudad = new HeapCiudad(cantCiudades);
 
         ciudad.despacharTraslados(new Traslado(0, 4, 5, 100, 20));
-        ciudad.despacharTraslados(new Traslado(0, 7, 8, 100, 20));
+        ciudad.despacharTraslados(new Traslado(1, 7, 8, 100, 20));
 
         assertEquals(4, ciudad.mayorSuperavit().nombre());
     }
 
-
-    Integer NCLAVES = 1000;
-    
-    private int[] generateTwoNumbes(int n) {
-        int numero = (int) (Math.random() * n);
-        int numero2 = (int) (Math.random() * n);
-        return new int[] {numero, numero2};
-    }
-
     @Test
-    void stress() {
-        int cantCiudades = 100;
+    void ciudadesDespachandoMuchosTraslados() {
+        int cantCiudades = 10;
+        HeapCiudad ciudad = new HeapCiudad(cantCiudades);
+        ciudad.despacharTraslados(new Traslado(0, 1, 2, 90, 19));
+        ciudad.despacharTraslados(new Traslado(1, 3, 1, 300, 18));
+        ciudad.despacharTraslados(new Traslado(2, 5, 0, 400, 13));
+        ciudad.despacharTraslados(new Traslado(3, 3, 6, 540, 32));
+        ciudad.despacharTraslados(new Traslado(4, 2, 5, 10, 23));
 
-        Ciudad[] arrayCiudades = new Ciudad[cantCiudades];
-        for(int i = 0; i < cantCiudades; i++) {
-            arrayCiudades[i] = new Ciudad(i);
-        }
+        assertEquals(3, ciudad.mayorSuperavit().nombre());
+        assertEquals(0, ciudad.getGanancia(0));
+        assertEquals(400, ciudad.getPerdida(0));
+
     }
+    
 }

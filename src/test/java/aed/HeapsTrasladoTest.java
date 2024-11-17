@@ -227,45 +227,4 @@ public class HeapsTrasladoTest {
         assertEquals(listaTraslados[5].id(), cola.desencolarPorGanancia().id() );
         assertTrue (cola.length() == 0) ;
     }
-
-// ------------------------- Stress Test ------------------------- //
-
-    int nClaves = 1000;
-
-    private int generadorGananciaNeta(int i) {
-        return nClaves * ((i * i - 100 * i) % nClaves) + i;
-    } 
-
-    private int generadorCiudadOrigen(int i) {
-        return ((nClaves * i + i*2) % 500);
-    }
-
-    private int generadorCiudadDestino(int i) {
-        return ((i + nClaves * 3) % 500) ;
-    }
-
-    private int generadorTimeStamp (int i) {
-        return i*3 ;
-    }
-
-    @Test 
-    void stress() {
-        HeapCiudad ciudades = new HeapCiudad(500) ;
-        Traslado[] listaTaslados = new Traslado[nClaves];
-
-        HeapsTraslado traslados = new HeapsTraslado() ;
-        int index = 0 ;
-        while (index != nClaves) {
-            int gananciaNeta = generadorGananciaNeta(index);
-            int timeStamp = generadorTimeStamp(generadorCiudadOrigen(index));
-            Traslado trasladoNuevo = new Traslado(index, generadorCiudadOrigen(index), generadorCiudadDestino(index), 
-                                                 gananciaNeta, timeStamp) ;
-            traslados.encolar(trasladoNuevo) ;
-            listaTaslados[index] = trasladoNuevo ;
-
-            // (...)
-
-            index ++;
-        }
-    } 
 }
